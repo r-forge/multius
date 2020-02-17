@@ -1,0 +1,27 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1581510476338.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "697674665",
+    "id" : "C7DC5E26",
+    "lastKnownWriteTime" : 1581513829,
+    "last_content_update" : 1581513829114,
+    "path" : "C:/Users/marss/Dropbox/FDV/multiUS/multiUS/R/predict.lda.R",
+    "project_path" : "R/predict.lda.R",
+    "properties" : {
+        "cursorPosition" : "80,30",
+        "notebook_format" : "html_document",
+        "scrollLine" : "0",
+        "tempName" : "Untitled2"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

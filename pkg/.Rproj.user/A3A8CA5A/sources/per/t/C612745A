@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1581514028813.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2343475306",
+    "id" : "C612745A",
+    "lastKnownWriteTime" : 1581514044,
+    "last_content_update" : 1581514044125,
+    "path" : "C:/Users/marss/Dropbox/FDV/multiUS/multiUS/R/printCorTestDf.R",
+    "project_path" : "R/printCorTestDf.R",
+    "properties" : {
+        "cursorPosition" : "24,17",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 14,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

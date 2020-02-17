@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1563525752560.000,
+    "dirty" : false,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "1242869995",
+    "id" : "EC69D7FE",
+    "lastKnownWriteTime" : 1563527680,
+    "last_content_update" : 1563527680812,
+    "path" : "~/FDV/multiUS/multiUS/R/makeFactorLabels.R",
+    "project_path" : "R/makeFactorLabels.R",
+    "properties" : {
+        "cursorPosition" : "11,29",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

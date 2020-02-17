@@ -1,0 +1,12 @@
+#' Calculate the value of the Ward criterion function
+#'
+#' @description It calculate the value of the Ward criterion function, based on the set of numberical variables and one categorical variable (partition).
+#' @param X A data frame with the values of numberical variables (usually the ones that were/are used for clustering).
+#' @param clu A partition.
+#' @author Aleš Žiberna
+
+wardKF<-function(X, clu){
+  sum(by(X,INDICES=clu,FUN=ssAllVar))
+}
+
+

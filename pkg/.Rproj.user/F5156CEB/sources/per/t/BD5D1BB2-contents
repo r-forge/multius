@@ -1,0 +1,9 @@
+#' Remove cases with missing values
+#'
+#' @description It return a data frame or a matrix without cases with missing values.
+#' @param X A data frame.
+#' @author Marjan Cugmas
+
+useCompleteCases <- function(X){
+  return(X[complete.cases(X),])
+}
