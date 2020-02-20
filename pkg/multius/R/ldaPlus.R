@@ -6,7 +6,7 @@
 #' provides with predicted values and with (Jack-knife) classification table and also with statistical test of canonical correlations
 #' between the variable that represents groups and numberic variables.
 #' @param x A data frame with values of numeric variables.
-#' @param grpuping Categorical variable that defines groups.
+#' @param grouping Categorical variable that defines groups.
 #' @param pred Wheter to retun the predicted values based on the model and based on the data that were used to estimate the model. Default is \code{TRUE}.
 #' @param CV Wheter to retun the predicted values based on the cross-validation method, default is \code{TRUE}.
 #' @param usePriorBetweenGroups Wheter to use prior probabilities to predict the values of the categorical variable, default is \code{TRUE}.

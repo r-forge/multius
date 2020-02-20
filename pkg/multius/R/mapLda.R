@@ -12,7 +12,7 @@
 #' #Estimate the LDA model:
 #' ldaCars <- ldaPlus(x = mtcars[,c(1, 3, 4, 5, 6)], grouping = mtcars[,10])
 #' #Plot LDA map:
-#' mapLDA(ldaCars)
+#' mapLda(ldaCars)
 #' @author Aleš Žiberna
 
 mapLda <- function (object, xlim=c(-2,2),ylim=c(-2,2), npoints=101, prior = object$prior, dimen=2, col=NULL){

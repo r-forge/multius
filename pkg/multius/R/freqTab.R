@@ -5,7 +5,7 @@
 #' @param dec Number of decimal places for percentages.
 #' @param ... Arguments passed to other functions, see \code{table}.
 #' @examples
-#' frekTab(GSSvocab[,4], dec = 1)
+#' freqTab(mtcars[,2], dec = 1)
 #' @author Aleš Žiberna
 
 freqTab<-function(x, dec=NULL, ...){

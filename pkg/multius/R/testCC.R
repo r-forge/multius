@@ -29,6 +29,10 @@
 #' @references
 #' R Data Analysis Examples: Canonical Correlation Analysis, UCLA: Statistical Consulting Group. From http://www.ats.ucla.edu/stat/r/dae/canonical.htm (accessed Decembar 27, 2013).
 
-testCC<-function(cancor, n){
-  testCCbase(cor=cancor$cor, n, p=dim(cancor$xcoef)[1], q=dim(cancor$ycoef)[1])
+# testCC<-function(cancor, n){
+#   testCCbase(cor=cancor$cor, n, p=dim(cancor$xcoef)[1], q=dim(cancor$ycoef)[1])
+# }
+
+testCC<-function(cor, n, p, q){
+  testCCbase(cor=cor, n, p=p, q=q)
 }

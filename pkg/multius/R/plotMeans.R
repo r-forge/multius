@@ -9,9 +9,10 @@
 #' @param plotLegend Wheter to plot a legend or not, default is \code{TRUE}.
 #' @param inset Inset distance(s) from the margins as a fraction of the plot region when legend is placed by keyword.
 #' @param xleg Position of a legend, default is \code{topleft}.
-#' @param lepPar Additional parameters for a legend. They have to be provided in a list format.
+#' @param legPar Additional parameters for a legend. They have to be provided in a list format.
 #' @param gap Space left between the center of the error bar and the lines marking the error bar in units of the height (width). Defaults to 1.0
 #' @param labels Labels of x-axis.
+#' @param alpha A confidence level for calculating confidence intervals (default is \code{0.05}).
 #' @param ... Arguments passed to functions \code{matplot} and \code{axis}.
 #' @examples
 #' plotMeans(x = mtcars[, c(1, 3, 5)], by = mtcars[,8])
