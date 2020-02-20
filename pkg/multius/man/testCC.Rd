@@ -4,12 +4,12 @@
 \alias{testCC}
 \title{Test of canonical correlations}
 \usage{
-testCC(cancor, n)
+testCC(cor, n, p, q)
 }
 \arguments{
-\item{n}{Number of units.}
-
 \item{cor}{Vector with canonical correlations.}
+
+\item{n}{Number of units.}
 
 \item{p}{Number of variables in the first group of variables.}
 

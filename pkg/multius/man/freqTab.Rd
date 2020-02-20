@@ -17,7 +17,7 @@ freqTab(x, dec = NULL, ...)
 The function creates a frequency table with percentages for the selected categorical variable.
 }
 \examples{
-frekTab(GSSvocab[,4], dec = 1)
+freqTab(mtcars[,2], dec = 1)
 }
 \author{
 Aleš Žiberna

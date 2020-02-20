@@ -10,6 +10,8 @@ ldaPlus(x, grouping, pred = TRUE, CV = TRUE,
 \arguments{
 \item{x}{A data frame with values of numeric variables.}
 
+\item{grouping}{Categorical variable that defines groups.}
+
 \item{pred}{Wheter to retun the predicted values based on the model and based on the data that were used to estimate the model. Default is \code{TRUE}.}
 
 \item{CV}{Wheter to retun the predicted values based on the cross-validation method, default is \code{TRUE}.}
@@ -17,8 +19,6 @@ ldaPlus(x, grouping, pred = TRUE, CV = TRUE,
 \item{usePriorBetweenGroups}{Wheter to use prior probabilities to predict the values of the categorical variable, default is \code{TRUE}.}
 
 \item{...}{Arguments passed to other functions, see \code{MASS::lda}.}
-
-\item{grpuping}{Categorical variable that defines groups.}
 
 \item{prior}{The prior probabilities of class membership. If unspecified, the class proportions for the training set are used. If present, the probabilities should be specified in the order of the factor levels.}
 }

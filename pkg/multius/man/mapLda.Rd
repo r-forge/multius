@@ -29,7 +29,7 @@ The function draws two dimensional map of discriminant functions.
 #Estimate the LDA model:
 ldaCars <- ldaPlus(x = mtcars[,c(1, 3, 4, 5, 6)], grouping = mtcars[,10])
 #Plot LDA map:
-mapLDA(ldaCars)
+mapLda(ldaCars)
 }
 \author{
 Aleš Žiberna

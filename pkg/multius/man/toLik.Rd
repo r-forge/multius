@@ -13,6 +13,8 @@ toLik(x, type = "eq", q = 1.5, k = 5, r = range(x), num = TRUE)
 
 \item{q}{...}
 
+\item{k}{Number of classes.}
+
 \item{r}{Minimum and maximum values to define intervals of \code{x}. Default are minimum and maximum values of \code{x}.}
 
 \item{num}{If \code{TRUE} (default) numberical values are returned, otherwise intervals are returned.}
@@ -25,12 +27,11 @@ The function transforms a continous variable to a \eqn{k}-point Likert-type vari
 }
 \examples{
 x <- rnorm(1000)
-par(mfrow = c(2, 2))
 hist(x = toLik(x, type = "eq"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'eq'")
 hist(x = toLik(x, type = "yes"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'yes'")
 hist(x = toLik(x, type = "no"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'no'")
 hist(x = toLik(x, type = "avg"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'avg'")
 }
 \author{
-Aleš Žiberna
+Ales Ziberna
 }

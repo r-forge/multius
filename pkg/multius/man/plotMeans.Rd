@@ -15,6 +15,8 @@ plotMeans(x, by, plotCI = TRUE, alpha = 0.05, ylab = "averages",
 
 \item{plotCI}{Wheter to plot condifence intervals or not, default is \code{TRUE}.}
 
+\item{alpha}{A confidence level for calculating confidence intervals (default is \code{0.05}).}
+
 \item{ylab}{The title of \eqn{y}-axis.}
 
 \item{xlab}{The title of \eqn{x}-axis.}
@@ -25,13 +27,13 @@ plotMeans(x, by, plotCI = TRUE, alpha = 0.05, ylab = "averages",
 
 \item{xleg}{Position of a legend, default is \code{topleft}.}
 
+\item{legPar}{Additional parameters for a legend. They have to be provided in a list format.}
+
 \item{gap}{Space left between the center of the error bar and the lines marking the error bar in units of the height (width). Defaults to 1.0}
 
 \item{labels}{Labels of x-axis.}
 
 \item{...}{Arguments passed to functions \code{matplot} and \code{axis}.}
-
-\item{lepPar}{Additional parameters for a legend. They have to be provided in a list format.}
 }
 \description{
 The function plots the means of several numerical variables by the levels of one categorical variable.
