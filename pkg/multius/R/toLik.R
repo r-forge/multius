@@ -56,11 +56,3 @@ toLik<-function(x,type="eq",q=1.5,k=5,r=range(x), num=TRUE){
   if(num) xd<-as.numeric(xd)
   return(xd)
 }
-
-
-x <- rnorm(1000)
-par(mfrow = c(2, 2))
-hist(x = toLik(x, type = "eq"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'eq'")
-hist(x = toLik(x, type = "yes", q = 1.8), breaks = 0:5+0.5, xlab = "answer", main = "type = 'yes'")
-hist(x = toLik(x, type = "no"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'no'")
-hist(x = toLik(x, type = "avg", q = 0.1), breaks = 0:5+0.5, xlab = "answer", main = "type = 'avg'")
