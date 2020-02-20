@@ -3,13 +3,13 @@
 #' @description The function transforms a continous variable to a \eqn{k}-point Likert-type variable. Different styles of answering to a survey are possible.
 #' @param x Vector with values to be transformed.
 #' @param type Type of transformation. Possible values are: \code{eq} (default) (equal wide intervals), \code{yes} (wider intervals at higher values of \code{x}), \code{no} (wider intervals at lower values of \code{x}), \code{avg} (wider intervals near the mean of \code{x}).
+#' @param k Number of classes.
 #' @param q ...
 #' @param r Minimum and maximum values to define intervals of \code{x}. Default are minimum and maximum values of \code{x}.
 #' @param num If \code{TRUE} (default) numberical values are returned, otherwise intervals are returned.
 #' @return Transformed values are organized into a vector.
 #' @examples
 #' x <- rnorm(1000)
-#' par(mfrow = c(2, 2))
 #' hist(x = toLik(x, type = "eq"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'eq'")
 #' hist(x = toLik(x, type = "yes"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'yes'")
 #' hist(x = toLik(x, type = "no"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'no'")
