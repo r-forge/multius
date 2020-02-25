@@ -19,7 +19,7 @@ cancorPlus(x, y, xcenter = TRUE, ycenter = TRUE,
 \item{useCCApackage}{Wheter \code{cc} function (from \code{CCA} package) or \code{cancor} function (from \code{stats} package) should be used to obtain canonical correlations.}
 }
 \value{
-The function returns the same output as functions \code{cancor} and \code{cc} with the following additional results:
+The function returns the same output as functions \code{cancor} or \code{cc} with the following additional results:
 \itemize{
 \item \code{$sigTest}
 \itemize{

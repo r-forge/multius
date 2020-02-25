@@ -13,7 +13,7 @@
 #' @param gap Space left between the center of the error bar and the lines marking the error bar in units of the height (width). Defaults to 1.0
 #' @param labels Labels of x-axis.
 #' @param alpha A confidence level for calculating confidence intervals (default is \code{0.05}).
-#' @param ... Arguments passed to functions \code{matplot} and \code{axis}.
+#' @param \dots Arguments passed to functions \code{matplot} and \code{axis}.
 #' @examples
 #' plotMeans(x = mtcars[, c(1, 3, 5)], by = mtcars[,8])
 #' @author Aleš Žiberna

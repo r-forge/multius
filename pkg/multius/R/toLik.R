@@ -4,7 +4,7 @@
 #' @param x Vector with values to be transformed.
 #' @param type Type of transformation. Possible values are: \code{eq} (default) (equal wide intervals), \code{yes} (wider intervals at higher values of \code{x}), \code{no} (wider intervals at lower values of \code{x}), \code{avg} (wider intervals near the mean of \code{x}).
 #' @param k Number of classes.
-#' @param q ...
+#' @param q Extension factor. Tells how much is each next interval wider then the previous one. Not used when \code{type="eq"}.
 #' @param r Minimum and maximum values to define intervals of \code{x}. Default are minimum and maximum values of \code{x}.
 #' @param num If \code{TRUE} (default) numberical values are returned, otherwise intervals are returned.
 #' @return Transformed values are organized into a vector.

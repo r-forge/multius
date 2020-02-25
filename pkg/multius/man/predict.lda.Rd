@@ -15,11 +15,11 @@ betweenGroupsWeights = object$betweenGroupsWeights)
 
 \item{prior}{Prior probabilities of class membership to be used to predict values.}
 
-\item{dimen}{?}
+\item{dimen}{The number of dimensions/linear discriminant functions to use. Defaults to all.}
 
 \item{method}{Possible values are \code{plug-in}, \code{predictive} and \code{debiased}.}
 
-\item{betweenGroupsWeights}{?}
+\item{betweenGroupsWeights}{The proportions/weights used when computing the grand/total mean from group means.}
 }
 \value{
 \itemize{

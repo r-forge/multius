@@ -11,7 +11,7 @@ freqTab(x, dec = NULL, ...)
 
 \item{dec}{Number of decimal places for percentages.}
 
-\item{...}{Arguments passed to other functions, see \code{table}.}
+\item{\dots}{Arguments passed to function \code{table}.}
 }
 \description{
 The function creates a frequency table with percentages for the selected categorical variable.

@@ -4,10 +4,10 @@
 #' @param X Data matrix with selected variables.
 #' @param method A type of correlation coefitient to be calculated, see function \code{cor}.
 #' @param use In the case of missing values, which method should be used, see function \code{cor}.
-#' @param ... Arguments passed to other functions, see \code{cor.test}.
+#' @param \dots Arguments passed to other functions, see \code{cor.test}.
 #' @examples
 #' corTestDf(mtcars[, 3:5])
-#' @seealso \code{cor}
+#' @seealso \code{cor.test}
 #' @author Aleš Žiberna
 
 corTestDf<-function(X, method = "p", use = "everything", ...){

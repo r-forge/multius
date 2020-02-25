@@ -33,7 +33,7 @@ plotMeans(x, by, plotCI = TRUE, alpha = 0.05, ylab = "averages",
 
 \item{labels}{Labels of x-axis.}
 
-\item{...}{Arguments passed to functions \code{matplot} and \code{axis}.}
+\item{\dots}{Arguments passed to functions \code{matplot} and \code{axis}.}
 }
 \description{
 The function plots the means of several numerical variables by the levels of one categorical variable.

@@ -11,7 +11,7 @@ toLik(x, type = "eq", q = 1.5, k = 5, r = range(x), num = TRUE)
 
 \item{type}{Type of transformation. Possible values are: \code{eq} (default) (equal wide intervals), \code{yes} (wider intervals at higher values of \code{x}), \code{no} (wider intervals at lower values of \code{x}), \code{avg} (wider intervals near the mean of \code{x}).}
 
-\item{q}{...}
+\item{q}{Extension factor. Tells how much is each next interval wider then the previous one. Not used when \code{type="eq"}.}
 
 \item{k}{Number of classes.}
 
@@ -33,5 +33,5 @@ hist(x = toLik(x, type = "no"), breaks = 0:5+0.5, xlab = "answer", main = "type 
 hist(x = toLik(x, type = "avg"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'avg'")
 }
 \author{
-Ales Ziberna
+Aleš Žiberna
 }

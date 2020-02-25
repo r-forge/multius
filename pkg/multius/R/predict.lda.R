@@ -4,9 +4,9 @@
 #' @param object Object obtained by the \code{ldaPlus} function or by the \code{MASS::lda}.
 #' @param newdata New dataset (without categorical variable).
 #' @param prior Prior probabilities of class membership to be used to predict values.
-#' @param dimen ?
+#' @param dimen The number of dimensions/linear discriminant functions to use. Defaults to all.
 #' @param method Possible values are \code{plug-in}, \code{predictive} and \code{debiased}.
-#' @param betweenGroupsWeights ?
+#' @param betweenGroupsWeights The proportions/weights used when computing the grand/total mean from group means.
 #' @return
 #' \itemize{
 #' \item \code{class} - Predicted values of categorical variable.

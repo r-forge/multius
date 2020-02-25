@@ -3,7 +3,7 @@
 #' @description The function creates a frequency table with percentages for the selected categorical variable.
 #' @param x Vector with the values of a categorical variable.
 #' @param dec Number of decimal places for percentages.
-#' @param ... Arguments passed to other functions, see \code{table}.
+#' @param \dots Arguments passed to function \code{table}.
 #' @examples
 #' freqTab(mtcars[,2], dec = 1)
 #' @author Aleš Žiberna

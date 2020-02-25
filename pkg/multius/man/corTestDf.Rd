@@ -13,7 +13,7 @@ corTestDf(X, method = "p", use = "everything", ...)
 
 \item{use}{In the case of missing values, which method should be used, see function \code{cor}.}
 
-\item{...}{Arguments passed to other functions, see \code{cor.test}.}
+\item{\dots}{Arguments passed to other functions, see \code{cor.test}.}
 }
 \description{
 The function computes the whole correlation matrix and corresponding sample sizes and \eqn{p}-values.
@@ -22,7 +22,7 @@ The function computes the whole correlation matrix and corresponding sample size
 corTestDf(mtcars[, 3:5])
 }
 \seealso{
-\code{cor}
+\code{cor.test}
 }
 \author{
 Aleš Žiberna
