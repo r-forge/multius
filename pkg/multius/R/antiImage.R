@@ -14,11 +14,13 @@
 #' @references Kaiser, H. F., & Rice, J. (1974). Little Jiffy, Mark Iv. Educational & Psychological Measurement, 34(1), 111.
 
 antiImage <- function(X){
+  varNames <- colnames(X)
   R <- cor(as.matrix(X))
   iR <- solve(R)
   AIR <- diag((diag(iR)**(-1/2))) %*% iR %*% diag(((diag(iR)**(-1/2))))
   KMO <- (sum(R**2)-nrow(R))/(sum(R**2+AIR**2) - nrow(R)*2)
   diag(AIR) <- (colSums(R**2) - 1)/(colSums(R**2+AIR**2) - 2)
+  rownames(AIR) <- colnames(AIR) <- varNames
   return(list("AIR" = AIR, "KMO" = KMO))
 }
 
