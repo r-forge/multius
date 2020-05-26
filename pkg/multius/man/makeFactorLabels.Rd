@@ -17,7 +17,7 @@ makeFactorLabels(x, reduce = TRUE, ...)
 The function transforms a numeric varibale into categorical one, based on the attribute data from a given SPSS file.
 }
 \details{
-Data have to be imported by using the \code{MASS::read.spss} function.
+Data have to be imported by using the \code{foreign::read.spss} function.
 The use of the function make sence when the parameter \code{use.value.lables} in the function \code{read.spss} is set to \code{FALSE}.
 }
 \author{
