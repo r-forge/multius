@@ -1,0 +1,14 @@
+Package: reporter
+Title: Handy package for reports
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Marjan",
+           family = "Cugmas",
+           role = c("aut", "cre"),
+           email = "marjan.cugmas@fdv.uni-lj.si",
+           comment = c(ORCID = "0000-0002-1715-2460"))
+Description: The package contains functions for summary tables, including statistical tests.
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
