@@ -10,11 +10,11 @@
 #' @export
 
 g <- function(ordinal, interval, correct = TRUE){
-  g <- diff(by(data = interval, ordinal, mean))/(sum((by(data = interval, ordinal, length) - 1)*by(data = interval, ordinal, sd))/(length(interval) - 2))
+  gs <- diff(by(data = interval, ordinal, mean))/(sum((by(data = interval, ordinal, length) - 1)*by(data = interval, ordinal, sd))/(length(interval) - 2))
 
-  if (corrected == TRUE){
+  if (correct == TRUE){
     a <- length(interval) - 2
-    g <- ((gamma(a/2))/(sqrt(a/2)*gamma((a-1)/2)))*g
+    gs <- ((gamma(a/2))/(sqrt(a/2)*gamma((a-1)/2)))*gs
   }
-  return(g)
+  return(gs)
 }
