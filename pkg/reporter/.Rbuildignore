@@ -1,2 +1,2 @@
-^reporter\.Rproj$
+^.*\.Rproj$
 ^\.Rproj\.user$
