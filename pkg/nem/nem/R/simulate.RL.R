@@ -1,0 +1,40 @@
+RL <- simulate.RL <- function(ideal.net, random.net, terms = "forb", k = 100, custom.terms = NULL, cr.type = "sum"){
+  n <- nrow(ideal.net)
+  teoreticna.porazdelitev <- ergm::summary_formula(ideal.net ~ triadcensus)
+  if (terms=="forb") allowed.terms <- names(teoreticna.porazdelitev)[teoreticna.porazdelitev == 0]
+  if (terms=="allow") allowed.terms <- names(teoreticna.porazdelitev)[teoreticna.porazdelitev != 0]
+  if (terms=="all") allowed.terms <- names(teoreticna.porazdelitev)
+  if (terms=="cust") allowed.terms <- names(teoreticna.porazdelitev)[custom.terms]
+  change.ratio.vec <- NULL
+  new.network <- random.net
+  for (i in 1:k){
+    # izberi eno ne-povezavo
+    pov <- sample(which(random.net == 0)[is.element(which(random.net == 0), which(diag(1, nrow = n) == 1)) == F], size = 1)
+    # izberi eno povezavo
+    npov <- sample(which(random.net == 1), size = 1)
+    # zamenjaj edge
+    new.network[pov] <- 1
+    new.network[npov] <- 0
+    # izracunaj statistike
+    s.rand <- summary(random.net ~ triadcensus)
+    s.new <- summary(new.network ~ triadcensus)
+
+    if (cr.type == "mean"){
+      nova.teoreticna <- mean((s.new[allowed.terms] - teoreticna.porazdelitev[allowed.terms]))
+      stara.teoreticna <- mean((s.rand[allowed.terms] - teoreticna.porazdelitev[allowed.terms]))
+    }
+
+    if (cr.type == "sum"){
+      nova.teoreticna <- sum((s.new[allowed.terms] - teoreticna.porazdelitev[allowed.terms])**2)
+      stara.teoreticna <- sum((s.rand[allowed.terms] - teoreticna.porazdelitev[allowed.terms])**2)
+    }
+
+    change.ratio.vec[i] <- change.ratio <- nova.teoreticna/stara.teoreticna
+
+    if (is.nan(change.ratio) == FALSE) {
+      if (change.ratio < 1) random.net <- new.network
+      else new.network <- random.net
+    } else new.network <- random.net
+  }
+  return(list(new.network, change.ratio.vec))
+}

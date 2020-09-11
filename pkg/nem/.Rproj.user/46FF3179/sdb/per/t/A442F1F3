@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "randomize <- function(network){\n  random <- matrix(sample(network), nrow = nrow(network))\n  ndiag <- sum(diag(random))\n  diag(random) <- -1\n\n  random[sample(which(random == 0), replace = FALSE, size = ndiag)] <- 1\n  diag(random) <- 0\n  return(random)\n}\n",
+    "created" : 1509969875476.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3479373300",
+    "id" : "A442F1F3",
+    "lastKnownWriteTime" : 1509969881,
+    "last_content_update" : 1509969881982,
+    "path" : "~/FDV/myPhD/R/randomize.R",
+    "project_path" : "R/randomize.R",
+    "properties" : {
+        "tempName" : "Untitled3"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

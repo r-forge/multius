@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "Package: myPhD\nType: Package\nTitle: Generating the networks with a given blockmodel\nVersion: 0.3.2\nAuthor: Marjan Cugmas\nMaintainer: Marjan Cugmas <marjan.cugmas@fdv.uni-lj.si>\nDescription: Yet to come.\nLicense: What license is it under?\nLazyData: TRUE\nImports: blockmodeling, ergm\nRoxygenNote: 6.0.1\n",
+    "created" : 1501499577592.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1700206055",
+    "id" : "C82FCE27",
+    "lastKnownWriteTime" : 1510838254,
+    "last_content_update" : 1510838254659,
+    "path" : "~/FDV/myPhD/DESCRIPTION",
+    "project_path" : "DESCRIPTION",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "dcf"
+}

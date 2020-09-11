@@ -1,0 +1,8 @@
+minIncBlocks <- function(res, compIM){
+  k <- nrow(IM(res)[,,])
+  all.perms <- permn(1:k)
+  diags <- sapply(1:length(all.perms), function(x) {
+    sum(abs(as.numeric(IM(res)[,,][all.perms[[x]], all.perms[[x]]] == "com") -  as.numeric(matrix(do.call(compIM, args = list(k)) == "com"))))
+  })
+  min(diags)
+}

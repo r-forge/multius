@@ -1,0 +1,44 @@
+#' Generates equally distributed random points on a sphere
+#'
+#' @description It is used to generate random points on a circumference (two dimensions) or on a sphere (three dimentions) ... The points are more equally distributed as in the case of other approaches.
+#' @param n The number of points to be generated.
+#' @param dim The number of dimensions/variables
+#' @param acc The precision (the number of proposed generated points).
+#' @param signs The signs of the generated variables; set a vector with 1s or -1s where each element corresponds to one variable/dimension; e.g., if the points in two dimensional space are going to be generated, then the vector with two elements can be provided. If the first element would be 1 and the second element would be -1, then all values in the fist column will be positive, while all the values in the second column will be negative; if you do not care about the signs of all variables, then set \code{signs=NULL} (privzeto); if you do not care about the sign of only one variable, then set the corresponding element \code{signs} to \code{NA}.
+#' @param initial.points Provide a matrix with the previusly generated points if you only want to add/generated some new/additional ones.
+#' @return
+#' \itemize{
+#' \item \code{points} - Generated values (data frame with n rows and dim columns).
+#' \item \code{posterior} - Posterior probabilities (the values of the Fisher's calsification linear discrimination function).
+#' \item \code{max.min.dist} - Maximum minimal distance between the points.
+#' }
+#' @seealso \code{rsphere}
+#' @author Marjan Cugmas
+#' @export
+
+ersphere <- function (n, dim, acc, signs = NULL, initial.points = NULL){
+  if (is.null(initial.points)){
+    selected.points <- starting.points(dim = dim)
+    max.min.distance <- rep(NA, times = length(selected.points))
+    n.selected.points <- nrow(selected.points)
+  }
+  if (!is.null(initial.points)) {
+    selected.points <- initial.points
+    max.min.distance <- rep(NA, times = length(selected.points))
+    n.selected.points <- nrow(selected.points)
+  }
+  for (i in 1:n) {
+    add <- rsphere(n = acc, dim = dim, r = 1, pos.only = FALSE)
+    if (!is.null(signs)) {
+      tmp <- t(apply(add, 1, function(X) abs(X) * t(signs)))
+      tmp[, which(is.na(signs))] <- add[, which(is.na(signs))]
+      add <- tmp
+    }
+    d <- as.matrix(dist(rbind(selected.points, add)))
+    minimalne.razdalje <- apply(d[(nrow(selected.points) + 1):nrow(d), 1:nrow(selected.points)], 1, min)
+    selected <- as.numeric(which.max(minimalne.razdalje))
+    selected.points <- rbind(selected.points, add[selected, ])
+    max.min.distance <- append(x = max.min.distance, values = max(minimalne.razdalje), after = length(max.min.distance))
+  }
+  return(list(points = selected.points, max.min.dist = max.min.distance))
+}

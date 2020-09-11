@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1563523710882.000,
+    "dirty" : false,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "809786817",
+    "id" : "6A7C694A",
+    "lastKnownWriteTime" : 1563526732,
+    "last_content_update" : 1563526732193,
+    "path" : "~/FDV/MVA2018_19/Vaje 1/vaje 1.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "48,62",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

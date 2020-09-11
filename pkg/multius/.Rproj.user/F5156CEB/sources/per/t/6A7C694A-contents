@@ -1,0 +1,346 @@
+# namestimo paketke
+# spodaj je predviden seznam vecine paketkov, ki jih bomo
+# potrebovali na vajah pri tem predmetu
+# vseh ne bomo potrebovali pri vsakih vajah
+# morda bomo dodali se kaksne
+library("car")
+library("xtable")
+library("blockmodeling")
+library("foreign")
+library("lawstat")
+library("rgl")
+library("CCA")
+library("psych")
+library("corrgram")
+library("XML")
+library("FactoMineR")
+library("ggplot2")
+library("lavaan")
+library("mvnormtest")
+library("Hmisc")
+library("gplots")
+
+source("../UcbenikR-funkcije.R")
+#######################################################################################
+#                            PRIPRAVA PODATKOV
+#######################################################################################
+# uvoz podatkov SPSS
+podatki <- read.spss("../WV6.sav",
+                     use.value.labels = FALSE,
+                     to.data.frame = TRUE,
+                     use.missings = TRUE)
+# pogledamo, kako izgledajo podatki
+head(podatki)
+# pogledamo, kaj vsebuje kodirni list
+names(attributes(podatki))
+attributes(podatki)$names #imena spremenljivk
+attributes(podatki)$variable.labels #opis spremenljivk
+# posebej shranimo labels
+varLabs <- attributes(podatki)$variable.labels
+
+# izberemo nominalne in/ali ordinalne (kategoricne) spremenljivke
+# spol - V240
+# zakonski status - V57
+# izobrazba - V248
+catVars <- c("V240", "V57", "V248")
+# pogledamo, kako izgledajo podatki
+head(podatki[, catVars])
+# naredimo, da so faktorji
+for(i in catVars) podatki[,i] <- makeFactorLabels(podatki[, i])
+# preverimo ...
+head(podatki[, catVars])
+
+# izeremo intervalne spremenljivke
+# starost - V242
+# preimenujemo v bolj clovesko ime
+colnames(podatki)[which(colnames(podatki) == "V242")] <- "starost"
+# izberemo "vsebinske" spremenljivke
+Sch <- paste0("V", 70:79)
+# pogledamo imena vprasanj
+varLabs[Sch]
+# nastavimo kratka imena spremenljivk
+# priporocam tudi uporabo uradnih poimenovanj
+kratka.imena <- c("kreativnost",
+                  "bogastvo",
+                  "varnost",
+                  "zabava",
+                  "dobrodelnost",
+                  "uspesnost",
+                  "pustolovstvo",
+                  "sprejemljivost",
+                  "naravovarstvenost",
+                  "konzervatizem")
+
+# pogledamo podatke - vrednosti bomo obravnavali kot stevilske (intervalne)
+head(podatki[, Sch])
+#######################################################################################
+#                            TOCKA 1-2: PREDSTAVITEV PODATKOV IN REKODIRANJE
+#######################################################################################
+# spol - V240
+table(podatki$V240)
+podatki$spol <- Recode(podatki$V240, "'Male' = 'moski'; 'Female' = 'zenski'")
+table(podatki$spol)
+
+# zakonski status - V57
+table(podatki$V57)
+podatki$status <- car::Recode(
+  podatki$V57,
+  "
+  'Married' = 'porocen';
+  'Living together as married' = 'zivi s partnerjem-ko';
+  'Widowed' = 'vdovel';
+  c('Divorced', 'Separated') = 'locen';
+  'Single' = 'samski'
+  "
+)
+table(podatki$status)
+
+# stopnja izobrazbe
+table(podatki$V248)
+podatki$izobrazba[podatki$V248 == "No formal education"] <- 'brez formalne izobrabe'
+podatki$izobrazba[podatki$V248 == "Incomplete primary school"] <- 'nedokoncana osnovna sola'
+podatki$izobrazba[podatki$V248 == "Complete primary school"] <- 'koncana osnovna sola'
+podatki$izobrazba[podatki$V248 == "Incomplete secondary school: technical/ vocational type"] <- 'nedokoncana srednja sola'
+podatki$izobrazba[podatki$V248 == "Complete secondary school: technical/ vocational type"] <- 'koncana srednja sola'
+podatki$izobrazba[podatki$V248 == "Incomplete secondary school: university-preparatory type"] <- 'nedokoncana gimnazija'
+podatki$izobrazba[podatki$V248 == "Complete secondary school: university-preparatory type"] <- 'koncana gimnazija'
+podatki$izobrazba[podatki$V248 == "Some university-level education, without degree"] <- 'nedok. univ. izob. ali dok. visja sola'
+podatki$izobrazba[podatki$V248 == "University - level education, with degree"  ] <- 'univerzitetna izobrazba, z diplomo'
+# definiramo kot faktor
+podatki$izobrazba <- factor(podatki$izobrazba)
+# preverimo vrstni red faktorjev
+levels(podatki$izobrazba)
+# popravimo vrstni red faktorjev
+ravniIzobrazbe <- levels(podatki$izobrazba)[c(1, 8, 6, 4, 2, 5, 9)]
+podatki$izobrazba <- factor(podatki$izobrazba, levels = ravniIzobrazbe)
+levels(podatki$izobrazba)
+table(podatki$izobrazba)
+
+# da lazje dostopamo do spremenljivk jih preimenujemo in imena shranimo
+catVars <- c("spol", "status", "izobrazba")
+summary(podatki[, catVars])
+
+# uporaba funkcije frekTab (smiselnost kumulativnih % pri nominalni spremenljivki)
+frekTab(podatki$spol)[, -c(2, 4)]
+frekTab(podatki$status)[, -c(2, 4)]
+frekTab(podatki$izobrazba)
+
+# graficne predstavitve kategoricnih spremenljivk
+# spravimo v for zanko za vse kategoricne spremenljivke
+par(mfrow = c(1, 3), mar = c(25,5,5,0))
+for (i in 1:length(catVars)){
+  barplot(table(podatki[, catVars[i]]),
+          ylab = "frekvenca",
+          las = 2)
+}
+
+# pogledamo se porazdelive stevilskih spremenljivk
+povzetek <- as.data.frame(psych::describe(podatki[, "starost"]))
+rownames(povzetek) <- c("starost")
+povzetek[, c(2, 3, 4, 5, 8, 9, 10, 11, 12)]
+
+# vsebinskim spremenljivkam obrnemo lestvico
+# (tako da bo vecja vrednost pomenila vecje strinjanje)
+for (i in 1:length(Sch)) podatki[, Sch[i]] <- Recode(podatki[, Sch[i]], "1=6;2=5;3=4;4=3;5=2;6=1")
+
+# pogledamo se porazdelive stevilskih spremenljivk
+# vrednosti ustrezno zaokrozimo
+povzetek <- as.data.frame(psych::describe(podatki[, Sch]))
+rownames(povzetek) <- kratka.imena
+povzetek[, c(2, 3, 4, 5, 8, 9, 10, 11, 12)]
+
+# histogram za starost
+hist(podatki$starost,
+     main = "PORAZDELITEV STAROSTI",
+     ylab = "gostota",
+     xlab = "starost",
+     freq = FALSE)
+curve(dnorm(x,
+            mean = mean(podatki$starost, na.rm = TRUE),
+            sd = sd(podatki$starost, na.rm = TRUE)),
+      add = TRUE, col = "red", lwd = 2, lty = 2, xpd = T)
+
+# lahko zapakiramo v funkcijo, ki sprejeme podatke
+myHist <- function(y, breaks = "Sturges", ...){
+  hist(y,
+       breaks = breaks,
+       freq = FALSE,
+       ylab = "gostota", ...)
+  curve(dnorm(x,
+              mean = mean(y, na.rm = TRUE),
+              sd = sd(y, na.rm = TRUE)),
+        add = TRUE, col = "red", lwd = 2, lty = 2, xpd = T)
+}
+
+# preverimo, ce deluje
+myHist(sample(x = 1:6, size = 100, replace = T), breaks =  0:10+0.5)
+myHist(rnorm(n = 10000))
+myHist(podatki$starost, xlab = "starost", main = "porazdelitev starosti")
+
+# histogram za vsebinske spremenljivke
+par(mfrow = c(3, 4))
+for (i in 1:length(Sch)) {
+  myHist(podatki[, Sch[i]],
+    breaks = 0:6 + 0.5,
+    main = kratka.imena[i],
+    xlab = "podobnost meni\n(strinjanje)",
+    ylim = c(0, 0.5))
+}
+#######################################################################################
+#                            TOCKA 3: ANALIZA POVEZANOSTI
+#######################################################################################
+# povezanost spremenljivk o opravicljivosti
+# uporabimo najbolj enostavno funkcijo
+pairs(podatki[, Sch], podatki[, Sch])
+
+# uporabimo funkcijo scatterplotMatrix iz paketka car
+scatterplotMatrix(podatki[, Sch])
+
+# raztresemo vrednosti --> k vsaki vrednosti pristejemo slucajno vrednost
+SlucajneVrednosti <- matrix(data = runif(n = nrow(podatki) * length(Sch), min = -0.4, max = 0.4),
+                         nrow = nrow(podatki),
+                         ncol = length(Sch))
+a <- podatki[, Sch] + SlucajneVrednosti
+# lazja aletrnativa
+# a <- apply(podatki[, opr], 2, jitter, amount = 0.4)
+# na diagonalno postavimo se histograme
+scatterplotMatrix(a, diagonal = "hist", smoother = FALSE, cex = 0.2)
+
+# izracunamo korelacije med spremenljivkami o opravicljivosti
+# uporabimo funckcijo s privzetimi vrednostmi
+cor(podatki[, Sch])
+# upostevamo samo enote, ki imajo vrednosti pri vseh spremenljivkah
+# pogledamo, koliksen deleu enot bomo upostevali na tak nacin
+sum(complete.cases(podatki[, Sch]))/nrow(podatki[, Sch])
+# izracunamo pearsonov koeficient korelacije
+(R.p <- cor(podatki[, Sch], use = "complete.obs", method = "pearson"))
+
+# narisemo korelacije
+rownames(R.p) <- colnames(R.p) <-  kratka.imena
+plot.mat(R.p, main = "Pearsonov koeficient korelacije")
+
+# poskusite spremeniti vrstni red spremenljivk !
+vrstni.red <- c(1, 2, 4, 6, 7, 3, 5, 8, 9, 10)
+plot.mat(R.p[vrstni.red, vrstni.red], main = "Pearsonov koeficient korelacije")
+
+# pogledamo korelacije med spremenljivkami o opravicljivosti in ostalimi
+# shranimo imena spremenljvk v en vektor
+allVars <- c(catVars, "starost", Sch)
+# upostevamo samo enote, ki imajo vrednosti pri vseh spremenljvkah
+comp <- complete.cases(podatki[, c(allVars)])
+
+# izracunamo povprecja strinjanja za prvo spremenljviko o opravicljivosti po spolu
+# lahko uporabimo funkcijo describeBy
+describeBy(podatki[comp, Sch[1]], podatki[comp, "spol"],  mat = TRUE)[,-c(1, 3, 8, 9)]
+
+# povezanost spremenljivk o upraviciljivosti s kategoricnimi spremenljivkami lahko predstavimo graficno
+par(mfrow = c(1, 2), oma = c(5, 2, 1, 1))
+plotMeans(x = podatki[, Sch],by = list(podatki$spol), labels = kratka.imena, xlab = "", ylim = c(1, 6))
+plotMeans(x = podatki[, Sch],by = list(podatki$status), labels = kratka.imena, xlab = "", ylim = c(1, 6))
+
+korelacije <- data.frame(cor(podatki[, Sch], as.numeric(podatki[, "izobrazba"]), method = "spearman", use = "com"),
+           cor(podatki[, Sch], podatki[, "starost"], method = "pearson", use = "com"))
+rownames(korelacije) <- kratka.imena
+colnames(korelacije) <- c("izobrazba (Spearman)", "starost (Pearson)")
+round(korelacije, 2)
+#######################################################################################
+#                            TOCKA 4: LIKARTOVE LESTVICE
+#######################################################################################
+# zdruzimo spremenljivke, ki naj bi merile isto stvar
+# navadno to naredimo na podlagi teorije in nato preverimo s faktorsko analizo
+# vcasih je dovolj pogledati ze korelacijsko matriko
+usmerjenost_vase <- c("V70", "V71", "V73", "V75", "V76")
+usmerjenost_ven  <- c("V72", "V74", "V77", "V78", "V79")
+
+# izracunamo povprecja odgovorov po posameznih sklopih spremenljivk
+# temu recemo Likertova lestvica
+# (upostevamo razpolozljive vrednosti)
+podatki$usmerjenost_vase <- rowMeans(x = podatki[, usmerjenost_vase], na.rm = TRUE)
+podatki$usmerjenost_ven <- rowMeans(x = podatki[, usmerjenost_ven], na.rm = TRUE)
+
+# pogledamo porazdelitev teh dveh spremenljivk
+par(mfrow = c(1, 2))
+myHist(podatki$usmerjenost_vase, xlim = c(1, 6), main = "usmerjenost vase", xlab = "stopnja strinjanja")
+myHist(podatki$usmerjenost_ven, xlim = c(1, 6), main = "usmerjenost navzven", xlab = "stopnja strinjanja")
+
+# pogledamo porazdelitev teh dveh spremenljivk tabelaricno
+povzetek <- psych::describe(podatki[, c("usmerjenost_vase", "usmerjenost_ven")])
+rownames(povzetek) <- c("usmerjenost_vase", "usmerjenost_ven")
+povzetek
+
+# pogledamo korerelacijo med spremenljivkama Lik. lestvice
+# ce imate vec kot 2 spremenljivki, lahko uporabite funkcijo pairs
+# vrednosti prej "raztresemo"
+tmp <- apply(podatki[, c("usmerjenost_vase", "usmerjenost_ven")], 2, jitter, amount = 0.05)
+plot(tmp, ylim = c(1, 6), xlim = c(1, 6), xlab = "usmerjenost vase", ylab = "usmerjenost navzven")
+
+# izracunamo korelacijo med spremenljivkami Lik. lestvice
+# ali je korelacija statisticno znacilna od 0? uporabimo funkcijo iz paketka Hmisc
+rcorr(as.matrix(podatki[, c("usmerjenost_vase", "usmerjenost_ven")]), type = "pearson")
+
+# pogledamo korelacijo med Lik spremenljivkama in starostjo :: podobno lahko naredimo se za ostale Lik. lestvice
+plot(jitter(podatki$starost, amount = 0.05), jitter(podatki$usmerjenost_vase, amount = 0.05), xlab = "starost", ylab = "usmerjenost vase")
+cor(podatki$usmerjenost_vase, podatki$starost, use = "compl")
+cor.test(podatki$usmerjenost_vase, podatki$starost, use = "compl")
+# glede na porazdelitev podatkov, kako bi se lahko analizirali povezanost?
+# racunanje povprecij po starostnih skupinah
+# racunanje deleza oseb po starostnih skupinah, ki je izbral odgovor 0
+
+# pogledamo, kako se razlikujejo ocene po kategoricnih spremenljivkah
+par(mfrow = c(1,2), mar = c(11, 5, 2, 2))
+plotmeans(usmerjenost_vase ~ spol, data = podatki, ylab = "povprecje", xlab = "", main = "usmerjenost vase", las = 2, cex.axis = 0.7, ylim = c(1, 6))
+plotmeans(usmerjenost_ven ~ spol, data = podatki, ylab = "povprecje", xlab = "", main = "usmerjenost navzven", las = 2, cex.axis = 0.7, ylim = c(1, 6))
+
+# par(mfrow = c(1,1))
+# plotMeans(x = podatki[, c("usmerjenost_vase", "usmerjenost_ven")],by = list(podatki$izobrazba), xleg = "bottomright", ylim = c(1, 6))
+# plotMeans(x = podatki[, c("prekrski", "liberalnost", "nasilnost")],by = list(podatki$status), xleg = "topright")
+# plotMeans(x = podatki[, c("prekrski", "liberalnost", "nasilnost")],by = list(podatki$izob), xleg = "topright")
+
+par(mfrow = c(1,2), mar = c(11, 5, 2, 2))
+plotmeans(usmerjenost_vase ~ izobrazba, data = podatki, ylab = "povprecje", xlab = "", main = "usmerjenost vase", las = 2, cex.axis = 0.7, ylim = c(1, 6))
+plotmeans(usmerjenost_ven ~ izobrazba, data = podatki, ylab = "povprecje", xlab = "", main = "usmerjenost navzven", las = 2, cex.axis = 0.7, ylim = c(1, 6))
+
+par(mfrow = c(1,2), mar = c(11, 5, 2, 2))
+plotmeans(usmerjenost_vase ~ status, data = podatki, ylab = "povprecje", xlab = "", main = "usmerjenost vase", las = 2, connect = FALSE, ylim = c(1, 6))
+plotmeans(usmerjenost_ven ~ status, data = podatki, ylab = "povprecje", xlab = "", main = "usmerjenost navzven", las = 2, connect = FALSE, ylim = c(1, 6))
+
+# ali so razlike statisticno znacilne?
+t.test(podatki$usmerjenost_vase ~ podatki$spol)
+leveneTest(y = podatki$usmerjenost_vase, group = podatki$status)
+oneway.test(podatki$usmerjenost_vase ~ podatki$status, var.equal = TRUE)
+cor.test(podatki$usmerjenost_vase, as.numeric(podatki$izob), method = "spearman", use = "com", exact = FALSE)
+
+t.test(podatki$usmerjenost_ven ~ podatki$spol)
+leveneTest(y = podatki$usmerjenost_ven, group = podatki$status)
+oneway.test(podatki$usmerjenost_ven ~ podatki$status, var.equal = FALSE)
+cor(podatki$usmerjenost_ven, as.numeric(podatki$izob), method = "spearman", use = "com")
+#######################################################################################
+#                            TOCKA 5: GRAF
+#######################################################################################
+dev.off()
+
+# izberemo spremenljivko
+var <- "spol"
+imena_spremenljivk <- c("usmerjenost_vase", "usmerjenost_ven")
+# izracunamo centroide po spolu
+(agg <- aggregate(podatki[, imena_spremenljivk], by = list(podatki[, var]), FUN=mean, na.rm = TRUE))
+tmp <- apply(podatki[, imena_spremenljivk], 2, jitter, amount = 0.4)
+joint <- rbind(tmp, agg[, -1])
+# narisemo v 2D prostoru, kot smo se naucili - s funkcijo jitter
+# v primeru, da imamo tri spremenljivke, "plot" nadomestimo s "pairs"
+plot(joint,
+     pch = 16,
+     ylim = c(1, 6), xlim = c(1, 6),
+     # nastavimo velikost pik
+     cex = c(rep(0.5, nrow(tmp)), rep(2, nrow(agg))),
+     # pike pobarvamo glede na spol
+     col=c(podatki[, var], agg[,1]))
+# dodamo legendo
+par(xpd=TRUE)
+legend("topleft", legend = agg[,1], pch = 16, col = 1:nrow(agg))
+#######################################################################################
+#                            TOCKA 5: SHRANIMO PODATKE
+#######################################################################################
+# shranimo podatkovno datoteko
+save(podatki, file = "WVSLO_rekodirane")
+###############################################

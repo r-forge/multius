@@ -1,0 +1,54 @@
+\name{minIncBlocks}
+\alias{minIncBlocks}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+Minimal number of inconsistent blocks
+}
+\description{
+Calculate the number of inconsistent blocks between the empirical and ideal blockmodel.
+}
+\usage{
+minIncBlocks(res, compIM)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{res}{the object returned by the function \code{optRandPar} in package \code{blockmodeling}}
+  \item{compIM}{the image matrix to be compared with, i.e., the ideal image matrix, in \code{array} format}
+}
+
+\details{
+It compare all possile permutations of rows and columns orders of the empirical and ideal image matrices. For each comparison it calculats the minimal number of inconsistent blocks. It returns the minimal number of inconsistent blocks.
+}
+\value{
+It returns a singe value - the number of inconsistent blocks.
+}
+\references{
+%% ~put references to the literature/web site here ~
+}
+\author{
+Marjan Cugmas
+}
+\note{
+%%  ~~further notes~~
+}
+
+%% ~Make other sections like Warning with \section{Warning }{....} ~
+
+\seealso{
+%% ~~objects to See Also as \code{\link{help}}, ~~~
+}
+\examples{
+minIncBlocks <- function(res, compIM){
+  k <- nrow(IM(res)[,,])
+  all.perms <- permn(1:k)
+  diags <- sapply(1:length(all.perms), function(x) {
+    sum(abs(as.numeric(IM(res)[,,][all.perms[[x]], all.perms[[x]]] == "com") -
+    as.numeric(matrix(do.call(compIM, args = list(k)) == "com"))))
+  })
+  min(diags)
+}
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
+\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

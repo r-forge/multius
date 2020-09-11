@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1564667340355.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "614017944",
+    "id" : "D2E5360D",
+    "lastKnownWriteTime" : 1564667354,
+    "last_content_update" : 1564667354192,
+    "path" : "~/FDV/myPhD/R/simulate.RL.R",
+    "project_path" : "R/simulate.RL.R",
+    "properties" : {
+        "cursorPosition" : "0,6",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

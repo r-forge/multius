@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1565078749961.000,
+    "dirty" : false,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "1325925717",
+    "id" : "897F2F96",
+    "lastKnownWriteTime" : 1565081368,
+    "last_content_update" : 1565081368226,
+    "path" : "~/FDV/MVA2018_19/LDAandCChelperFunctions.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "283,0",
+        "scrollLine" : "272"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 13,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

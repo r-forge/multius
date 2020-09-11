@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "orderdClu <- function(res){\n  means<-fun.by.blocks(res, ignore.diag=TRUE)\n  crit<-colSums(means)+rowSums(means)\n  r <- order(crit, decreasing = TRUE)\n  a <- IM(res)[1,,]\n  a <- a[as.vector(r), as.vector(r)]\n  IMg <- array(NA, dim = c(1, max(r), max(r)))\n  (IMg[1,,] <-  a)\n  r<-rank(-crit)\n  names(r) <- 1:max(clu(res))\n  tclu <- r[as.character(clu(res))]\n  return(list(tclu, IMg))\n}\n",
+    "created" : 1510830259116.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3729830710",
+    "id" : "D6C98CEE",
+    "lastKnownWriteTime" : 1510830280,
+    "last_content_update" : 1510830280054,
+    "path" : "~/FDV/myPhD/R/orderdClu.R",
+    "project_path" : "R/orderdClu.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

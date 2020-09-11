@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1569828572297.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "203989865",
+    "id" : "BD36BEEE",
+    "lastKnownWriteTime" : 1569569556,
+    "last_content_update" : 1569569556,
+    "path" : "~/FDV/myPhD/R/nem.R",
+    "project_path" : "R/nem.R",
+    "properties" : {
+        "cursorPosition" : "1,0",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

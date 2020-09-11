@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1581514058547.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1009270874",
+    "id" : "BC0B2EE2",
+    "lastKnownWriteTime" : 1581514067,
+    "last_content_update" : 1581514067941,
+    "path" : "C:/Users/marss/Dropbox/FDV/multiUS/multiUS/R/testCC.R",
+    "project_path" : "R/testCC.R",
+    "properties" : {
+        "cursorPosition" : "14,71",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 15,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

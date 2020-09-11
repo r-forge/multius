@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1562932864164.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "674670251",
+    "id" : "523925E3",
+    "lastKnownWriteTime" : 1564559546,
+    "last_content_update" : 1564559546852,
+    "path" : "~/FDV/myPhD/R/orderdClu.R",
+    "project_path" : "R/orderdClu.R",
+    "properties" : {
+        "cursorPosition" : "13,0",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

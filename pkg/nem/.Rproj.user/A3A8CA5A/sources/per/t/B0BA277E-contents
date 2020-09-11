@@ -1,0 +1,12 @@
+Package: myPhD
+Type: Package
+Title: Generating the networks with a given blockmodel
+Version: 0.12.22
+Authors@R: person("Marjan", "Cugmas", email = "marjan.cugmas@fdv.uni-lj.si", role = c("aut", "cre"))
+Description: Contains most of the defined functions used in the PhD thesis written by Marjan Cugmas with a lot of help by Ales Ziberna and Anuska Ferligoj.
+LazyData: TRUE
+Imports: blockmodeling, ergm
+Depends: blockmodeling, ergm, combinat, igraph
+RoxygenNote: 6.1.1
+License: GPL-2
+Encoding: UTF-8

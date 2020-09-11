@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "\\name{orderdClu}\n\\alias{orderdClu}\n%- Also NEED an '\\alias' for EACH other topic documented here.\n\\title{\nOrdered clusters in a matrix network representation\n}\n\\description{\nThis function reorder the groups in an image matrix in such a way that the blocks with a higher average weigh are placed on the left hand side of the matrix.\n}\n\\usage{\norderdClu(res)\n}\n%- maybe also 'usage' for other objects documented here.\n\\arguments{\n  \\item{res}{The object produced by the function \\code{oprRandParC} from \\code{blockmodeling} package.\n}\n}\n\\details{\n%%  ~~ If necessary, more details than the description above ~~\n}\n\\value{\n\\item{tclu}{The vector indication to which group a certain unit belongs.}\n\\item{IMg}{Reordered image matrix.}\n}\n\\references{\n%% ~put references to the literature/web site here ~\n}\n\\author{\n%%  ~~who you are~~\n}\n\\note{\n%%  ~~further notes~~\n}\n\n%% ~Make other sections like Warning with \\section{Warning }{....} ~\n\n\\seealso{\n%% ~~objects to See Also as \\code{\\link{help}}, ~~~\n}\n\\examples{\norderdClu <- function(res){\n  means<-fun.by.blocks(res, ignore.diag=TRUE)\n  crit<-colSums(means)+rowSums(means)\n  r <- order(crit, decreasing = TRUE)\n  a <- IM(res)[1,,]\n  a <- a[as.vector(r), as.vector(r)]\n  IMg <- array(NA, dim = c(1, max(r), max(r)))\n  (IMg[1,,] <-  a)\n  r<-rank(-crit)\n  names(r) <- 1:max(clu(res))\n  tclu <- r[as.character(clu(res))]\n  return(list(tclu, IMg))\n}\n}\n% Add one or more standard keywords, see file 'KEYWORDS' in the\n% R documentation directory.\n\\keyword{ ~kwd1 }% use one of  RShowDoc(\"KEYWORDS\")\n\\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line\n",
+    "created" : 1510830352184.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2386673564",
+    "id" : "D6AFF8BC",
+    "lastKnownWriteTime" : 1510830677,
+    "last_content_update" : 1510830677301,
+    "path" : "~/FDV/myPhD/man/orderedClu.Rd",
+    "project_path" : "man/orderedClu.Rd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_doc"
+}

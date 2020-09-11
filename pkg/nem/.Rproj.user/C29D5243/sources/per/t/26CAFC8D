@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1538997389804.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1497017423",
+    "id" : "26CAFC8D",
+    "lastKnownWriteTime" : 1538997398,
+    "last_content_update" : 1538997398094,
+    "path" : "~/FDV/myPhD/R/MRI.R",
+    "project_path" : "R/MRI.R",
+    "properties" : {
+        "cursorPosition" : "6,191",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,29 @@
+rnem <- function (initial, formula, theta, k = 5000, q, b = 0.25) {
+  networks <- list("final" = initial,
+                   "initial" = initial,
+                   "negative" = matrix(0, nrow = k, ncol = 3),
+                   "positive" = matrix(0, nrow = k, ncol = 3))
+
+  for (i in 1:k) {
+    actor <- sample(nrow(initial), size = 1)
+    X <- matrix(NA, nrow = nrow(initial), ncol = length(formula))
+    for (j in 1:length(formula)) {
+      X[, j] <- formula[[j]](initial, actor = actor)
+    }
+    X[is.nan(X)] <- 0
+    probabilities <- X %*% theta
+    urej <- cbind(1:24, order(probabilities), probabilities)[-actor,]
+    if (sample(c(0, 1), prob = c(1 - q, q), 1) == 1) {
+      alter <- sample(urej[which(urej[, 3] >= quantile(urej[, 3], probs = 1 - b)), 1], 1)
+      initial[actor, alter] <- 1
+      networks[["positive"]][i, ] <- c(actor, alter, 1)
+    }
+    if (sample(c(0, 1), prob = c(1 - q, q), 1) == 0) {
+      alter <- sample(urej[which(urej[, 3] <= quantile(urej[, 3], probs = b)), 1], 1)
+      initial[actor, alter] <- 0
+      networks[["negative"]][i, ] <- c(actor, alter, -1)
+    }
+  }
+  networks[["final"]] <- initial
+  return(networks)
+}
