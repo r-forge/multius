@@ -1,25 +1,24 @@
 {
-    "collab_server" : "",
-    "contents" : "",
-    "created" : 1581510264744.000,
-    "dirty" : false,
-    "encoding" : "UTF-8",
-    "folds" : "",
-    "hash" : "281072944",
-    "id" : "CB8E93B",
-    "lastKnownWriteTime" : 1581513815,
-    "last_content_update" : 1581513815407,
-    "path" : "C:/Users/marss/Dropbox/FDV/multiUS/multiUS/R/makeFactorLabels.R",
-    "project_path" : "R/makeFactorLabels.R",
-    "properties" : {
-        "cursorPosition" : "5,57",
-        "scrollLine" : "0"
+    "id": "CB8E93B",
+    "path": "C:/Users/marss/Dropbox/FDV/multiUS/multiUSrForge/pkg/multius/R/makeFactorLabels.R",
+    "project_path": "R/makeFactorLabels.R",
+    "type": "r_source",
+    "hash": "281072944",
+    "contents": "",
+    "dirty": false,
+    "created": 1581510264744.0,
+    "source_on_save": false,
+    "relative_order": 8,
+    "properties": {
+        "cursorPosition": "5,57",
+        "scrollLine": "0"
     },
-    "read_only" : false,
-    "read_only_alternatives" : [
-    ],
-    "relative_order" : 8,
-    "source_on_save" : false,
-    "source_window" : "",
-    "type" : "r_source"
+    "folds": "",
+    "lastKnownWriteTime": 1581513815,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1581513815407,
+    "read_only": false,
+    "read_only_alternatives": []
 }

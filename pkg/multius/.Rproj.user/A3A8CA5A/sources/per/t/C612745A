@@ -1,26 +1,25 @@
 {
-    "collab_server" : "",
-    "contents" : "",
-    "created" : 1581514028813.000,
-    "dirty" : false,
-    "encoding" : "UTF-8",
-    "folds" : "",
-    "hash" : "2343475306",
-    "id" : "C612745A",
-    "lastKnownWriteTime" : 1581514044,
-    "last_content_update" : 1581514044125,
-    "path" : "C:/Users/marss/Dropbox/FDV/multiUS/multiUS/R/printCorTestDf.R",
-    "project_path" : "R/printCorTestDf.R",
-    "properties" : {
-        "cursorPosition" : "24,17",
-        "scrollLine" : "0",
-        "tempName" : "Untitled1"
+    "id": "C612745A",
+    "path": "C:/Users/marss/Dropbox/FDV/multiUS/multiUSrForge/pkg/multius/R/printCorTestDf.R",
+    "project_path": "R/printCorTestDf.R",
+    "type": "r_source",
+    "hash": "2343475306",
+    "contents": "",
+    "dirty": false,
+    "created": 1581514028813.0,
+    "source_on_save": false,
+    "relative_order": 14,
+    "properties": {
+        "cursorPosition": "24,17",
+        "scrollLine": "0",
+        "tempName": "Untitled1"
     },
-    "read_only" : false,
-    "read_only_alternatives" : [
-    ],
-    "relative_order" : 14,
-    "source_on_save" : false,
-    "source_window" : "",
-    "type" : "r_source"
+    "folds": "",
+    "lastKnownWriteTime": 1581514044,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1581514044125,
+    "read_only": false,
+    "read_only_alternatives": []
 }

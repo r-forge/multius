@@ -1,25 +1,24 @@
 {
-    "collab_server" : "",
-    "contents" : "",
-    "created" : 1581513869790.000,
-    "dirty" : false,
-    "encoding" : "UTF-8",
-    "folds" : "",
-    "hash" : "1099096255",
-    "id" : "92036866",
-    "lastKnownWriteTime" : 1581513884,
-    "last_content_update" : 1581513884997,
-    "path" : "C:/Users/marss/Dropbox/FDV/multiUS/multiUS/R/BoxMTest.R",
-    "project_path" : "R/BoxMTest.R",
-    "properties" : {
-        "cursorPosition" : "36,19",
-        "scrollLine" : "0"
+    "id": "92036866",
+    "path": "C:/Users/marss/Dropbox/FDV/multiUS/multiUSrForge/pkg/multius/R/BoxMTest.R",
+    "project_path": "R/BoxMTest.R",
+    "type": "r_source",
+    "hash": "1099096255",
+    "contents": "",
+    "dirty": false,
+    "created": 1581513869790.0,
+    "source_on_save": false,
+    "relative_order": 11,
+    "properties": {
+        "cursorPosition": "36,19",
+        "scrollLine": "0"
     },
-    "read_only" : false,
-    "read_only_alternatives" : [
-    ],
-    "relative_order" : 11,
-    "source_on_save" : false,
-    "source_window" : "",
-    "type" : "r_source"
+    "folds": "",
+    "lastKnownWriteTime": 1581513884,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1581513884997,
+    "read_only": false,
+    "read_only_alternatives": []
 }

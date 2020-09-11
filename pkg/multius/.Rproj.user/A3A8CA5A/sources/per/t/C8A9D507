@@ -1,26 +1,25 @@
 {
-    "collab_server" : "",
-    "contents" : "",
-    "created" : 1581513952333.000,
-    "dirty" : false,
-    "encoding" : "UTF-8",
-    "folds" : "",
-    "hash" : "1422576206",
-    "id" : "C8A9D507",
-    "lastKnownWriteTime" : 1581513965,
-    "last_content_update" : 1581513965483,
-    "path" : "C:/Users/marss/Dropbox/FDV/multiUS/multiUS/R/toLik.R",
-    "project_path" : "R/toLik.R",
-    "properties" : {
-        "cursorPosition" : "29,24",
-        "scrollLine" : "0",
-        "tempName" : "Untitled1"
+    "id": "C8A9D507",
+    "path": "C:/Users/marss/Dropbox/FDV/multiUS/multiUSrForge/pkg/multius/R/toLik.R",
+    "project_path": "R/toLik.R",
+    "type": "r_source",
+    "hash": "1422576206",
+    "contents": "",
+    "dirty": false,
+    "created": 1581513952333.0,
+    "source_on_save": false,
+    "relative_order": 13,
+    "properties": {
+        "cursorPosition": "29,24",
+        "scrollLine": "0",
+        "tempName": "Untitled1"
     },
-    "read_only" : false,
-    "read_only_alternatives" : [
-    ],
-    "relative_order" : 13,
-    "source_on_save" : false,
-    "source_window" : "",
-    "type" : "r_source"
+    "folds": "",
+    "lastKnownWriteTime": 1581513965,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1581513965483,
+    "read_only": false,
+    "read_only_alternatives": []
 }

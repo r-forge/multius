@@ -1,26 +1,25 @@
 {
-    "collab_server" : "",
-    "contents" : "",
-    "created" : 1581510217072.000,
-    "dirty" : false,
-    "encoding" : "UTF-8",
-    "folds" : "",
-    "hash" : "1335485575",
-    "id" : "4632690D",
-    "lastKnownWriteTime" : 1581513809,
-    "last_content_update" : 1581513809840,
-    "path" : "C:/Users/marss/Dropbox/FDV/multiUS/multiUS/R/ldaPlus.R",
-    "project_path" : "R/ldaPlus.R",
-    "properties" : {
-        "cursorPosition" : "7,58",
-        "scrollLine" : "0",
-        "tempName" : "Untitled1"
+    "id": "4632690D",
+    "path": "C:/Users/marss/Dropbox/FDV/multiUS/multiUSrForge/pkg/multius/R/ldaPlus.R",
+    "project_path": "R/ldaPlus.R",
+    "type": "r_source",
+    "hash": "1769489124",
+    "contents": "",
+    "dirty": false,
+    "created": 1581510217072.0,
+    "source_on_save": false,
+    "relative_order": 7,
+    "properties": {
+        "cursorPosition": "7,58",
+        "scrollLine": "0",
+        "tempName": "Untitled1"
     },
-    "read_only" : false,
-    "read_only_alternatives" : [
-    ],
-    "relative_order" : 7,
-    "source_on_save" : false,
-    "source_window" : "",
-    "type" : "r_source"
+    "folds": "",
+    "lastKnownWriteTime": 1582633138,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1582633138,
+    "read_only": false,
+    "read_only_alternatives": []
 }

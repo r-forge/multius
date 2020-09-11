@@ -1,27 +1,26 @@
 {
-    "collab_server" : "",
-    "contents" : "",
-    "created" : 1581510476338.000,
-    "dirty" : false,
-    "encoding" : "UTF-8",
-    "folds" : "",
-    "hash" : "697674665",
-    "id" : "C7DC5E26",
-    "lastKnownWriteTime" : 1581513829,
-    "last_content_update" : 1581513829114,
-    "path" : "C:/Users/marss/Dropbox/FDV/multiUS/multiUS/R/predict.lda.R",
-    "project_path" : "R/predict.lda.R",
-    "properties" : {
-        "cursorPosition" : "80,30",
-        "notebook_format" : "html_document",
-        "scrollLine" : "0",
-        "tempName" : "Untitled2"
+    "id": "C7DC5E26",
+    "path": "C:/Users/marss/Dropbox/FDV/multiUS/multiUSrForge/pkg/multius/R/predict.lda.R",
+    "project_path": "R/predict.lda.R",
+    "type": "r_source",
+    "hash": "4277432855",
+    "contents": "",
+    "dirty": false,
+    "created": 1581510476338.0,
+    "source_on_save": false,
+    "relative_order": 10,
+    "properties": {
+        "cursorPosition": "80,30",
+        "notebook_format": "html_document",
+        "scrollLine": "0",
+        "tempName": "Untitled2"
     },
-    "read_only" : false,
-    "read_only_alternatives" : [
-    ],
-    "relative_order" : 10,
-    "source_on_save" : false,
-    "source_window" : "",
-    "type" : "r_source"
+    "folds": "",
+    "lastKnownWriteTime": 1582632492,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1582632492,
+    "read_only": false,
+    "read_only_alternatives": []
 }

@@ -1,9 +1,9 @@
 {
-    "path" : "C:/Users/marss/Dropbox/FDV/multiUS/multiUS",
-    "sortOrder" : [
+    "path": "C:/Users/marss/Dropbox/FDV/multiUS/multiUS",
+    "sortOrder": [
         {
-            "ascending" : true,
-            "columnIndex" : 2
+            "ascending": true,
+            "columnIndex": 2
         }
     ]
 }

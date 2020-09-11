@@ -1,25 +1,24 @@
 {
-    "collab_server" : "",
-    "contents" : "",
-    "created" : 1579877677877.000,
-    "dirty" : false,
-    "encoding" : "UTF-8",
-    "folds" : "",
-    "hash" : "3171728342",
-    "id" : "3F6EE322",
-    "lastKnownWriteTime" : 1581513706,
-    "last_content_update" : 1581513706978,
-    "path" : "C:/Users/marss/Dropbox/FDV/multiUS/multiUS/R/corTestDf.R",
-    "project_path" : "R/corTestDf.R",
-    "properties" : {
-        "cursorPosition" : "6,37",
-        "scrollLine" : "0"
+    "id": "3F6EE322",
+    "path": "C:/Users/marss/Dropbox/FDV/multiUS/multiUSrForge/pkg/multius/R/corTestDf.R",
+    "project_path": "R/corTestDf.R",
+    "type": "r_source",
+    "hash": "1634559363",
+    "contents": "",
+    "dirty": false,
+    "created": 1579877677877.0,
+    "source_on_save": false,
+    "relative_order": 3,
+    "properties": {
+        "cursorPosition": "6,37",
+        "scrollLine": "0"
     },
-    "read_only" : false,
-    "read_only_alternatives" : [
-    ],
-    "relative_order" : 3,
-    "source_on_save" : false,
-    "source_window" : "",
-    "type" : "r_source"
+    "folds": "",
+    "lastKnownWriteTime": 1582633155,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1582633155,
+    "read_only": false,
+    "read_only_alternatives": []
 }

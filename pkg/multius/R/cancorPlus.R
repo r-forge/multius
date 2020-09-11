@@ -33,7 +33,7 @@
 #' @author Aleš Žiberna, Statistical Consulting Group
 #' @seealso \code{testCC}
 #' @references
-#' R Data Analysis Examples: Canonical Correlation Analysis, UCLA: Statistical Consulting Group. From http://www.ats.ucla.edu/stat/r/dae/canonical.htm (accessed Decembar 27, 2013).
+#' R Data Analysis Examples: Canonical Correlation Analysis, UCLA: Statistical Consulting Group. From http://www.ats.ucla.edu/stat/r/dae/canonical.htm (accessed December 27, 2013).
 
 cancorPlus<-function(x, y, xcenter = TRUE, ycenter = TRUE, useCCApackage=FALSE){
   if(useCCApackage){
