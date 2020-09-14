@@ -1,4 +1,0 @@
-normalize.rsphere <- function (X,  r= 1) {
-  r.sphere <- X * 1/sqrt(rowSums(X^2)) * r
-  return(r.sphere)
-}
