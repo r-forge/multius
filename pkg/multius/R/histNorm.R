@@ -8,7 +8,7 @@
 #' @examples
 #' histNorm(rnorm(1000), freq = TRUE)
 #' histNorm(rnorm(1000), freq = FALSE)
-#' @author Ales Ziberna
+#' @author Marjan Cugmas
 
 histNorm <- function(y, breaks = "Sturges", freq = TRUE, ...){
   y <- na.omit(y)
