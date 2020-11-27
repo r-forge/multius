@@ -1,4 +1,4 @@
-Package: reporter
+Package: handyReport
 Title: Handy package for reports
 Version: 0.0.0.903
 Authors@R: person(given = "Marjan", family = "Cugmas", role = c("aut", "cre"), email = "marjan.cugmas@fdv.uni-lj.si", comment = c(ORCID = "0000-0002-1715-2460"))
