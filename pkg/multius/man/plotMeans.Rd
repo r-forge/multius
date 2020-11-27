@@ -4,9 +4,21 @@
 \alias{plotMeans}
 \title{Plot the means}
 \usage{
-plotMeans(x, by, plotCI = TRUE, alpha = 0.05, ylab = "averages",
-  xlab = "", plotLegend = TRUE, inset = 0.01, xleg = "topleft",
-  legPar = list(), gap = 0, labels = NULL, ...)
+plotMeans(
+  x,
+  by,
+  plotCI = TRUE,
+  alpha = 0.05,
+  ylab = "averages",
+  xlab = "",
+  plotLegend = TRUE,
+  inset = 0.01,
+  xleg = "topleft",
+  legPar = list(),
+  gap = 0,
+  labels = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{Data frame with values of numeric variables.}

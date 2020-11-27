@@ -23,5 +23,5 @@ histNorm(rnorm(1000), freq = TRUE)
 histNorm(rnorm(1000), freq = FALSE)
 }
 \author{
-Ales Ziberna
+Marjan Cugmas
 }

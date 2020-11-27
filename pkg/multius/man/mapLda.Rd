@@ -4,8 +4,15 @@
 \alias{mapLda}
 \title{LDA mapping}
 \usage{
-mapLda(object, xlim = c(-2, 2), ylim = c(-2, 2), npoints = 101,
-  prior = object$prior, dimen = 2, col = NULL)
+mapLda(
+  object,
+  xlim = c(-2, 2),
+  ylim = c(-2, 2),
+  npoints = 101,
+  prior = object$prior,
+  dimen = 2,
+  col = NULL
+)
 }
 \arguments{
 \item{object}{Object obtained by \code{ldaPlus} function or \code{MASS::lda} function.}

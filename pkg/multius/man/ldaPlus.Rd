@@ -4,8 +4,7 @@
 \alias{ldaPlus}
 \title{Linear discriminant analysis}
 \usage{
-ldaPlus(x, grouping, pred = TRUE, CV = TRUE,
-  usePriorBetweenGroups = TRUE, ...)
+ldaPlus(x, grouping, pred = TRUE, CV = TRUE, usePriorBetweenGroups = TRUE, ...)
 }
 \arguments{
 \item{x}{A data frame with values of numeric variables.}

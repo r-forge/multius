@@ -4,8 +4,7 @@
 \alias{cancorPlus}
 \title{Canonical correlations}
 \usage{
-cancorPlus(x, y, xcenter = TRUE, ycenter = TRUE,
-  useCCApackage = FALSE)
+cancorPlus(x, y, xcenter = TRUE, ycenter = TRUE, useCCApackage = FALSE)
 }
 \arguments{
 \item{x}{A data frame or a matrix with the values that correspond to the first set of variables (\eqn{X}-variables).}
