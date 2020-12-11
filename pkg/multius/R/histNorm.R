@@ -12,16 +12,8 @@
 
 histNorm <- function(y, breaks = "Sturges", freq = TRUE, ...){
   y <- na.omit(y)
-  hist(y,
-       breaks = breaks,
-       freq = freq, ...)
-
-  if (length(breaks) == 1) {
-    if (breaks == "Sturges") {nbars <- nclass.Sturges(y)} else nbars <- breaks
-  } else nbars <- length(breaks) - 1
-
-  curve(dnorm(x,
-              mean = mean(y),
-              sd = sd(y))*ifelse(freq == TRUE, yes = length(!is.na(y))*diff(range(y))/nbars, no = 1),
-        add = TRUE, col = "red", lwd = 2, lty = 2, xpd = TRUE)
+  h<-hist(y, freq = freq, ...)
+  if(!h$equidist & freq) {
+    warning("Normal distribution not added due to using unequal bin widths with frequencies!")
+  } else curve(dnorm(x, mean = mean(y), sd = sd(y)) * ifelse(freq == TRUE, yes = sum(!is.na(y)) * diff(h$breaks)[1], no = 1), add = TRUE, col = "red", lwd = 2, lty = 2, xpd = TRUE)
 }
