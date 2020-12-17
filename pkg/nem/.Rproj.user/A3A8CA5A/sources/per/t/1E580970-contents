@@ -1,0 +1,41 @@
+\name{normalize.rsphere}
+\alias{normalize.rsphere}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+Normalize values on a sphere
+}
+\description{
+It normalizes values such that the sum of squared elements equal to 1.
+}
+\usage{
+normalize.rsphere(X, r = 1)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{X}{a data frame or a matrix or a vector with values to be normalized}
+  \item{r}{the diameter of a sphere, default 1}
+}
+\details{
+%%  ~~ If necessary, more details than the description above ~~
+}
+\value{
+It returns a data frame with normalized values.
+}
+\references{
+%% ~put references to the literature/web site here ~
+}
+\author{
+Marjan Cugmas
+}
+\note{
+%%  ~~further notes~~
+}
+
+%% ~Make other sections like Warning with \section{Warning }{....} ~
+
+\seealso{
+\code{\link{rsphere}}, \code{\link{ersphere}}
+}
+
+\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
+\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
