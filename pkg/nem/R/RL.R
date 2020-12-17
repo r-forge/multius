@@ -11,13 +11,12 @@
 #' @examples
 #' # generate initial and ideal network
 #' cohesiveBM <- rbind(c("com", "nul"), c("nul", "com"))
-#' initial <- gen.network.LE(BM = cohesiveBM, LE = 0, n = 12, size = rep(0.5, 2))
+#' ideal <- gen.network.LE(BM = cohesiveBM, LE = 0, n = 12, size = rep(0.5, 2))
 #' random <- gen.network.LE(BM = cohesiveBM, LE = 1, n = 12, size = rep(0.5, 2))
 #' # generate network with the RL algorithm
-#' generatedNetwork <- RL(ideal.net = ideal.net, initial.net = random.net, triads = "all", k = 1000)
+#' generatedNetwork <- RL(ideal.net = ideal, initial.net = random, triads = "all", k = 1000)
 #' # evaluate the obtained network
-#' res <- blockmodeling::optRandomParC(M = generatedNetwork[[1]], k = 2, approaches = "bin", blocks = c("null", "com"), rep = 1000, nCores = 0)
-#' plot(res)
+#' res <- blockmodeling::optRandomParC(M = generatedNetwork[[1]], k = 2, approaches = "bin", blocks = c("null", "com"), rep = 1000, nCores = 1)
 #' @source Cugmas M, Ferligoj A, ?iberna A (2018) Generating global network structures by triad types. PLoS ONE 13(5): e0197514. https://doi.org/10.1371/journal.pone.0197514
 #' @author Marjan Cugmas
 #' @export
