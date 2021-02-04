@@ -1,7 +1,7 @@
 Package: nem
 Type: Package
 Title: Generating networks with selected blockmodel
-Version: 0.12.31
+Version: 0.12.32
 Authors@R: person("Marjan", "Cugmas", email = "marjan.cugmas@fdv.uni-lj.si", role = c("aut", "cre"))
 Description: For studying different blockmodeling approaches and the network evolution models.
 LazyData: TRUE

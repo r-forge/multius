@@ -1,3 +1,10 @@
+#' Hierarchical blockmodel with complete diagonal blocks
+#'
+#' @description Hierarchical blockmodel with complete diagonal blocks.
+#' @param nbl Number of clusters.
+#' @author Marjan Cugmas
+#' @export
+
 hierb <- function (nbl){
   nap <- cbind(c(2:nbl), c(1:(nbl - 1)))
   B.hierb <- array(NA, dim = c(1, 1, nbl, nbl))

@@ -40,7 +40,8 @@ get.RF <- function(network,
                              rep = rep,
                              approach = "bin",
                              blocks = blocks,
-                             nCores = nCores)
+                             nCores = nCores,
+                             printRep=FALSE)
 
       empCF[stevec, j] <- err(resBM)
       partitions[,stevec,j] <- clu(resBM)
@@ -64,7 +65,8 @@ get.RF <- function(network,
                                                  rep = rep,
                                                  approach = "bin",
                                                  blocks = blocks,
-                                                 nCores = nCores))
+                                                 nCores = nCores,
+                                                 printRep=FALSE))
       }
     }
     stevec <- stevec + 1
