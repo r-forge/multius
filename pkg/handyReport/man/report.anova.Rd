@@ -4,7 +4,7 @@
 \alias{report.anova}
 \title{Report the results of ANOVA}
 \usage{
-report.anova(ordinalna, intervalna, dataset, omegaSq = FALSE)
+report.anova(ordinalna, intervalna, dataset, omegaSq = FALSE, varEqual = TRUE)
 }
 \arguments{
 \item{ordinalna}{The name of ordinal variable. One variable can be considered.}
@@ -14,6 +14,8 @@ report.anova(ordinalna, intervalna, dataset, omegaSq = FALSE)
 \item{dataset}{The dataframe with ordinal and numeric variables.}
 
 \item{omegaSq}{Whether to calculate Omega Square (adjusted Etha Square) which is the effect size measure.}
+
+\item{varEqual}{Wheter to assume equal variances (F-test) (\code{TRUE}) or unequal variances (Welch test) (\code{FALSE}).}
 }
 \description{
 The function reports the results of ANOVA tests with one categorical variable and one or several numeric variables.
