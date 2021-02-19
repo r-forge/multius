@@ -13,7 +13,7 @@ histNorm(y, breaks = "Sturges", freq = TRUE, ...)
 
 \item{freq}{Wheter frequencies (\code{freq = TRUE}) of density (\code{freq = FALSE}) should be represented on \eqn{y}-axis.}
 
-\item{...}{Arguments passed to function \code{hist}.}
+\item{\dots}{Arguments passed to function \code{hist}.}
 }
 \description{
 The function draws a histogram with a normal density curve. The parameters (mean and standard deviation) are estimated on the empirical data.

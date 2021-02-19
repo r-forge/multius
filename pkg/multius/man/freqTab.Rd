@@ -4,12 +4,14 @@
 \alias{freqTab}
 \title{Create a frequency table}
 \usage{
-freqTab(x, dec = NULL, ...)
+freqTab(x, dec = 2, cum = TRUE, ...)
 }
 \arguments{
 \item{x}{Vector with the values of a categorical variable.}
 
 \item{dec}{Number of decimal places for percentages.}
+
+\item{cum}{wheter to calculate cummulative frequencies and percentages (default \code{TRUE}).}
 
 \item{\dots}{Arguments passed to function \code{table}.}
 }
