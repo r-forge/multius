@@ -1,7 +1,7 @@
 Package: multiUS
 Type: Package
 Title: Functions for the courses Multivariate analysis and Computer intensive methods
-Version: 1.0.7
+Version: 1.1.0
 Author: as.person(c("Aleš Žiberna <ales.ziberna@fdv.uni-lj.si> [aut, cre]", Marjan Cugmas <marjan.cugmas@fdv.uni-lj.si> [aut, cre]"))
 Maintainer: Marjan Cugmas <marjan.cugmas@fdv.uni-lj.si>
 Description: Provides utility functions for multivariate analysis (factor analysis, discriminant analysis, and others). The package is primary written for the course Multivariate analysis and for the course Computer intensive methods at the masters program of Applied Statistics at University of Ljubljana.
