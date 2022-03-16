@@ -15,6 +15,13 @@ histNorm(y, breaks = "Sturges", freq = TRUE, ...)
 
 \item{\dots}{Arguments passed to function \code{hist}.}
 }
+\value{
+A list with two elements:
+\itemize{
+\item \code{x} - breaks, see \code{graphics::hist}.
+\item \code{y} - frequencies or relative frequencies, see \code{graphics::hist}.
+}
+}
 \description{
 The function draws a histogram with a normal density curve. The parameters (mean and standard deviation) are estimated on the empirical data.
 }

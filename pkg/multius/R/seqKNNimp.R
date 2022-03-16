@@ -11,6 +11,7 @@
 #' units in the complete set. This reduces execution time from previously developed KNN method that selects nearest neighbours
 #' for each imputation.
 #' @note This is the function from package \code{SeqKNN} by Ki-Yeol Kim and Gwan-Su Yi.
+#' @return A dataframe with imputed values.
 #' @examples
 #' mtcars$mpg[sample(1:nrow(mtcars), size = 5, replace = FALSE)] <- NA
 #' seqKNNimp(data = mtcars)
@@ -18,6 +19,7 @@
 #' @seealso \code{KNNimp}
 #' @references
 #' Ki-Yeol Kim, Byoung-Jin Kim, Gwan-Su Yi (2004.Oct.26) "Reuse of imputed data in microarray analysis increases imputation efficiency", BMC Bioinformatics 5:160.
+#' @export
 
 seqKNNimp <- function (data, k = 10) {
     x <- as.matrix(data)
@@ -47,8 +49,7 @@ seqKNNimp <- function (data, k = 10) {
     x
   }
 
-nnmiss <-
-  function (x, xmiss, ismiss, K)
+nnmiss <- function (x, xmiss, ismiss, K)
   {
     xd <- as.matrix(scale(x, xmiss, FALSE)[, !ismiss])
     dd <- drop(xd^2 %*% rep(1, ncol(xd)))

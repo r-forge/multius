@@ -40,7 +40,7 @@ lda.default <- function (x, grouping, prior = proportions, tol = 1e-04, method =
         stop(gettext("cannot use leave-one-out CV with method %s",
                      sQuote(method)), domain = NA)
     group.means <- tapply(c(x), list(rep(g, p), col(x)), mean)
-    f1 <- sqrt(diag(var(x - group.means[g, ])))
+    f1 <- sqrt(diag(stats::var(x - group.means[g, ])))
     if (any(f1 < tol)) {
         const <- format((1L:p)[f1 < tol])
         stop(sprintf(ngettext(length(const), "variable %s appears to be constant within groups",
@@ -49,7 +49,7 @@ lda.default <- function (x, grouping, prior = proportions, tol = 1e-04, method =
     }
     scaling <- diag(1/f1, , p)
     if (method == "mve") {
-        cov <- n/(n - ng) * cov.rob((x - group.means[g, ]) %*%
+        cov <- n/(n - ng) * MASS::cov.rob((x - group.means[g, ]) %*%
                                         scaling)$cov
         sX <- svd(cov, nu = 0L)
         rank <- sum(sX$d > tol^2)
@@ -163,7 +163,7 @@ lda.default <- function (x, grouping, prior = proportions, tol = 1e-04, method =
     sds<-sqrt(v)
     standCoefWithin<-diag(sds)%*%scaling
 
-    standCoefTotal<-diag(apply(x,2,sd))%*%scaling
+    standCoefTotal<-diag(apply(x,2,stats::sd))%*%scaling
 
     rownames(standCoefWithin)<-rownames(standCoefTotal)<-rownames(scaling)
     structure(list(prior = prior, counts = counts, means = group.means,

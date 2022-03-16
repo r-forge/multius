@@ -1,22 +1,23 @@
-#' Transform continous variable to a Likert-type variable
+#' Transform continuous variable to a discrete variable
 #'
-#' @description The function transforms a continous variable to a \eqn{k}-point Likert-type variable. Different styles of answering to a survey are possible.
+#' @description The function transforms a continuous variable to a \eqn{k}-point discrete variable (similar to a Likert-item type variable). Different styles of answering to a survey are possible.
 #' @param x Vector with values to be transformed.
 #' @param type Type of transformation. Possible values are: \code{eq} (default) (equal wide intervals), \code{yes} (wider intervals at higher values of \code{x}), \code{no} (wider intervals at lower values of \code{x}), \code{avg} (wider intervals near the mean of \code{x}).
 #' @param k Number of classes.
 #' @param q Extension factor. Tells how much is each next interval wider then the previous one. Not used when \code{type="eq"}.
 #' @param r Minimum and maximum values to define intervals of \code{x}. Default are minimum and maximum values of \code{x}.
-#' @param num If \code{TRUE} (default) numberical values are returned, otherwise intervals are returned.
+#' @param num If \code{TRUE} (default) numerical values are returned, otherwise intervals are returned.
 #' @return Transformed values are organized into a vector.
 #' @examples
 #' x <- rnorm(1000)
-#' hist(x = toLik(x, type = "eq"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'eq'")
-#' hist(x = toLik(x, type = "yes"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'yes'")
-#' hist(x = toLik(x, type = "no"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'no'")
-#' hist(x = toLik(x, type = "avg"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'avg'")
+#' hist(x = discretize(x, type = "eq"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'eq'")
+#' hist(x = discretize(x, type = "yes"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'yes'")
+#' hist(x = discretize(x, type = "no"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'no'")
+#' hist(x = discretize(x, type = "avg"), breaks = 0:5+0.5, xlab = "answer", main = "type = 'avg'")
 #' @author Aleš Žiberna
+#' @export
 
-toLik<-function(x,type="eq",q=1.5,k=5,r=range(x), num=TRUE){
+discretize<-function(x,type="eq",q=1.5,k=5,r=range(x), num=TRUE){
   d<-diff(r)
   if(type=="eq"){
     br<-c(-Inf,r[1]+1:(k-1)*d/k,Inf)

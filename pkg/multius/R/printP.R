@@ -1,12 +1,14 @@
 #' Print p-value
 #'
-#' @description The function round and prints \code{p}-value.
+#' @description The function round and prints \eqn{p}-value.
 #' @param p Value to be printed.
 #' @examples
 #' printP(p = 0.523)
 #' printP(p = 0.022)
 #' printP(p = 0.099)
+#' @return A string (formatted \eqn{p}-value).
 #' @author Marjan Cugmas
+#' @export
 
 printP <- function(p){
   if ((p<=1) & (p>=0)) {

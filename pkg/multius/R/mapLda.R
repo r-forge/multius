@@ -8,12 +8,14 @@
 #' @param prior Prior probabilities of class membership to estimate the model (they can be estimated based on the sample data or they can be provided by a reseacher).
 #' @param dimen Number of dimensions used for prediction. Probably only 2 (as these are used for drawing) makes sense.
 #' @param col Vector of mapping colors, default is \code{NULL} (i.e., it takes the default R colors).
+#' @return No return value, called for side effects (plotting a map).
 #' @examples
-#' #Estimate the LDA model:
+#' # Estimate the LDA model:
 #' ldaCars <- ldaPlus(x = mtcars[,c(1, 3, 4, 5, 6)], grouping = mtcars[,10])
-#' #Plot LDA map:
+#' # Plot LDA map:
 #' mapLda(ldaCars)
 #' @author Aleš Žiberna
+#' @export
 
 mapLda <- function (object, xlim=c(-2,2),ylim=c(-2,2), npoints=101, prior = object$prior, dimen=2, col=NULL){
   if (!inherits(object, "lda")) stop("object not of class \"lda\"")
@@ -38,5 +40,5 @@ mapLda <- function (object, xlim=c(-2,2),ylim=c(-2,2), npoints=101, prior = obje
   cl <- factor(nm[max.col(posterior)], levels = object$lev)
   list(class = cl, posterior = posterior, x = x)
   if(is.null(col))col<-1:ng
-  image(LD1,LD2,matrix(as.numeric(cl), nrow=npoints), col=col)
+  graphics::image(LD1,LD2,matrix(as.numeric(cl), nrow=npoints), col=col)
 }

@@ -10,6 +10,7 @@ antiImage(X)
 \item{X}{A data frame with the values of numerical variables.}
 }
 \value{
+A list with two elements:
 \itemize{
 \item \code{AIR} - Anti-image matrix.
 \item \code{KMO} - Overall KMO.

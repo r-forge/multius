@@ -29,13 +29,16 @@ mapLda(
 
 \item{col}{Vector of mapping colors, default is \code{NULL} (i.e., it takes the default R colors).}
 }
+\value{
+No return value, called for side effects (plotting a map).
+}
 \description{
 The function draws two dimensional map of discriminant functions.
 }
 \examples{
-#Estimate the LDA model:
+# Estimate the LDA model:
 ldaCars <- ldaPlus(x = mtcars[,c(1, 3, 4, 5, 6)], grouping = mtcars[,10])
-#Plot LDA map:
+# Plot LDA map:
 mapLda(ldaCars)
 }
 \author{

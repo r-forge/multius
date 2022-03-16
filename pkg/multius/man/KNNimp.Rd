@@ -17,6 +17,9 @@ KNNimp(data, k = 10, scale = TRUE, meth = "weighAvg", distData = NULL)
 
 \item{distData}{Optionally you may sepecify here a data frame containing the data set that should be used to find the neighbours. This is usefull when filling in NA values on a test set, where you should use only information from the training set. This defaults to \code{NULL}, which means that the neighbours will be searched in data.}
 }
+\value{
+A dataframe with imputed values.
+}
 \description{
 Function that fills in all NA values using the k-nearest-neighbours of each case with NA values.
 By default it uses the values of the neighbours and obtains an weighted (by the distance to the case) average of
@@ -25,7 +28,7 @@ their values to fill in the unknows. If \code{meth='median'} it uses the median/
 \details{
 This function uses the k-nearest neighbours to fill in the unknown (NA) values in a data set. For each case with any NA value it will search for its k most similar cases and use the values of these cases to fill in the unknowns.
 If \code{meth='median'} the function will use either the median (in case of numeric variables) or the most frequent value (in case of factors), of the neighbours to fill in the NAs. If \code{meth='weighAvg'} the function will use a
-weighted average of the values of the neighbours. The weights are given by \code{exp(-dist(k,x)} where \dist{dist(k,x)} is the euclidean distance between the case with NAs (x) and the neighbour k.
+weighted average of the values of the neighbours. The weights are given by \code{exp(-dist(k,x)} where \code{dist(k,x)} is the euclidean distance between the case with NAs (x) and the neighbour k.
 }
 \note{
 This is a slightly modified function from package \code{DMwR} by Luis Torgo. The modification allows the units with missing values at almost all variables.

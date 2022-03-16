@@ -11,8 +11,9 @@
 #' @details
 #' This function uses the k-nearest neighbours to fill in the unknown (NA) values in a data set. For each case with any NA value it will search for its k most similar cases and use the values of these cases to fill in the unknowns.
 #' If \code{meth='median'} the function will use either the median (in case of numeric variables) or the most frequent value (in case of factors), of the neighbours to fill in the NAs. If \code{meth='weighAvg'} the function will use a
-#' weighted average of the values of the neighbours. The weights are given by \code{exp(-dist(k,x)} where \dist{dist(k,x)} is the euclidean distance between the case with NAs (x) and the neighbour k.
+#' weighted average of the values of the neighbours. The weights are given by \code{exp(-dist(k,x)} where \code{dist(k,x)} is the euclidean distance between the case with NAs (x) and the neighbour k.
 #' @note This is a slightly modified function from package \code{DMwR} by Luis Torgo. The modification allows the units with missing values at almost all variables.
+#' @return A dataframe with imputed values.
 #' @examples
 #' mtcars$mpg[sample(1:nrow(mtcars), size = 5, replace = FALSE)] <- NA
 #' KNNimp(data = mtcars)
@@ -20,6 +21,7 @@
 #' @seealso \code{seqKNNimp}
 #' @references
 #' Torgo, L. (2010) Data Mining using R: learning with case studies, CRC Press (ISBN: 9781439810187).
+#' @export
 
 KNNimp <- function (data, k = 10, scale = TRUE, meth = "weighAvg", distData = NULL) {
   n <- nrow(data)
@@ -38,7 +40,7 @@ KNNimp <- function (data, k = 10, scale = TRUE, meth = "weighAvg", distData = NU
   if (scale) dm[, contAttrs] <- scale(dm[, contAttrs])
   if (hasNom) for (i in nomAttrs) dm[, i] <- as.integer(dm[, i])
   dm <- as.matrix(dm)
-  nas <- which(!complete.cases(dm))
+  nas <- which(!stats::complete.cases(dm))
   if (!is.null(distData)) {tgt.nas <- nas[nas <= n]} else {tgt.nas <- nas}
   if (length(tgt.nas) == 0) warning("No case has missing values. Stopping as there is nothing to do.")
   xcomplete <- dm[setdiff(distInit:N, nas), ]
@@ -63,7 +65,7 @@ KNNimp <- function (data, k = 10, scale = TRUE, meth = "weighAvg", distData = NU
 centralValue <- function (x, ws = NULL) {
   if (is.numeric(x)) {
     if (is.null(ws))
-      median(x, na.rm = T)
+      stats::median(x, na.rm = T)
     else if ((s <- sum(ws)) > 0)
       sum(x * (ws/s))
     else NA
@@ -72,7 +74,7 @@ centralValue <- function (x, ws = NULL) {
     x <- as.factor(x)
     if (is.null(ws))
       levels(x)[which.max(table(x))]
-    else levels(x)[which.max(aggregate(ws, list(x), sum)[,
+    else levels(x)[which.max(stats::aggregate(ws, list(x), sum)[,
                                                          2])]
   }
 }

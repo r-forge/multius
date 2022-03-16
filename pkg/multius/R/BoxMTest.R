@@ -5,7 +5,7 @@
 #' @param cl An normial or ordinal variable which defines groups (a partition) (must be of type \code{factor}).
 #' @param alpha Significance level (default \code{0.05}).
 #' @param test Wheter the F-test (\code{test = "F"}) or Chi-square (\code{test = "ChiSq"}) test should be forced (see Details). In the case of default value \code{any}, the test is chosen based on the number of units by groups.
-#' @return
+#' @return A list with the following elements:
 #' \itemize{
 #' \item \code{MBox} - The value of the Box's M statistic.
 #' \item \code{ChiSq} or \code{F} - The approximation statistic test.
@@ -17,8 +17,9 @@
 #' @examples
 #' BoxMTest(X = mtcars[, c(1, 3, 4, 5)], cl = as.factor(mtcars[, 2]), alpha = 0.05)
 #' @author
-#' Aleš Žiberna based on Douglas R. White's original REGE and REGD
+#' Andy Liaw and Aleš Žiberna (minor modifications)
 #' @references Stevens, J. (1996). Applied multivariate statistics for the social sciences . 1992. Hillsdale, NJ: Laurence Erlbaum.
+#' @export
 
 BoxMTest <- function(X, cl, alpha=0.05, test="any") {
   if (alpha <= 0 || alpha >= 1)
@@ -33,7 +34,7 @@ BoxMTest <- function(X, cl, alpha=0.05, test="any") {
   if(test=="ChiSq") bandera=1
   ## Partition of the group covariance matrices.
   #covList <- tapply(as.matrix(X), rep(cl, ncol(X)), function(x, nc) cov(matrix(x, nc = nc)), ncol(X))
-  covList <- by(X, INDICES = cl, FUN = cov)
+  covList <- by(X, INDICES = cl, FUN = stats::cov)
   deno = sum(n) - g
   suma = array(0, dim=dim(covList[[1]]))
   for (k in 1:g)
@@ -54,7 +55,7 @@ BoxMTest <- function(X, cl, alpha=0.05, test="any") {
     X2 = MB * (1 - C) ## Chi-square approximation.
     v = as.integer((p * (p + 1) * (g - 1)) / 2) ## Degrees of freedom.
     ## Significance value associated to the observed Chi-square statistic.
-    P = pchisq(X2, v, lower=FALSE)  #RM: corrected to be the upper tail
+    P = stats::pchisq(X2, v, lower=FALSE)  #RM: corrected to be the upper tail
     cat('------------------------------------------------\n');
     cat(sprintf("%10s%11s%12s%13s\n", "MBox", "Chi-sqr", "df", "P"))
     cat('------------------------------------------------\n')
@@ -79,7 +80,7 @@ BoxMTest <- function(X, cl, alpha=0.05, test="any") {
       v21 = (((v1 + 2) / (Co - (C^2)))) ## Denominator DF.
       F1 = MB * ((1 - C - (v1 / v21)) / v1) ## F approximation.
       ## Significance value associated to the observed F statistic.
-      P1 = pf(F1, v1, v21, lower=FALSE)
+      P1 = stats::pf(F1, v1, v21, lower=FALSE)
       cat('\n------------------------------------------------------------\n')
       cat(sprintf("%10s%11s%11s%14s%13s\n", "MBox", "F", "df1", "df2", "p"))
       cat('------------------------------------------------------------\n')
@@ -98,7 +99,7 @@ BoxMTest <- function(X, cl, alpha=0.05, test="any") {
       b = v22 / (1 - C - (2 / v22))
       F2 = (v22 * MB) / (v1 * (b - MB)) ## F approximation.
       ## Significance value associated to the observed F statistic.
-      P2 = pf(F2, v1, v22, lower=FALSE)
+      P2 = stats::pf(F2, v1, v22, lower=FALSE)
       cat('\n------------------------------------------------------------\n')
       cat(sprintf("%10s%11s%11s%14s%13s\n", "MBox", "F", "df1", "df2", "p"))
       cat('------------------------------------------------------------\n')

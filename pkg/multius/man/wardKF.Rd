@@ -2,12 +2,15 @@
 % Please edit documentation in R/wardKF.R
 \name{wardKF}
 \alias{wardKF}
+\alias{wardCF}
 \title{Calculate the value of the Ward criterion function}
 \usage{
 wardKF(X, clu)
+
+wardCF(X, clu)
 }
 \arguments{
-\item{X}{Data frame with values of numberical variables (usually the ones that were/are used for clustering).}
+\item{X}{Data frame with values of numerical variables (usually the ones that were/are used for clustering).}
 
 \item{clu}{Partition.}
 }
@@ -15,7 +18,7 @@ wardKF(X, clu)
 The value of the Ward criterion function.
 }
 \description{
-The function calculate the value of the Ward criterion function, based on a set of numberical variables and one categorical variable (partition).
+The function calculate the value of the Ward criterion function, based on a set of numerical variables and one categorical variable (partition).
 }
 \author{
 Aleš Žiberna

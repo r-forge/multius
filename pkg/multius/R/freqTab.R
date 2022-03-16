@@ -3,11 +3,13 @@
 #' @description The function creates a frequency table with percentages for the selected categorical variable.
 #' @param x Vector with the values of a categorical variable.
 #' @param dec Number of decimal places for percentages.
-#' @param cum wheter to calculate cummulative frequencies and percentages (default \code{TRUE}).
+#' @param cum whether to calculate cumulative frequencies and percentages (default \code{TRUE}).
 #' @param \dots Arguments passed to function \code{table}.
+#' @return A frequency table (as a dataframe).
 #' @examples
 #' freqTab(mtcars[,2], dec = 1)
 #' @author Aleš Žiberna
+#' @export
 
 freqTab <- function (x, dec = 2, cum = TRUE, ...){
   tbl <- table(x, ...)

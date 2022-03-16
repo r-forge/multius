@@ -11,6 +11,9 @@ seqKNNimp(data, k = 10)
 
 \item{k}{The number of nearest neighbours to use (defaults to 10).}
 }
+\value{
+A dataframe with imputed values.
+}
 \description{
 This function estimates missing values sequentially from the units that has least missing rate, using weighted mean of k nearest neighbors.
 }

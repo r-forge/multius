@@ -9,8 +9,11 @@ printP(p)
 \arguments{
 \item{p}{Value to be printed.}
 }
+\value{
+A string (formatted \eqn{p}-value).
+}
 \description{
-The function round and prints \code{p}-value.
+The function round and prints \eqn{p}-value.
 }
 \examples{
 printP(p = 0.523)

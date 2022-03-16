@@ -13,6 +13,9 @@ makeFactorLabels(x, reduce = TRUE, ...)
 
 \item{...}{Arguments passed to function \code{factor}.}
 }
+\value{
+Categorical variable (vector).
+}
 \description{
 The function transforms a numeric varibale into categorical one, based on the attribute data from a given SPSS file.
 }

@@ -7,7 +7,9 @@
 #' @details
 #' Data have to be imported by using the \code{MASS::read.spss} function.
 #' The use of the function make sence when the parameter \code{use.value.lables} in the function \code{read.spss} is set to \code{FALSE}.
+#' @return Categorical variable (vector).
 #' @author Aleš Žiberna
+#' @export
 
 makeFactorLabels<-function(x, reduce=TRUE, ...){
   lab<-attr(x,"value.labels")
@@ -19,6 +21,5 @@ makeFactorLabels<-function(x, reduce=TRUE, ...){
   }else{
     warning("The suplied argument does not contain the attribute \"value.labels\".\nThe unchanged argument is returned!")
     return(x)
-    #stop("The suplied argument does not contain the attribute \"value.labels\"!")
   }
 }

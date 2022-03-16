@@ -11,6 +11,9 @@ renameVar(data, renames)
 
 \item{renames}{A list with oldnames and newnames (e.g, \code{list("oldname1" = "newname1", "oldname2" = "newname2")}).}
 }
+\value{
+A dataframe with renamed columns.
+}
 \description{
 The function for renaming one or several variables in a dataframe.
 }

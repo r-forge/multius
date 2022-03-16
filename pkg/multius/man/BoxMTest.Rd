@@ -16,6 +16,7 @@ BoxMTest(X, cl, alpha = 0.05, test = "any")
 \item{test}{Wheter the F-test (\code{test = "F"}) or Chi-square (\code{test = "ChiSq"}) test should be forced (see Details). In the case of default value \code{any}, the test is chosen based on the number of units by groups.}
 }
 \value{
+A list with the following elements:
 \itemize{
 \item \code{MBox} - The value of the Box's M statistic.
 \item \code{ChiSq} or \code{F} - The approximation statistic test.
@@ -37,5 +38,5 @@ BoxMTest(X = mtcars[, c(1, 3, 4, 5)], cl = as.factor(mtcars[, 2]), alpha = 0.05)
 Stevens, J. (1996). Applied multivariate statistics for the social sciences . 1992. Hillsdale, NJ: Laurence Erlbaum.
 }
 \author{
-Aleš Žiberna based on Douglas R. White's original REGE and REGD
+Andy Liaw and Aleš Žiberna (minor modifications)
 }
