@@ -1,7 +1,7 @@
 Package: multiUS
 Type: Package
 Title: Functions for the Courses Multivariate Analysis and Computer Intensive Methods
-Version: 1.2.1
+Version: 1.2.2
 Authors@R: c(person("Žiberna", "Aleš", email = "ales.ziberna@fdv.uni-lj.si", role = c("aut")), person("Cugmas", "Marjan", email = "marjan.cugmas@fdv.uni-lj.si", role = c("cre", "aut")), person("Torgo", "Luis", role = c("cph")), person("Ki-Yeol", "Kim", role = c("cph")), person("Gwan-Su", "Yi", role = c("cph")), person("Liaw", "Andy", role = c("cph")), person("Leisch", "Friedrich", role = c("cph")))
 Description: Provides utility functions for multivariate analysis (factor analysis, discriminant analysis, and others). The package is primary written for the course Multivariate analysis and for the course Computer intensive methods at the masters program of Applied Statistics at University of Ljubljana.
 License: GPL (>= 2)
