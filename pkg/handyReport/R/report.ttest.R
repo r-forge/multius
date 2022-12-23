@@ -23,7 +23,7 @@ report.ttest <- function(ordinalna, intervalna, dataset, hedgesG = FALSE){
   res <- matrix(NA, nrow = length(intervalna), ncol = 6 + nravni + as.numeric(hedgesG))
   for (i in 1:length(intervalna)) {
     data <- dataset[, c(which(names(dataset)==ordinalna),  which(names(dataset)==intervalna[i]))]
-    means <- round(as.vector(by(data = data[, intervalna[i]], INDICES = data[, ordinalna], mean)), 2)
+    means <- round(as.vector(by(data = data[, intervalna[i]], INDICES = data[, ordinalna], mean, na.rm = TRUE)), 2)
     res[i, 1:nravni] <- means
     model <- t.test(data[, intervalna[i]] ~ as.factor(data[, ordinalna]))
     res[i, 1+nravni] <- round(model$statistic, 2)
