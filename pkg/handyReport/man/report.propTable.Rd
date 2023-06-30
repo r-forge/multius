@@ -4,7 +4,7 @@
 \alias{report.propTable}
 \title{Create a contingency table}
 \usage{
-report.propTable(x, y, margin = NULL, digits = 1)
+report.propTable(x, y, margin = NULL, dec = 1)
 }
 \arguments{
 \item{x}{First categorical variable.}
@@ -12,12 +12,14 @@ report.propTable(x, y, margin = NULL, digits = 1)
 \item{y}{Second categorical variable.}
 
 \item{margin}{Index to generate margin for. If \code{NULL}, then simple probabilities (non-conditional) are reported.}
+
+\item{dec}{The number of decimal places to round the values.}
 }
 \description{
 The function print the contingency table with columns sums or rowsums.
 }
 \examples{
-report.propTable(x = mtcars$gear, y = mtcars$carb, margin = 1, digits = 2)
+report.propTable(x = mtcars$gear, y = mtcars$carb, margin = 1, dec = 2)
 }
 \author{
 Marjan Cugmas

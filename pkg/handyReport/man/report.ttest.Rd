@@ -2,30 +2,39 @@
 % Please edit documentation in R/report.ttest.R
 \name{report.ttest}
 \alias{report.ttest}
-\title{CReport the results of t-test}
+\title{T-test Reporting Function}
 \usage{
-report.ttest(ordinalna, intervalna, dataset, hedgesG = FALSE)
+report.ttest(catVarName, numVarNames, data, hedgesG = FALSE, CI = FALSE)
 }
 \arguments{
-\item{ordinalna}{The name of categorical variable. One variable can be considered.}
+\item{catVarName}{A string. The name of the categorical variable to be used in the t-tests.}
 
-\item{intervalna}{The name of interval/numberic variable(s). A string or a list. Several numeric variables can be considered.}
+\item{numVarNames}{A vector of strings. The names of the numerical variables to be used in the t-tests.}
 
-\item{dataset}{The dataframe with categorical and numerical variables.}
+\item{data}{A data frame. The data to be used in the t-tests.}
 
-\item{hedgesG}{Should Hedges' g statistics be computed?}
+\item{hedgesG}{A logical. If \code{TRUE}, Hedges' G effect size is computed for each t-test. Defaults to \code{FALSE}.}
+
+\item{CI}{A logical. If \code{TRUE}, confidence intervals are computed for each t-test. Defaults to \code{FALSE}.}
+}
+\value{
+A matrix with the results of the t-tests. Each row corresponds to one of the numerical variables,
+        and the columns show the means for each level of the categorical variable, the t-statistic, the degrees of freedom,
+        the p-value, and optionally the confidence intervals and Hedges' G effect size.
 }
 \description{
-The function reports the results of t-tests with one categorical variable and one or several numeric variables.
+This function performs a t-test on a given categorical variable and a set of numerical variables. It also optionally computes Hedges' G effect size and confidence intervals.
 }
 \note{
-Hedges' g statistics is a variation of Cohen's d, corrected for bias due to the sammple size.
+This function assumes that the categorical variable is a factor.
+      If the variable is not a factor, it will be converted to a factor within the function.
 }
 \examples{
-report.ttest(ordinalna = "vs", intervalna = c("disp", "wt", "qsec"), dataset = mtcars)
+report.ttest(catVarName = "am", c("mpg", "disp"), mtcars, hedgesG = TRUE, CI = TRUE)
+
 }
-\references{
-Hedges, L., & Olkin, I. (2014). Statistical methods for meta-analysis. Academic press.
+\seealso{
+\code{\link{t.test}}
 }
 \author{
 Marjan Cugmas

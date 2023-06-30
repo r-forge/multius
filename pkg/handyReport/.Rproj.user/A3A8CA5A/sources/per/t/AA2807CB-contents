@@ -1,19 +1,29 @@
-#' CReport the results of chi-square test
+#' Report the results of chi-square test
 #'
-#' @description The function reports the results of several (with several variables) chi-square tests.
-#' @param x The names of the first set of categorical variables.
-#' @param y The names of the second set of categorical variables.
-#' @param dataset The dataframe with categorical variables.
-#' @param simulate.p.value Wheter to estimate the p-value by simulations (simulate.p.value=TRUE)  or analytically (simulate.p.value=FALSE).
-#' @param cramer Wheter to calculate the Cramer's V coefficient.
-#' @note One or several categorical variables can be set in x and/or x. When several variables are set, they have to be in a vector format.
+#' This function conducts Chi-square tests for independence between pairs of categorical variables.
+#' It provides the option to use Monte Carlo simulations for the p-value computation and to calculate Cramer's V.
+#'
+#' @param varNamesX A vector of strings representing the names of the X variables in the data frame.
+#' @param varNamesY A vector of strings representing the names of the Y variables in the data frame.
+#' @param data A data frame containing the variables to be analyzed.
+#' @param simulate.p.value A logical value indicating whether to compute p-values by Monte Carlo simulation. Default is TRUE.
+#' @param cramer A logical value indicating whether to compute Cramer's V for the pairs. Default is FALSE.
+#' @param ... Additional arguments to be passed to the chisq.test function.
+#'
+#' @return A matrix with rows representing each pair of variables, and columns representing:
+#'         1) variable pair,
+#'         2) Chi-square statistic,
+#'         3) p-value (calculated by simulation or classic method, based on 'simulate.p.value'),
+#'         4) degrees of freedom (if 'simulate.p.value' is FALSE),
+#'         5) Cramer's V (if 'cramer' is TRUE).
+#'
 #' @examples
-#' report.chitest(x = c("cyl", "vs", "am"), y = "gear", dataset = mtcars, simulate.p.value = TRUE)
+#' report.chitest(varNamesX = c("cyl", "vs", "am"),
+#' varNamesY = "gear", data = mtcars, simulate.p.value = TRUE)
 #' @author Marjan Cugmas
 #' @export
-
-report.chitest <- function(x, y, dataset, simulate.p.value = TRUE, cramer = FALSE, ...){
-  res <- matrix(NA, nrow = length(x)*length(y), ncol = 2 +
+report.chitest <- function(varNamesX, varNamesY, data, simulate.p.value = TRUE, cramer = FALSE, ...){
+  res <- matrix(NA, nrow = length(varNamesX)*length(varNamesY), ncol = 2 +
                   as.numeric(simulate.p.value == TRUE) + as.numeric(simulate.p.value == FALSE) + as.numeric(simulate.p.value == FALSE) +
                   as.numeric(cramer == TRUE))
 
@@ -24,12 +34,12 @@ report.chitest <- function(x, y, dataset, simulate.p.value = TRUE, cramer = FALS
   colnames(res) <- basicNames
 
   stevec <- 1
-  for (i in 1:length(x)) {
-    for (j in 1:length(y)) {
-      cor.res <- chisq.test(table(dataset[, x[i]], dataset[,y[j]]), simulate.p.value =  simulate.p.value, ...)
+  for (i in 1:length(varNamesX)) {
+    for (j in 1:length(varNamesY)) {
+      cor.res <- chisq.test(table(data[, varNamesX[i]], data[,varNamesY[j]]), simulate.p.value =  simulate.p.value, ...)
       if(simulate.p.value == TRUE){
 
-        vrstica <- c(paste0(x[i], " and ", y[j]),
+        vrstica <- c(paste0(varNamesX[i], " and ", varNamesY[j]),
                      round(cor.res$statistic, 2),
                      ifelse(cor.res$p.value < 0.001, yes = "< 0.01", no = round(cor.res$p.value, 3)))
         if (cramer == TRUE) {
@@ -38,7 +48,7 @@ report.chitest <- function(x, y, dataset, simulate.p.value = TRUE, cramer = FALS
         res[stevec, ] <- vrstica
       }
       if(simulate.p.value == FALSE){
-        vrstica <- c(paste0(x[i], " and ", y[j]),
+        vrstica <- c(paste0(varNamesX[i], " and ", varNamesY[j]),
                      round(cor.res$statistic, 2),
                      cor.res$parameter,
                      ifelse(cor.res$p.value < 0.001, yes = "< 0.01", no = round(cor.res$p.value, 3)))

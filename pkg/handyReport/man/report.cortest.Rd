@@ -2,22 +2,35 @@
 % Please edit documentation in R/report.cortest.R
 \name{report.cortest}
 \alias{report.cortest}
-\title{CReport the results of correlation test}
+\title{Report the results of correlation test}
 \usage{
-report.cortest(x, y, dataset, method = "pearson")
+report.cortest(varNamesX, varNamesY, data, method = "pearson")
 }
 \arguments{
-\item{x}{The names of the first set of numerical variables.}
+\item{varNamesX}{A vector of strings representing the names of the X variables in the data frame.}
 
-\item{y}{The names of the second set of numerical variables.}
+\item{varNamesY}{A vector of strings representing the names of the Y variables in the data frame.}
 
-\item{dataset}{The dataframe with numerical variables.}
+\item{data}{A data frame containing the variables to be analyzed.}
+
+\item{method}{A string indicating the method of correlation test to be conducted: \code{"pearson"} (default) or \code{"spearman"}.}
+}
+\value{
+A matrix with rows representing each pair of variables, and columns representing:
+        1) variable pair,
+        2) test statistic,
+        3) degrees of freedom (for Pearson's r),
+        4) p-value,
+        5) correlation coefficient (Pearson or Spearman, as specified),
+        6) 95% confidence interval lower bound (for Pearson's r),
+        7) 95% confidence interval upper bound (for Pearson's r).
 }
 \description{
-The function reports the results of several (with several variables) correlation tests.
+This function conducts correlation tests between pairs of interval variables.
+It performs either Pearson or Spearman correlation tests, depending on the chosen method.
 }
 \examples{
-report.cortest(x = "drat", y = c("wt", "disp", "hp"), dataset = mtcars)
+report.cortest(varNamesX = "drat", varNamesY = c("wt", "disp", "hp"), data = mtcars)
 }
 \author{
 Marjan Cugmas

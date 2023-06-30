@@ -1,45 +1,58 @@
-#' CReport the results of t-test
+#' T-test Reporting Function
 #'
-#' @description The function reports the results of t-tests with one categorical variable and one or several numeric variables.
-#' @param ordinalna The name of categorical variable. One variable can be considered.
-#' @param intervalna The name of interval/numberic variable(s). A string or a list. Several numeric variables can be considered.
-#' @param dataset The dataframe with categorical and numerical variables.
-#' @param hedgesG Should Hedges' g statistics be computed?
-#' @note Hedges' g statistics is a variation of Cohen's d, corrected for bias due to the sammple size.
+#' @description This function performs a t-test on a given categorical variable and a set of numerical variables. It also optionally computes Hedges' G effect size and confidence intervals.
+#'
+#' @param catVarName A string. The name of the categorical variable to be used in the t-tests.
+#' @param numVarNames A vector of strings. The names of the numerical variables to be used in the t-tests.
+#' @param data A data frame. The data to be used in the t-tests.
+#' @param hedgesG A logical. If \code{TRUE}, Hedges' G effect size is computed for each t-test. Defaults to \code{FALSE}.
+#' @param CI A logical. If \code{TRUE}, confidence intervals are computed for each t-test. Defaults to \code{FALSE}.
+#'
+#' @return A matrix with the results of the t-tests. Each row corresponds to one of the numerical variables,
+#'         and the columns show the means for each level of the categorical variable, the t-statistic, the degrees of freedom,
+#'         the p-value, and optionally the confidence intervals and Hedges' G effect size.
+#'
 #' @examples
-#' report.ttest(ordinalna = "vs", intervalna = c("disp", "wt", "qsec"), dataset = mtcars)
-#' @references
-#' Hedges, L., & Olkin, I. (2014). Statistical methods for meta-analysis. Academic press.
-#' @author Marjan Cugmas
+#' report.ttest(catVarName = "am", c("mpg", "disp"), mtcars, hedgesG = TRUE, CI = TRUE)
+#'
 #' @export
+#' @author Marjan Cugmas
+#'
+#' @note This function assumes that the categorical variable is a factor.
+#'       If the variable is not a factor, it will be converted to a factor within the function.
+#'
+#' @seealso \code{\link{t.test}}
 
-report.ttest <- function(ordinalna, intervalna, dataset, hedgesG = FALSE){
-  if (is.factor(dataset[, which(names(dataset)==ordinalna)]) == FALSE){
-    dataset[, which(names(dataset)==ordinalna)] <- as.factor(dataset[, which(names(dataset)==ordinalna)])
+report.ttest <- function(catVarName, numVarNames, data, hedgesG = FALSE, CI = FALSE){
+  if (is.factor(data[, which(names(data)==catVarName)]) == FALSE){
+    data[, which(names(data)==catVarName)] <- as.factor(data[, which(names(data)==catVarName)])
   }
-  if (length(ordinalna) > 1) stop("More than one categorical variable is provided.")
-  ravni <- levels(dataset[, which(names(dataset)==ordinalna)])
+  if (length(catVarName) > 1) stop("More than one categorical variable is provided.")
+  ravni <- levels(data[, which(names(data)==catVarName)])
   nravni <- length(ravni)
-  res <- matrix(NA, nrow = length(intervalna), ncol = 6 + nravni + as.numeric(hedgesG))
-  for (i in 1:length(intervalna)) {
-    data <- dataset[, c(which(names(dataset)==ordinalna),  which(names(dataset)==intervalna[i]))]
-    means <- round(as.vector(by(data = data[, intervalna[i]], INDICES = data[, ordinalna], mean, na.rm = TRUE)), 2)
+  res <- matrix(NA, nrow = length(numVarNames), ncol = 3 + as.numeric(CI)*2 + nravni + as.numeric(hedgesG))
+  for (i in 1:length(numVarNames)) {
+    tmp <- data[, c(which(names(data)==catVarName),  which(names(data)==numVarNames[i]))]
+    means <- round(as.vector(by(data = tmp[, numVarNames[i]], INDICES = tmp[, catVarName], mean, na.rm = TRUE)), 2)
     res[i, 1:nravni] <- means
-    model <- t.test(data[, intervalna[i]] ~ as.factor(data[, ordinalna]))
+    model <- t.test(tmp[, numVarNames[i]] ~ as.factor(data[, catVarName]), var.equal = FALSE)
     res[i, 1+nravni] <- round(model$statistic, 2)
     res[i, 2+nravni] <- round(model$parameter, 2)
-    res[i, 3+nravni] <- round(model$p.value, 3)
-    res[i, 4+nravni] <- round(model$conf.int[1], 2)
-    res[i, 5+nravni] <- round(model$conf.int[2], 2)
-    res[i, 6+nravni] <- model$method
-    if (hedgesG == TRUE) {
-      res[i, 7+nravni] <- round(g(ordinal = dataset[, which(names(dataset)==ordinalna)],
-                                  interval = dataset[, which(names(dataset)==intervalna[i])],
-                                  correct = TRUE), 2)}
+    res[i, 3+nravni] <- ifelse(model$p.value < 0.001, yes = "< 0.01", no = round(model$p.value, 3))
+    if (CI) {
+      res[i, 4+nravni] <- round(model$conf.int[1], 2)
+      res[i, 5+nravni] <- round(model$conf.int[2], 2)
+    }
+    if (hedgesG) {
+      res[i, ncol(res)] <- round(g(ordinal = tmp[, which(names(tmp)==catVarName)],
+                                  interval = tmp[, which(names(tmp)==numVarNames[i])],
+                                  correct = TRUE), 2)
+      }
   }
-  labele <- c(ravni, "t", "df", "p", "CI95 low", "CI95 high", "method", ifelse(hedgesG==TRUE, yes = "Hedges G", no = ""))
+  if (CI) labele <- c(ravni, "t", "df", "p", "CI95 low", "CI95 high", ifelse(hedgesG==TRUE, yes = "Hedges G", no = ""))
+  if (!CI) labele <- c(ravni, "t", "df", "p",  ifelse(hedgesG==TRUE, yes = "Hedges G", no = ""))
   labele <- labele[!labele %in% ""]
   colnames(res) <- labele
-  rownames(res) <- intervalna
+  rownames(res) <- numVarNames
   return(res)
 }

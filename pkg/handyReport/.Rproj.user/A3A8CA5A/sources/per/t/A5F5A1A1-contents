@@ -4,7 +4,7 @@
 #' @param x A vector with the values of categorical variable.
 #' @param dec Number of decimal places for percentages.
 #' @param useNA Wheter to include NA values in the table. Default is always (it includes NAs even when the count of NAs is zero), other ppossible values are no (do not include NAs) and ifany (NAs are included if they are present in the data). See ?table for more.
-#' @param cumulative Wheter to report cumulative frequencies and percentages or not. Default is TRUE.
+#' @param cumulative Wheter to report cumulative frequencies and percentages or not. Default is \code{FALSE}.
 #' @examples
 #' x <- mtcars$gear
 #' x[sample(1:length(x), size = 5, replace = FALSE)] <- NA
@@ -13,7 +13,7 @@
 #' @author Marjan Cugmas
 #' @export
 
-report.freqTab <- function(x, dec = 2, cumulative = TRUE, useNA = "always"){
+report.freqTab <- function(x, dec = 2, cumulative = FALSE, useNA = "always"){
   if (is.factor(x) == FALSE) x <- as.factor(x)
   tblValid <- table(x)
   cumFreqValid <- cumsum(tblValid)

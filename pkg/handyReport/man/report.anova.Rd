@@ -2,26 +2,36 @@
 % Please edit documentation in R/report.anova.R
 \name{report.anova}
 \alias{report.anova}
-\title{Report the results of ANOVA}
+\title{Report the ANOVA results}
 \usage{
-report.anova(ordinalna, intervalna, dataset, omegaSq = FALSE, testVar = TRUE)
+report.anova(catVarName, numVarNames, data, omegaSq = FALSE)
 }
 \arguments{
-\item{ordinalna}{The name of ordinal variable. One variable can be considered.}
+\item{catVarName}{A string representing the name of the ordinal factor variable in the data frame.}
 
-\item{intervalna}{The name of interval/numberic variable(s). A string or a list. Several numeric variables can be considered.}
+\item{numVarNames}{A vector of strings representing the names of the interval variables in the data frame.}
 
-\item{dataset}{The dataframe with ordinal and numeric variables.}
+\item{data}{A data frame containing the variables to be analyzed.}
 
-\item{omegaSq}{Whether to calculate Omega Square (adjusted Etha Square) which is the effect size measure.}
-
-\item{testVar}{Wheter to test equal variances (Levene test) and perform Welch ANOVA accordingly.}
+\item{omegaSq}{Logical, if \code{TRUE}, the function also calculates and reports omega squared effect sizes.
+By default, \code{omegaSq = FALSE}.}
+}
+\value{
+A matrix with rows representing each specified interval variable, and columns representing:
+        1) means for each level of the ordinal factor (one column per level),
+        2) F-statistic,
+        3) degrees of freedom 1 (df1),
+        4) degrees of freedom 2 (df2),
+        5) p-value,
+        6) optionally, omega squared effect size.
 }
 \description{
-The function reports the results of ANOVA tests with one categorical variable and one or several numeric variables.
+This function conducts one-way ANOVAs for each of the provided interval variables, with a specified ordinal variable as a factor.
+It reports group means for each level of the ordinal variable, ANOVA test statistics, and optionally, omega squared effect sizes.
 }
 \examples{
-report.anova(ordinalna = "cyl", intervalna = c("hp", "disp", "qsec"), dataset = mtcars)
+report.anova(catVarName = "gear", numVarNames = c("mpg", "wt"),
+data = mtcars, omegaSq = TRUE)
 }
 \references{
 Kirk, R. E. (1996). Practical significance: A concept whose time has come. Educational and psychological measurement, 56(5), 746-759.

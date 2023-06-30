@@ -1,55 +1,59 @@
-#' Report the results of ANOVA
+#' Report the ANOVA results
 #'
-#' @description The function reports the results of ANOVA tests with one categorical variable and one or several numeric variables.
-#' @param ordinalna The name of ordinal variable. One variable can be considered.
-#' @param intervalna The name of interval/numberic variable(s). A string or a list. Several numeric variables can be considered.
-#' @param omegaSq Whether to calculate Omega Square (adjusted Etha Square) which is the effect size measure.
-#' @param testVar Wheter to test equal variances (Levene test) and perform Welch ANOVA accordingly.
-#' @param dataset The dataframe with ordinal and numeric variables.
-#' @examples
-#' report.anova(ordinalna = "cyl", intervalna = c("hp", "disp", "qsec"), dataset = mtcars)
-#' @author Marjan Cugmas
+#' This function conducts one-way ANOVAs for each of the provided interval variables, with a specified ordinal variable as a factor.
+#' It reports group means for each level of the ordinal variable, ANOVA test statistics, and optionally, omega squared effect sizes.
+#'
+#' @param catVarName A string representing the name of the ordinal factor variable in the data frame.
+#' @param numVarNames A vector of strings representing the names of the interval variables in the data frame.
+#' @param data A data frame containing the variables to be analyzed.
+#' @param omegaSq Logical, if \code{TRUE}, the function also calculates and reports omega squared effect sizes.
+#'               By default, \code{omegaSq = FALSE}.
+#'
+#' @return A matrix with rows representing each specified interval variable, and columns representing:
+#'         1) means for each level of the ordinal factor (one column per level),
+#'         2) F-statistic,
+#'         3) degrees of freedom 1 (df1),
+#'         4) degrees of freedom 2 (df2),
+#'         5) p-value,
+#'         6) optionally, omega squared effect size.
 #' @references
 #' Kirk, R. E. (1996). Practical significance: A concept whose time has come. Educational and psychological measurement, 56(5), 746-759.
 #' Tunks, T. (1978). The use of omega squared in interpreting statistical significance. Bulletin of the Council for Research in Music Education, 28-34.
+#' @examples
+#' report.anova(catVarName = "gear", numVarNames = c("mpg", "wt"),
+#' data = mtcars, omegaSq = TRUE)
+#' @author Marjan Cugmas
+#' @importFrom stats t.test aov chisq.test oneway.test sd t.test
 #' @export
-
-report.anova <- function(ordinalna, intervalna, dataset, omegaSq = FALSE, testVar = TRUE){
-  if (is.factor(dataset[, which(names(dataset)==ordinalna)]) == FALSE){
-    dataset[, which(names(dataset)==ordinalna)] <- as.factor(dataset[, which(names(dataset)==ordinalna)])
+report.anova <- function(catVarName, numVarNames, data, omegaSq = FALSE){
+  if (is.factor(data[, which(names(data)==catVarName)]) == FALSE){
+    data[, which(names(data)==catVarName)] <- as.factor(data[, which(names(data)==catVarName)])
   }
-  if (length(ordinalna) > 1) stop("More than one categorical variable is provided.")
-  ravni <- levels(dataset[, which(names(dataset)==ordinalna)])
+  if (length(catVarName) > 1) stop("More than one categorical variable is provided.")
+  ravni <- levels(data[, which(names(data)==catVarName)])
   nravni <- length(ravni)
-  res <- matrix(NA, nrow = length(intervalna), ncol = 4 + nravni + as.numeric(testVar==TRUE) + as.numeric(omegaSq==TRUE))
-  for (i in 1:length(intervalna)) {
-    data <- dataset[, c(which(names(dataset)==ordinalna),  which(names(dataset)==intervalna[i]))]
-    means <- round(as.vector(by(data = data[, intervalna[i]], INDICES = data[, ordinalna], mean, na.rm = TRUE)), 2)
+  res <- matrix(NA, nrow = length(numVarNames), ncol = 4 + nravni + as.numeric(omegaSq==TRUE))
+  for (i in 1:length(numVarNames)) {
+    tmp <- data[, c(which(names(data)==catVarName),  which(names(data)==numVarNames[i]))]
+    means <- round(as.vector(by(data = tmp[, numVarNames[i]], INDICES = tmp[, catVarName], mean, na.rm = TRUE)), 2)
     res[i, 1:nravni] <- means
 
-    leveneP <- leveneTest(y = data[, intervalna[i]], group = as.factor(data[, ordinalna]))[[3]][1]
-    if ((leveneP < 0.05) & (testVar == TRUE)) {
-      model <- oneway.test(data[, intervalna[i]] ~ as.factor(data[, ordinalna]), var.equal = FALSE)
-    } else {model <- oneway.test(data[, intervalna[i]] ~ as.factor(data[, ordinalna]), var.equal = TRUE)}
+    model <- oneway.test(tmp[, numVarNames[i]] ~ as.factor(tmp[, catVarName]), var.equal = FALSE)
 
     res[i, 1+nravni] <- round(model$statistic, 2)
     res[i, 2+nravni] <- model$parameter[1]
     res[i, 3+nravni] <- round(model$parameter[2])
     res[i, 4+nravni] <- ifelse(model$p.value < 0.001, yes = "< 0.01", no = round(model$p.value, 3))
 
-    if (testVar == TRUE){
-      res[i, 4+nravni + as.numeric(testVar==TRUE)] <- ifelse(leveneP < 0.05, yes = "F-test", no = "Welch")
-    }
-
     if (omegaSq == TRUE) {
-      modelAov <- summary(aov(data[, intervalna[i]] ~ as.factor(data[, ordinalna])))
-      res[i, 4+nravni+ as.numeric(testVar==TRUE) + as.numeric(omegaSq==TRUE)] <- round((modelAov[[1]][1,2] - modelAov[[1]][1,1]*(modelAov[[1]][2,3]))/(modelAov[[1]][1,2] + modelAov[[1]][2,2] + modelAov[[1]][2,3]), 2)
+      modelAov <- summary(aov(tmp[, numVarNames[i]] ~ as.factor(tmp[, catVarName])))
+      res[i, 4+nravni+  as.numeric(omegaSq==TRUE)] <- round((modelAov[[1]][1,2] - modelAov[[1]][1,1]*(modelAov[[1]][2,3]))/(modelAov[[1]][1,2] + modelAov[[1]][2,2] + modelAov[[1]][2,3]), 2)
     }
   }
-  labele <- c(ravni, "F", "df 1", "df 2", "p")
-  if (testVar==TRUE) labele <- c(labele, "Test")
+
+  labele <- c(ravni, "F", "df1", "df2", "p")
   if (omegaSq==TRUE) labele <- c(labele, "Omega Sq")
   colnames(res) <- labele
-  rownames(res) <- intervalna
+  rownames(res) <- numVarNames
   return(res)
 }

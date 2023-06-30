@@ -2,29 +2,45 @@
 % Please edit documentation in R/report.chitest.R
 \name{report.chitest}
 \alias{report.chitest}
-\title{CReport the results of chi-square test}
+\title{Report the results of chi-square test}
 \usage{
-report.chitest(x, y, dataset, simulate.p.value = TRUE, cramer = FALSE, ...)
+report.chitest(
+  varNamesX,
+  varNamesY,
+  data,
+  simulate.p.value = TRUE,
+  cramer = FALSE,
+  ...
+)
 }
 \arguments{
-\item{x}{The names of the first set of categorical variables.}
+\item{varNamesX}{A vector of strings representing the names of the X variables in the data frame.}
 
-\item{y}{The names of the second set of categorical variables.}
+\item{varNamesY}{A vector of strings representing the names of the Y variables in the data frame.}
 
-\item{dataset}{The dataframe with categorical variables.}
+\item{data}{A data frame containing the variables to be analyzed.}
 
-\item{simulate.p.value}{Wheter to estimate the p-value by simulations (simulate.p.value=TRUE)  or analytically (simulate.p.value=FALSE).}
+\item{simulate.p.value}{A logical value indicating whether to compute p-values by Monte Carlo simulation. Default is TRUE.}
 
-\item{cramer}{Wheter to calculate the Cramer's V coefficient.}
+\item{cramer}{A logical value indicating whether to compute Cramer's V for the pairs. Default is FALSE.}
+
+\item{...}{Additional arguments to be passed to the chisq.test function.}
+}
+\value{
+A matrix with rows representing each pair of variables, and columns representing:
+        1) variable pair,
+        2) Chi-square statistic,
+        3) p-value (calculated by simulation or classic method, based on 'simulate.p.value'),
+        4) degrees of freedom (if 'simulate.p.value' is FALSE),
+        5) Cramer's V (if 'cramer' is TRUE).
 }
 \description{
-The function reports the results of several (with several variables) chi-square tests.
-}
-\note{
-One or several categorical variables can be set in x and/or x. When several variables are set, they have to be in a vector format.
+This function conducts Chi-square tests for independence between pairs of categorical variables.
+It provides the option to use Monte Carlo simulations for the p-value computation and to calculate Cramer's V.
 }
 \examples{
-report.chitest(x = c("cyl", "vs", "am"), y = "gear", dataset = mtcars, simulate.p.value = TRUE)
+report.chitest(varNamesX = c("cyl", "vs", "am"),
+varNamesY = "gear", data = mtcars, simulate.p.value = TRUE)
 }
 \author{
 Marjan Cugmas

@@ -4,12 +4,13 @@
 #' @param x First categorical variable.
 #' @param y Second categorical variable.
 #' @param margin Index to generate margin for. If \code{NULL}, then simple probabilities (non-conditional) are reported.
+#' @param dec The number of decimal places to round the values.
 #' @examples
-#' report.propTable(x = mtcars$gear, y = mtcars$carb, margin = 1, digits = 2)
+#' report.propTable(x = mtcars$gear, y = mtcars$carb, margin = 1, dec = 2)
 #' @author Marjan Cugmas
 #' @export
 
-report.propTable <- function(x, y, margin = NULL, digits = 1){
+report.propTable <- function(x, y, margin = NULL, dec = 1){
   ptableO <- prop.table(table(x, y), margin)
   if (is.null(margin)){
     ptable <- cbind(ptableO, rowSums(ptableO))
@@ -27,6 +28,6 @@ report.propTable <- function(x, y, margin = NULL, digits = 1){
       rownames(ptable) <- c(rownames(ptableO), "skupaj")
     }
   }
-  ptable <- round(ptable*100, digits = digits)
+  ptable <- round(ptable*100, digits = dec)
   return(ptable)
 }
