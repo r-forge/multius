@@ -16,22 +16,21 @@ A ggplot2 theme.
 \description{
 This function creates a custom ggplot2 theme, with various formatting
 adjustments. It sets the panel grid minor and axis ticks to blank, modifies text
-elements (including strip text, legend, axis titles, plot title, subtitle, and caption),
-and ensures that Google font "Lato" is used where specified. The function also allows
-to change the position of the legend.
+elements (including strip text, legend, axis titles, plot title, subtitle, and caption).
+The function also allows to change the position of the legend.
 }
 \examples{
 \dontrun{
 library(ggplot2)
-p <- ggplot(mtcars, aes(x = mpg, y = disp)) +
+ggplot(mtcars, aes(x = mpg, y = disp, color = as.factor(am))) +
  geom_point() +
  labs(title = "Title",
- subtitle = "Subtitle",
- caption = "Caption",
- y = "Y axis title",
- x = "X axis title") +
+      color  = "Legend title",
+     subtitle = "Subtitle",
+     caption = "Caption",
+      y = "Y axis title",
+      x = "X axis title") +
  theme_marjan(legend.position = "bottom")
-print(p)
 }
 
 }
