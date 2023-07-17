@@ -1,17 +1,13 @@
-#' UL color theme
+#' University of Ljubljana colors
 #'
 #' This function provides a set of color schemes adhering to the official visual identity
-#' of the University of Ljubljana. The colors are categorized into primary, secondary cold,
-#' and secondary warm color schemes. If no arguments are supplied, it returns all
+#' of the University of Ljubljana. If no arguments are supplied, it returns all
 #' available colors. If specific color names are supplied, it will return only
 #' those colors.
 #'
-#' The primary color scheme consists of red, antracit, medium, and lajt.
-#' The secondary cold color scheme includes darkblue, navyblue, turquoise, and green.
-#' The secondary warm color scheme is defined by yellow, orange, burgundy, and pink.
-#'
 #' @param ... Optional character vectors. If color names are supplied, only those colors
-#' will be returned. If no arguments are supplied, all available colors are returned.
+#' will be returned. If no arguments are supplied, all available colors are returned. Avaiable colors are
+#'red, antracit, medium, lajt, darkblue, navyblue, turquoise, green, yellow, orange, burgundy, and pink.
 #'
 #' @return A character vector of hexadecimal color codes.
 #' If no arguments are supplied, all color codes are returned.

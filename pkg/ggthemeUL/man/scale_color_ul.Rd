@@ -2,49 +2,49 @@
 % Please edit documentation in R/scale_color_ul.R
 \name{scale_color_ul}
 \alias{scale_color_ul}
-\title{Color scale for University of Ljubljana color palettes}
+\title{University of Ljubljana theme (color) scale}
 \usage{
 scale_color_ul(
-  palette = "main",
+  palette = "primary",
   discrete = TRUE,
   reverse = FALSE,
   midpoint = NA,
+  neutralColor = "white",
+  guide = guide_colourbar(frame.colour = "#58595b", title.vjust = 0.8),
   ...
 )
 }
 \arguments{
-\item{palette}{Character. The name of the palette to use.
-- Main: \code{"main"} (default)
-- Secondary (cold): \code{"secondaryCold"}
-- Secondary (warm): \code{"secondaryWarm"}
-- Individual colors: \code{"red"}, \code{"antracit"}, \code{"medium"}, \code{"lajt"}, \code{"darkblue"},
-\code{"navyblue"}, \code{"turquoise"}, \code{"green"}, \code{"yellow"}, \code{"orange"}, \code{"burgundy"},
-\code{"pink"}
-- Divergent: \code{"divergent1"}, \code{"divergent2"}, \code{"divergent3"}, \code{"divergent4"}}
+\item{palette}{A character string indicating the color palette to use. Default is \code{"primary"}. See \code{?ul_pal} for other options.}
 
-\item{discrete}{Logical. If \code{TRUE} (default), a discrete color scale is used. If \code{FALSE}, a continuous color gradient is used.}
+\item{discrete}{A logical indicating whether the scale is discrete. Default is \code{TRUE}.}
 
-\item{reverse}{Logical. If \code{TRUE}, the order of the colors in the palette is reversed. Default is \code{FALSE}.}
+\item{reverse}{A logical indicating whether to reverse the order of colors in the palette. Default is \code{FALSE}.}
 
-\item{midpoint}{The midpoint (in data value) of the diverging scale.}
+\item{midpoint}{A numeric value indicating the midpoint for the color scale in case of a divergent color scale (default is \code{NA}).}
 
-\item{...}{Additional arguments passed on to the underlying scale function (`discrete_scale` or `scale_color_gradientn`).}
+\item{neutralColor}{A character string specifying the color to use for neutral values (default is \code{"white"}).}
+
+\item{guide}{A guide function specification, such as \code{guide_colorbar()} or \code{guide_legend()}, used to modify specific guide properties (default is \code{guide_colourbar(frame.colour = "#58595b", title.vjust = 0.8)}).}
+
+\item{...}{Other arguments passed on to the scale functions (\code{discrete_scale}, \code{scale_color_gradientn} or \code{scale_color_gradient2}).}
 }
 \value{
-A color scale that can be added to a ggplot2 plot.
+A discrete or gradient color scale.
 }
 \description{
-This function provides color scales using the official visual identity
-color palettes of the University of Ljubljana for use in ggplot2.
+Applies color scale to the given data based on the University of Ljubljana's visual identity guidelines.
+}
+\details{
+This function returns a color scale to be used with ggplot2. It uses color palettes defined according to the visual identity of the University of Ljubljana.
 }
 \examples{
 \dontrun{
-library(ggplot2)
-ggplot(mpg, aes(displ, hwy, color = class)) +
-  geom_point() +
-  scale_color_ul("primary", discrete = TRUE)
+ggplot(mtcars, aes(x = mpg, y = wt, color = factor(gear))) +
+geom_point(size = 4) +
+scale_color_ul()
 }
 }
 \seealso{
-\code{\link[ggplot2]{scale_fill_discrete}}, \code{\link[ggplot2]{scale_fill_gradientn}}
+\code{\link{ggplot2::scale_color_gradientn}}, \code{\link{ggplot2::scale_color_gradient2}}, \code{\link{ggplot2::discrete_scale}}
 }
