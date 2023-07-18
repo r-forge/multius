@@ -10,7 +10,7 @@
 #' @return A discrete or gradient color scale.
 #' @details
 #' This function returns a color scale to be used with ggplot2. It uses color palettes defined according to the visual identity of the University of Ljubljana.
-#' @seealso \code{\link{ggplot2::scale_color_gradientn}}, \code{\link{ggplot2::scale_color_gradient2}}, \code{\link{ggplot2::discrete_scale}}
+#' @seealso \code{\link[ggplot2]{scale_color_gradientn}}, \code{\link[ggplot2]{scale_color_gradient2}}, \code{\link[ggplot2]{discrete_scale}}
 #' @examples
 #' \dontrun{
 #' ggplot(mtcars, aes(x = mpg, y = wt, color = factor(gear))) +

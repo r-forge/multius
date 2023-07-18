@@ -10,7 +10,7 @@
 #' @return A discrete or gradient fill scale.
 #' @details
 #' This function returns a color fill scale to be used with ggplot2. It uses color palettes defined according to the visual identity of the University of Ljubljana.
-#' @seealso \code{\link{ggplot2::scale_fill_gradientn}}, \code{\link{ggplot2::scale_fill_gradient2}}, \code{\link{ggplot2::discrete_scale}}
+#' @seealso \code{\link[ggplot2]{scale_fill_gradientn}}, \code{\link[ggplot2]{scale_fill_gradient2}}, \code{\link[ggplot2]{discrete_scale}}
 #' @examples
 #' \dontrun{
 #' ggplot(mtcars, aes(x = mpg, fill = factor(cyl))) +

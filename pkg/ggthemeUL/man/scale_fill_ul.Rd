@@ -46,5 +46,5 @@ scale_fill_ul(discrete = TRUE)
 }
 }
 \seealso{
-\code{\link{ggplot2::scale_fill_gradientn}}, \code{\link{ggplot2::scale_fill_gradient2}}, \code{\link{ggplot2::discrete_scale}}
+\code{\link[ggplot2]{scale_fill_gradientn}}, \code{\link[ggplot2]{scale_fill_gradient2}}, \code{\link[ggplot2]{discrete_scale}}
 }

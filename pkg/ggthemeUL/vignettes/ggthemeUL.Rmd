@@ -1,10 +1,11 @@
 ---
-title: "ggthemeUL"
+title: "A short introduction to ggthemeUL package"
 author: "Marjan Cugmas"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: yes
 vignette: >
-  %\VignetteIndexEntry{ggthemeUL}
+  %\VignetteIndexEntry{A short introduction to ggthemeUL package}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -18,6 +19,14 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+library(knitr)
+opts_chunk$set(fig.align = 'center', 
+               fig.show = 'hold', fig.width = 7, fig.height = 5)
+options(warnPartialMatchArgs = FALSE,
+        tibble.print.max = 4,
+        tibble.print.min = 4,
+        dplyr.summarise.inform = FALSE)
 ```
 
 ## Introduction
@@ -100,7 +109,6 @@ You can retrieve the HEX codes of individual colors by invoking the `ul_color` f
 ul_color("lajt")
 ```
 
-## Data
 
 ```{r include=FALSE}
 set.seed(1)  
@@ -109,8 +117,8 @@ age <- rnorm(n, mean = 35, sd = 5)
 height <- rnorm(n, mean = 150 + 0.1 * age, sd = 5)
 weight <- rnorm(n, mean = 100 + 0.5 * height - 1 * age, sd = 5)/2
 
-SatisfactionLevels <- c("Strongly Disagree", "Disagree", "Agree", "Strongly Agree")
-SatisfactionLevelsWithNeutral <- c("Strongly Disagree", "Disagree", "Neither", "Agree", "Strongly Agree")
+SatisfactionLevels <- c("Highly Disagree", "Disagree", "Agree", "Highly Agree")
+SatisfactionLevelsWithNeutral <- c("Highly Disagree", "Disagree", "Neutral", "Agree", "Highly Agree")
 df <- data.frame(
   respondent_id = 1:n,
   country = sample(x = c("Slovenia", "Croatia", "Austria", "France"), n, replace = TRUE),
@@ -131,7 +139,7 @@ The theme_ul function applies minor visual adjustments to a chart, such as rende
 
 Below is an illustration of how the theme_ul function is used, compared to the default settings. It should be noted that it is employed in conjunction with the ul_color function to determine the color of the bars as well as the color of the horizontal line.
 
-```{r fig.height=5, fig.show='hold', fig.width=7}
+```{r fig.show='hold'}
 basicChart <- ggplot(df, aes(x = country)) +  
   geom_bar() + 
   geom_hline(yintercept = 5) +
@@ -151,7 +159,7 @@ basicChart +
 
 If you wish to modify certain adjustments applied by `theme_ul`, you can easily do so by using the theme function to override these settings. For instance, if you want to change the color of the chart title to red, you can do this:
 
-```{r fig.height=5, fig.show='hold', fig.width=7}
+```{r fig.show='hold'}
 basicChart +
   geom_bar(fill = ul_color("navyblue")) +   
   geom_hline(yintercept = 5, color = ul_color("red")) +
@@ -165,7 +173,7 @@ When visualizing a variable of nominal scale, the `scale_fill_ul` function can b
 
 If the data comprises too many categories, consider applying a data transformation (this could include excluding or combining categories to reduce their number) or supplementing color with textures or patterns for better differentiation.
 
-```{r fig.height=5, fig.show='hold', fig.width=7}
+```{r fig.show='hold'}
 basicChart <- ggplot(df, aes(x = gender, y = height, fill = country)) +
   geom_boxplot() +
   labs(y = "Sentiment", x = element_blank()) +
@@ -187,7 +195,7 @@ An alternative to employing various hues is to modulate the shades of a single h
 
 This can be accomplished by passing the name of a color to the `scale_fill_ul` function, which will automatically generate a gradient of that hue with different shades. Below, I have also set `reverse = TRUE`, which inverts the order of the generated colors.
 
-```{r fig.height=5, fig.show='hold', fig.width=7}
+```{r fig.show='hold'}
 basicChart + scale_fill_ul("navyblue", reverse = TRUE) 
 ```
 
@@ -195,7 +203,7 @@ A similar approach can be adopted for interval and ratio variables. In this case
 
 By adjusting the values parameter, you can manipulate the midpoint of the color scale. However, this is not generally recommended. If an asymmetric color scale is required, transforming the variable would typically provide a more consistent approach.
 
-```{r fig.height=5, fig.show='hold', fig.width=7}
+```{r fig.show='hold'}
 basicChartCont <- ggplot(df, aes(x = age, y = height, color = weight)) +   
   geom_point(size = 5) +   
   theme_ul(legend.justification = c(0, 1)) +
@@ -216,7 +224,7 @@ Diverging color scales are utilized when it's important to illustrate how quanti
 
 In the realm of social sciences, these scales are often employed to visualize responses captured on a Likert scale. The ggthemeUL package provides several diverging scales. The red-green (`redGreen`) and blue-turquoise (`blueTurquoise`) hue combinations are commonly used. The blue-turquoise combination tends to be more neutral, avoiding the implication of negative or positive sentiment often associated with red-green scales. For other avaiable divering scales look at the package's manual.
 
-```{r fig.height=5, fig.show='hold', fig.width=7}
+```{r fig.show='hold'}
 ggplot(df, aes(y = country, fill = satisfaction)) +
   geom_bar(position = position_fill(reverse = TRUE)) +
   scale_fill_ul("redGreen") +
@@ -226,14 +234,14 @@ ggplot(df, aes(y = country, fill = satisfaction)) +
        title = "Lorem ipsum dolor sit amet",        
        caption = "Data source: this is all fake data.",        
        subtitle = "Eiusmod tempor incididunt ut labore et dolore magna.",
-       fill = "Level of Agreement") 
+       fill = "Agreement") 
 ```
 
 Exactly the same function can be applied in the case of a neutral category. If a variable has even number of levels (i.e., possible values), the middle one will be treated as a neutral category (asymmetric scales are not yet supported).
 
 The same function can also be utilized in scenarios where there's a neutral category. If the variable has an even number of levels (i.e., possible values), the midpoint level is treated as neutral. Please note that asymmetric scales are not yet supported. If you need asymmetric scales, then define the values manualy within the functions such as `scale_fill_manual`.
 
-```{r fig.height=5, fig.show='hold', fig.width=8}
+```{r fig.show='hold'}
 basicChart <- ggplot(df, aes(y = country, fill = satisfactionWithNeutral)) +
   geom_bar(position = position_fill(reverse = TRUE)) +
   guides(fill = guide_legend(nrow = 1)) +
@@ -245,7 +253,7 @@ basicChart <- ggplot(df, aes(y = country, fill = satisfactionWithNeutral)) +
        title = "Lorem ipsum dolor sit amet",        
        caption = "Data source: this is all fake data.",        
        subtitle = "Eiusmod tempor incididunt ut labore et dolore magna.",
-       fill = "Level of Agreement") 
+       fill = "Agreement") 
 
 basicChart + scale_fill_ul("redGreen")
 ```
@@ -254,7 +262,7 @@ By setting the parameter `neutralColor` one can change the color of the neutral 
 
 Be aware that when using the 'lajt' color to color both the plot background and a neutral category, the neutral category may not be distinctly visible on the chart due to the color match with the background. In such cases, you can make the legend keys distinct by setting `legend.key = element_rect(color = ul_color("antracit"), fill = "transparent")` within the `theme_ul` function, or by defining `color = ul_color("antracit")` within the `geom_bar` function. However, keep in mind that the latter approach may not be ideal. This is because employing the same color for both the neutral category and the background intends to convey a sense of empty space between the 'agreement' and 'disagreement' categories.
 
-```{r fig.height=5, fig.show='hold', fig.width=8}
+```{r fig.show='hold'}
 ggplot(df, aes(y = country, fill = satisfactionWithNeutral)) +
   geom_bar(position = position_fill(reverse = TRUE)) +
   guides(fill = guide_legend(nrow = 1)) +
@@ -268,7 +276,7 @@ ggplot(df, aes(y = country, fill = satisfactionWithNeutral)) +
        title = "Lorem ipsum dolor sit amet",        
        caption = "Data source: this is all fake data.",        
        subtitle = "Eiusmod tempor incididunt ut labore et dolore magna.",
-       fill = "Level of Agreement") 
+       fill = "Agreement") 
 
 ggplot(df, aes(y = country, fill = satisfactionWithNeutral)) +
   geom_bar(position = position_fill(reverse = TRUE), color = ul_color("antracit")) +
@@ -281,20 +289,20 @@ ggplot(df, aes(y = country, fill = satisfactionWithNeutral)) +
        title = "Lorem ipsum dolor sit amet",        
        caption = "Data source: this is all fake data.",        
        subtitle = "Eiusmod tempor incididunt ut labore et dolore magna.",
-       fill = "Level of Agreement") 
+       fill = "Agreement") 
 ```
 
-**Note:** A better visualisation of such data can be achieved by using the diverging bar charts.Here, the stacks diverge from a central baseline in opposite directions. One advantage of this chart is that the sentiments are clearly presented. This works well if your audience is most interested in the total sentiment of each side and not necessarily comparisons between each individual component. Such charts can be (with some data manipulation) generated using the `ggplot2` package (or use `sjPlot::plot_likert` or `likert::likert`).
+**Note:** A better visualisation of such data can be achieved by using the diverging bar charts.Here, the stacks diverge from a central baseline in opposite directions. One advantage of this chart is that the sentiments are clearly presented. This works well if your audience is most interested in the total sentiment of each side and not necessarily comparisons between each individual component. Such charts can be (with some data manipulation) generated using the `ggplot2` package (or use `sjPlot::plot_likert` or `likert::likert`). However, if you place the neutral category in the middle of the chart along the vertical baseline, there will be a shift between the two groups, and it will appear that the neutral responses are split between the two sentiments. To avoid this issue, you can place a neutral category at the side of the chart (not covered here).
 
 When you want to apply the diverging scale to interval or ratio variables, set the parameter `discrete = FALSE`. 
 
-```{r fig.height=5, fig.show='hold', fig.width=7}
+```{r fig.show='hold'}
 basicChartCont + scale_color_ul(palette = "redGreen", discrete = FALSE)
 ```
 
 You can also adjust the midpoint by altering the `midpoint` parameter. However, bear in mind that this will result in a symmetric color scale. Should you require an asymmetric color scale (with the most extreme colors dictated by the minimum and maximum values), you will need to specify the `values` parameter. This parameter is a vector encompassing three values (minimum, midpoint, maximum) set within an interval of 0 and 1. Consequently, you will need to appropriately rescale the midpoint value. For this task, the `scales::rescale` function proves to be quite useful.
 
-```{r fig.height=5, fig.show='hold', fig.width=7}
+```{r fig.show='hold'}
 basicChartCont + scale_color_ul(palette = "redGreen", discrete = FALSE, midpoint = 70)
 basicChartCont + scale_color_ul(palette = "redGreen", 
                             discrete = FALSE, 

@@ -46,5 +46,5 @@ scale_color_ul()
 }
 }
 \seealso{
-\code{\link{ggplot2::scale_color_gradientn}}, \code{\link{ggplot2::scale_color_gradient2}}, \code{\link{ggplot2::discrete_scale}}
+\code{\link[ggplot2]{scale_color_gradientn}}, \code{\link[ggplot2]{scale_color_gradient2}}, \code{\link[ggplot2]{discrete_scale}}
 }

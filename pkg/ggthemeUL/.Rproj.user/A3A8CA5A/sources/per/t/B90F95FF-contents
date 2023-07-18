@@ -1,0 +1,13 @@
+Package: ggthemeUL
+Type: Package
+Title: A ggplot Theme for University of Ljubljana
+Version: 0.1.1
+Authors@R: person(given = "Marjan", family = "Cugmas", role = c("aut", "cre"), email = "marjan.cugmas@fdv.uni-lj.si", comment = c(ORCID = "0000-0002-1715-2460"))
+Description: Designed to customize ggplot2 graphics according to the corporate identity of the University of Ljubljana. 
+License: GPL
+Encoding: UTF-8
+Depends: ggplot2
+LazyData: true
+Suggests: knitr, rmarkdown, scales
+VignetteBuilder: knitr
+RoxygenNote: 7.2.3

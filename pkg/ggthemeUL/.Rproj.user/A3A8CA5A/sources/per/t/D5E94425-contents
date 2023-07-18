@@ -1,0 +1,318 @@
+---
+title: "A short introduction to ggthemeUL package"
+author: "Marjan Cugmas"
+output: 
+  rmarkdown::html_vignette:
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{A short introduction to ggthemeUL package}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(knitr)
+opts_chunk$set(fig.align = 'center', 
+               fig.show = 'hold', fig.width = 7, fig.height = 5)
+options(warnPartialMatchArgs = FALSE,
+        tibble.print.max = 4,
+        tibble.print.min = 4,
+        dplyr.summarise.inform = FALSE)
+```
+
+## Introduction
+
+The `ggthemeUL` package provides essential tools to produce charts that align with the comprehensive visual identity of the University of Ljubljana and its members. The rules defined by the comprehensive visual identity will be implemented starting January 1st, 2024.
+
+This package is designed to complement the functionality of `ggplot2`, which can be installed from CRAN. The `ggthemeUL` package itself can also be downloaded from either CRAN or the R-Forge repository for the most recent version.
+
+Please note that `ggthemeUL` is currently under active development. For suggestions or error reporting, please contact Marjan Cugmas at marjan.cugmas@fdv.uni-lj.si.
+
+While `ggthemeUL` is intended for basic adjustments to the visual appearance of charts, more complex chart types and customizations may require additional modifications. In such cases, consider using functions like `scale_*_steps` and `scale_*_gradient`. For a deeper understanding of these customizations, the book *ggplot2: Elegant Graphics for Data Analysis* (https://ggplot2-book.org/) is highly recommended.
+
+To ensure visual accessibility, consider using the `colorBlindness` package. Specifically, the `displayAllColors` function (e.g, `displayAllColors(ul_color())`) allows you to preview colors considering various types of visual impairments, and `cvdPlot` enables you to display ggplot objects as they would be perceived by individuals with different types of visual impairments.
+
+```{r}
+library(ggplot2)
+library(ggthemeUL)
+```
+
+## Color palettes
+
+The visual identity defines six unique colors across three color palettes. The primary color palette is typically used for chart annotations such as text color and bandings color.
+
+For marking attributes, the secondary color palettes should be employed. When utilizing these palettes, it is advisable to avoid combining colors from opposite parts of the color wheel (for example, pink and turquoise or green and burgundy). Such combinations may not be accessible to visually impaired individuals. The colorBlindness package can always be used to test color accessibility.
+
+**The primary color palettes** comprises four distinct colors. The red color, as the foundational color of the University of Ljubljana, should be used sparingly, typically reserved for special highlights or accent elements. The antracit color is intended to serve as a substitute for traditional black, and is recommended as the primary color for text. The color named lajt may be used as a background color in certain instances.
+
+```{r, echo=FALSE, results='asis'}
+primaryColors <- c(
+  `red`     = "#E03127",
+  `antracit` = "#58595b",
+  `medium`     = "#A7A8AA",
+  `lajt`    = "#E8E9EA"
+)
+
+for (i in seq_along(primaryColors)) {
+  cat('<div style="width: 100px; height: 100px; background-color:', primaryColors[i], 
+      '; display: flex; justify-content: center; align-items: center; color: white; margin: 10px; display: inline-block;">', 
+      names(primaryColors)[i], "<br>", primaryColors[i], '</div>')
+}
+```
+
+**The cold color palette** is comprised of a selection of two hues each of blue and green.
+
+```{r echo=FALSE, results='asis'}
+coldColors <- c(
+  `darkblue`   = "#0033a0",
+  `navyblue`   = "#0082C0",
+  `turquoise`   = "#00B1AC",
+  `green`   = "#00694E"
+)
+
+for (i in seq_along(coldColors)) {
+  cat('<div style="width: 100px; height: 100px; background-color:', coldColors[i], 
+      '; display: flex; justify-content: center; align-items: center; color: white; margin: 10px; display: inline-block;">', 
+      names(coldColors)[i], "<br>", coldColors[i],  '</div>')
+}
+```
+
+**The warm color palette** contains four different hues.
+
+```{r, echo=FALSE, results='asis'}
+warmColors <- c(
+  `yellow`   = "#EACE12",
+  `orange`   = "#CB511C",
+  `burgundy`   = "#9A2F31",
+  `pink`   = "#C43788"
+)
+
+for (i in seq_along(warmColors)) {
+  cat('<div style="width: 100px; height: 100px; background-color:', warmColors[i], 
+      '; display: flex; justify-content: center; align-items: center; color: white; margin: 10px; display: inline-block;">', 
+      names(warmColors)[i],"<br>", warmColors[i],  '</div>')
+}
+```
+
+You can retrieve the HEX codes of individual colors by invoking the `ul_color` function (all available HEX codes will be returned in the case you do not set any color name). For example:
+
+```{r}
+ul_color("lajt")
+```
+
+
+```{r include=FALSE}
+set.seed(1)  
+n <- 100 
+age <- rnorm(n, mean = 35, sd = 5)
+height <- rnorm(n, mean = 150 + 0.1 * age, sd = 5)
+weight <- rnorm(n, mean = 100 + 0.5 * height - 1 * age, sd = 5)/2
+
+SatisfactionLevels <- c("Highly Disagree", "Disagree", "Agree", "Highly Agree")
+SatisfactionLevelsWithNeutral <- c("Highly Disagree", "Disagree", "Neutral", "Agree", "Highly Agree")
+df <- data.frame(
+  respondent_id = 1:n,
+  country = sample(x = c("Slovenia", "Croatia", "Austria", "France"), n, replace = TRUE),
+  gender = sample(x = c("Male", "Female"), n, replace = TRUE),
+  height = height,
+  weight = weight,
+  age = age,
+  satisfaction = sample(SatisfactionLevels, n, replace = TRUE),
+  satisfactionWithNeutral = sample(SatisfactionLevelsWithNeutral, n, replace = TRUE)
+)
+df$satisfaction <- factor(df$satisfaction, levels = SatisfactionLevels)
+df$satisfactionWithNeutral <- factor(df$satisfactionWithNeutral, levels = SatisfactionLevelsWithNeutral)
+```
+
+## Theme UL
+
+The theme_ul function applies minor visual adjustments to a chart, such as rendering titles in bold. By default, the legend is positioned at the top of the plot, the panel background color is set to 'lajt', and the plot background color is white. However, there may be instances where you'd want the plot background color to match the 'lajt' color, such as when it aligns with the background color of a publication. In such scenarios, use plot.background.fill = "#E8E9EA" or plot.background.fill = ul_color("lajt") to modify the plot's background color.
+
+Below is an illustration of how the theme_ul function is used, compared to the default settings. It should be noted that it is employed in conjunction with the ul_color function to determine the color of the bars as well as the color of the horizontal line.
+
+```{r fig.show='hold'}
+basicChart <- ggplot(df, aes(x = country)) +  
+  geom_bar() + 
+  geom_hline(yintercept = 5) +
+  labs(x = element_blank(),        
+       y = "Frequency",        
+       title = "Lorem ipsum dolor sit amet",        
+       caption = "Data source: this is all fake data.",        
+       subtitle = "Eiusmod tempor incididunt ut labore et dolore magna.")
+
+basicChart
+
+basicChart +
+  geom_bar(fill = ul_color("navyblue")) +   
+  geom_hline(yintercept = 5, color = ul_color("red")) +
+  theme_ul(plot.background.fill =  "#E8E9EA")
+```
+
+If you wish to modify certain adjustments applied by `theme_ul`, you can easily do so by using the theme function to override these settings. For instance, if you want to change the color of the chart title to red, you can do this:
+
+```{r fig.show='hold'}
+basicChart +
+  geom_bar(fill = ul_color("navyblue")) +   
+  geom_hline(yintercept = 5, color = ul_color("red")) +
+  theme_ul(plot.background.fill =  "#E8E9EA") +
+  theme(plot.title = element_text(color="red"))
+```
+
+## Nominal scales
+
+When visualizing a variable of nominal scale, the `scale_fill_ul` function can be used without specifying any additional parameters. This function will employ all the colors from both the cold and warm color palettes in an order that optimizes visual distinction between the colors. However, given that colors within the same palette are from the same side of a color wheel, it is recommended to limit the colors by selecting either `scale_fill_ul("cold")` for cold colors, or `scale_fill_ul("warm")` for warm colors.
+
+If the data comprises too many categories, consider applying a data transformation (this could include excluding or combining categories to reduce their number) or supplementing color with textures or patterns for better differentiation.
+
+```{r fig.show='hold'}
+basicChart <- ggplot(df, aes(x = gender, y = height, fill = country)) +
+  geom_boxplot() +
+  labs(y = "Sentiment", x = element_blank()) +
+  theme_ul(legend.justification = c(0, 1)) +
+  labs(x = element_blank(),        
+       y = "Height",        
+       title = "Lorem ipsum dolor sit amet",        
+       caption = "Data source: this is all fake data.",        
+       subtitle = "Eiusmod tempor incididunt ut labore et dolore magna.",
+       fill = "Country") 
+
+basicChart + scale_fill_ul() 
+basicChart + scale_fill_ul("cold") 
+```
+
+## Converging scales
+
+An alternative to employing various hues is to modulate the shades of a single hue (this is called converging color scale). This method is especially advantageous for individuals with color blindness, as well as for instances that require black and white printing. Besides, it often produces a more coherent and aesthetically pleasing visual. This approach can also be applied to ordinal variables, depending on the variable's content.
+
+This can be accomplished by passing the name of a color to the `scale_fill_ul` function, which will automatically generate a gradient of that hue with different shades. Below, I have also set `reverse = TRUE`, which inverts the order of the generated colors.
+
+```{r fig.show='hold'}
+basicChart + scale_fill_ul("navyblue", reverse = TRUE) 
+```
+
+A similar approach can be adopted for interval and ratio variables. In this case, set discrete = FALSE within the `scale_color_ul` or `scale_fill_ul` functions. Note that you can also specify additional parameters, such as `limits` to determine the minimum and maximum values of a variable (the default is derived from the data). This is particularly useful when natural limits exist.
+
+By adjusting the values parameter, you can manipulate the midpoint of the color scale. However, this is not generally recommended. If an asymmetric color scale is required, transforming the variable would typically provide a more consistent approach.
+
+```{r fig.show='hold'}
+basicChartCont <- ggplot(df, aes(x = age, y = height, color = weight)) +   
+  geom_point(size = 5) +   
+  theme_ul(legend.justification = c(0, 1)) +
+  labs(x = "Age",        
+       y = "Height",        
+       title = "Lorem ipsum dolor sit amet",        
+       caption = "Data source: this is all fake data.",        
+       subtitle = "Eiusmod tempor incididunt ut labore et dolore magna.",
+       color = "Weight") 
+
+basicChartCont + scale_color_ul(palette = "navyblue", discrete = FALSE)
+basicChartCont + scale_color_ul(palette = "navyblue", discrete = FALSE, values = c(0, 0.8, 1))
+```
+
+## Diverging scales
+
+Diverging color scales are utilized when it's important to illustrate how quantities deviate in two directions from a specific breakpoint. Commonly, this breakpoint is established to visually distinguish values above or below zero, or to separate values on either side of a specified threshold. This could be a target value, an average, or a median value.
+
+In the realm of social sciences, these scales are often employed to visualize responses captured on a Likert scale. The ggthemeUL package provides several diverging scales. The red-green (`redGreen`) and blue-turquoise (`blueTurquoise`) hue combinations are commonly used. The blue-turquoise combination tends to be more neutral, avoiding the implication of negative or positive sentiment often associated with red-green scales. For other avaiable divering scales look at the package's manual.
+
+```{r fig.show='hold'}
+ggplot(df, aes(y = country, fill = satisfaction)) +
+  geom_bar(position = position_fill(reverse = TRUE)) +
+  scale_fill_ul("redGreen") +
+  theme_ul() +
+    labs(x = element_blank(),        
+       y = element_blank(),        
+       title = "Lorem ipsum dolor sit amet",        
+       caption = "Data source: this is all fake data.",        
+       subtitle = "Eiusmod tempor incididunt ut labore et dolore magna.",
+       fill = "Agreement") 
+```
+
+Exactly the same function can be applied in the case of a neutral category. If a variable has even number of levels (i.e., possible values), the middle one will be treated as a neutral category (asymmetric scales are not yet supported).
+
+The same function can also be utilized in scenarios where there's a neutral category. If the variable has an even number of levels (i.e., possible values), the midpoint level is treated as neutral. Please note that asymmetric scales are not yet supported. If you need asymmetric scales, then define the values manualy within the functions such as `scale_fill_manual`.
+
+```{r fig.show='hold'}
+basicChart <- ggplot(df, aes(y = country, fill = satisfactionWithNeutral)) +
+  geom_bar(position = position_fill(reverse = TRUE)) +
+  guides(fill = guide_legend(nrow = 1)) +
+  theme_ul() +
+  labs(fill = element_blank()) +
+  theme_ul(plot.background.fill = ul_color("lajt")) +
+      labs(x = element_blank(),        
+       y = element_blank(),        
+       title = "Lorem ipsum dolor sit amet",        
+       caption = "Data source: this is all fake data.",        
+       subtitle = "Eiusmod tempor incididunt ut labore et dolore magna.",
+       fill = "Agreement") 
+
+basicChart + scale_fill_ul("redGreen")
+```
+
+By setting the parameter `neutralColor` one can change the color of the neutral category. However, not that in the current implementation, the selected color also affect the color of the surrounding categories. Use this feature with caution.
+
+Be aware that when using the 'lajt' color to color both the plot background and a neutral category, the neutral category may not be distinctly visible on the chart due to the color match with the background. In such cases, you can make the legend keys distinct by setting `legend.key = element_rect(color = ul_color("antracit"), fill = "transparent")` within the `theme_ul` function, or by defining `color = ul_color("antracit")` within the `geom_bar` function. However, keep in mind that the latter approach may not be ideal. This is because employing the same color for both the neutral category and the background intends to convey a sense of empty space between the 'agreement' and 'disagreement' categories.
+
+```{r fig.show='hold'}
+ggplot(df, aes(y = country, fill = satisfactionWithNeutral)) +
+  geom_bar(position = position_fill(reverse = TRUE)) +
+  guides(fill = guide_legend(nrow = 1)) +
+  scale_fill_ul("redGreen", neutralColor = "lajt") +   
+  theme_ul(legend.key = element_rect(color = ul_color("antracit"), 
+                                     fill = "transparent"), 
+           plot.background.fill = ul_color("lajt")) +
+  labs(fill = element_blank()) +
+      labs(x = element_blank(),        
+       y = element_blank(),        
+       title = "Lorem ipsum dolor sit amet",        
+       caption = "Data source: this is all fake data.",        
+       subtitle = "Eiusmod tempor incididunt ut labore et dolore magna.",
+       fill = "Agreement") 
+
+ggplot(df, aes(y = country, fill = satisfactionWithNeutral)) +
+  geom_bar(position = position_fill(reverse = TRUE), color = ul_color("antracit")) +
+  guides(fill = guide_legend(nrow = 1)) +
+  scale_fill_ul("redGreen", neutralColor = "lajt") +   
+  theme_ul(plot.background.fill = ul_color("lajt")) +
+  labs(fill = element_blank()) +
+      labs(x = element_blank(),        
+       y = element_blank(),        
+       title = "Lorem ipsum dolor sit amet",        
+       caption = "Data source: this is all fake data.",        
+       subtitle = "Eiusmod tempor incididunt ut labore et dolore magna.",
+       fill = "Agreement") 
+```
+
+**Note:** A better visualisation of such data can be achieved by using the diverging bar charts.Here, the stacks diverge from a central baseline in opposite directions. One advantage of this chart is that the sentiments are clearly presented. This works well if your audience is most interested in the total sentiment of each side and not necessarily comparisons between each individual component. Such charts can be (with some data manipulation) generated using the `ggplot2` package (or use `sjPlot::plot_likert` or `likert::likert`). However, if you place the neutral category in the middle of the chart along the vertical baseline, there will be a shift between the two groups, and it will appear that the neutral responses are split between the two sentiments. To avoid this issue, you can place a neutral category at the side of the chart (not covered here).
+
+When you want to apply the diverging scale to interval or ratio variables, set the parameter `discrete = FALSE`. 
+
+```{r fig.show='hold'}
+basicChartCont + scale_color_ul(palette = "redGreen", discrete = FALSE)
+```
+
+You can also adjust the midpoint by altering the `midpoint` parameter. However, bear in mind that this will result in a symmetric color scale. Should you require an asymmetric color scale (with the most extreme colors dictated by the minimum and maximum values), you will need to specify the `values` parameter. This parameter is a vector encompassing three values (minimum, midpoint, maximum) set within an interval of 0 and 1. Consequently, you will need to appropriately rescale the midpoint value. For this task, the `scales::rescale` function proves to be quite useful.
+
+```{r fig.show='hold'}
+basicChartCont + scale_color_ul(palette = "redGreen", discrete = FALSE, midpoint = 70)
+basicChartCont + scale_color_ul(palette = "redGreen", 
+                            discrete = FALSE, 
+                            values = c(0, 
+                                       scales::rescale(70, to = c(0, 1), from = range(df$weight)),
+                                       1))
+```
+
+## Conclusion
+
+In this document, I've highlighted the most frequently utilized features of the `ggthemeUL` package. Looking ahead, I have plans to further enhance the package by adding features such as asymmetric divergent discrete scales, adjustable neutral category colors, and font customization. However, it is crucial to retain the package's simplicity to avoid substantial deviations from the University of Ljubljana's visual identity.
+
+Additionally, remember that you can always export the charts in vector format. This will enable you to continue the production process using software that supports manual manipulation of these files (e.g., Inkscape, Adobe, Affinity).
