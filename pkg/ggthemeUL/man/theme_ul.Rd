@@ -11,6 +11,16 @@ theme_ul(
   panel.grid.major.color = NULL,
   legend.justification = c(0, 1),
   legend.key = element_rect(fill = "transparent"),
+  text = element_text(colour = "#58595b"),
+  axis.text = element_text(colour = "#58595b"),
+  strip.text.x = element_text(colour = "#58595b"),
+  plot.caption = element_text(hjust = 1),
+  legend.title = element_text(face = "bold"),
+  axis.title = element_text(face = "bold"),
+  plot.title = element_text(face = "bold"),
+  plot.subtitle = element_text(hjust = 0),
+  legend.background = element_rect(fill = ul_color("transparent"), colour =
+    "transparent"),
   ...
 )
 }
@@ -26,6 +36,24 @@ theme_ul(
 \item{legend.justification}{A numeric vector of length 2 that determines the justification of the legend. Default is \code{c(0, 1)}.}
 
 \item{legend.key}{An \code{element_rect} object defining the appearance of the legend key. Default is \code{element_rect(fill = "transparent")}.}
+
+\item{text}{A ggplot2 element specifying the appearance of text elements in the plot.}
+
+\item{axis.text}{A ggplot2 element specifying the appearance of axis text in the plot.}
+
+\item{strip.text.x}{A ggplot2 element specifying the appearance of strip text for x-axis facet labels.}
+
+\item{plot.caption}{A ggplot2 element specifying the appearance of the plot caption.}
+
+\item{legend.title}{A ggplot2 element specifying the appearance of the legend title.}
+
+\item{axis.title}{A ggplot2 element specifying the appearance of axis titles.}
+
+\item{plot.title}{A ggplot2 element specifying the appearance of the plot title.}
+
+\item{plot.subtitle}{A ggplot2 element specifying the appearance of the plot subtitle.}
+
+\item{legend.background}{A ggplot2 element specifying the appearance of the legend background.}
 
 \item{...}{Other arguments passed on to the function `theme()`.}
 }

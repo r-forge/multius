@@ -31,26 +31,30 @@ options(warnPartialMatchArgs = FALSE,
 
 ## Introduction
 
-The `ggthemeUL` package provides essential tools to produce charts that align with the comprehensive visual identity of the University of Ljubljana and its members. The rules defined by the comprehensive visual identity will be implemented starting January 1st, 2024.
+The `ggthemeUL` package provides essential tools to produce charts that align with the comprehensive [visual identity](https://www.uni-lj.si/mma_bin.php?id=2023062610340269)
+ of the University of Ljubljana and its members. The rules defined by the comprehensive visual identity will be implemented starting January 1st, 2024.
 
-This package is designed to complement the functionality of `ggplot2`, which can be installed from CRAN. The `ggthemeUL` package itself can also be downloaded from either CRAN or the R-Forge repository for the most recent version.
+This package is designed to complement the functionality of `ggplot2`, which can be installed from CRAN. The `ggthemeUL` package itself can be downloaded from the [R-Forge repository](https://r-forge.r-project.org/R/?group_id=2387).
 
 Please note that `ggthemeUL` is currently under active development. For suggestions or error reporting, please contact Marjan Cugmas at marjan.cugmas@fdv.uni-lj.si.
 
 While `ggthemeUL` is intended for basic adjustments to the visual appearance of charts, more complex chart types and customizations may require additional modifications. In such cases, consider using functions like `scale_*_steps` and `scale_*_gradient`. For a deeper understanding of these customizations, the book *ggplot2: Elegant Graphics for Data Analysis* (https://ggplot2-book.org/) is highly recommended.
 
-To ensure visual accessibility, consider using the `colorBlindness` package. Specifically, the `displayAllColors` function (e.g, `displayAllColors(ul_color())`) allows you to preview colors considering various types of visual impairments, and `cvdPlot` enables you to display ggplot objects as they would be perceived by individuals with different types of visual impairments.
+To ensure visual accessibility, consider using the `colorBlindness` package. Specifically, the `displayAllColors` function (e.g, `displayAllColors(ul_color())`) allows you to preview colors considering various types of visual impairments, and `cvdPlot` enables you to display ggplot objects as they would be perceived by individuals with different types of visual impairments. Consider also [Coblis - Color Blindness Simulator](https://www.color-blindness.com/coblis-color-blindness-simulator/).
 
 ```{r}
-library(ggplot2)
+# install.packages("ggthemeUL", repos="http://R-Forge.R-project.org")
 library(ggthemeUL)
+
+library(ggplot2)
+library(scales)
 ```
 
 ## Color palettes
 
 The visual identity defines six unique colors across three color palettes. The primary color palette is typically used for chart annotations such as text color and bandings color.
 
-For marking attributes, the secondary color palettes should be employed. When utilizing these palettes, it is advisable to avoid combining colors from opposite parts of the color wheel (for example, pink and turquoise or green and burgundy). Such combinations may not be accessible to visually impaired individuals. The colorBlindness package can always be used to test color accessibility.
+For marking attributes, the secondary color palettes should be employed. When utilizing these palettes, it is advisable to avoid combining red and green hues (for example, pink and turquoise or green and burgundy). Such combinations may not be accessible to visually impaired individuals. The `colorBlindness` package can always be used to test color accessibility.
 
 **The primary color palettes** comprises four distinct colors. The red color, as the foundational color of the University of Ljubljana, should be used sparingly, typically reserved for special highlights or accent elements. The antracit color is intended to serve as a substitute for traditional black, and is recommended as the primary color for text. The color named lajt may be used as a background color in certain instances.
 
@@ -164,26 +168,27 @@ basicChart +
   geom_bar(fill = ul_color("navyblue")) +   
   geom_hline(yintercept = 5, color = ul_color("red")) +
   theme_ul(plot.background.fill =  "#E8E9EA") +
-  theme(plot.title = element_text(color="red"))
+  theme(plot.title = element_text(color="red")) 
 ```
 
 ## Nominal scales
 
-When visualizing a variable of nominal scale, the `scale_fill_ul` function can be used without specifying any additional parameters. This function will employ all the colors from both the cold and warm color palettes in an order that optimizes visual distinction between the colors. However, given that colors within the same palette are from the same side of a color wheel, it is recommended to limit the colors by selecting either `scale_fill_ul("cold")` for cold colors, or `scale_fill_ul("warm")` for warm colors.
+When visualizing a variable of nominal scale, the `scale_fill_ul` function can be used without specifying any additional parameters. This function will employ all the colors from both the cold and warm color palettes in an order that optimizes visual distinction between the colors. However, it is recommended to limit the colors by selecting either `scale_fill_ul("cold")` for cold colors, or `scale_fill_ul("warm")` for warm colors.
 
 If the data comprises too many categories, consider applying a data transformation (this could include excluding or combining categories to reduce their number) or supplementing color with textures or patterns for better differentiation.
 
 ```{r fig.show='hold'}
-basicChart <- ggplot(df, aes(x = gender, y = height, fill = country)) +
-  geom_boxplot() +
+basicChart <- ggplot(df, aes(x = country, y = height, fill = country)) +
+  facet_grid(.~gender) +
+  geom_boxplot(show.legend = FALSE) +
   labs(y = "Sentiment", x = element_blank()) +
   theme_ul(legend.justification = c(0, 1)) +
+  scale_y_continuous(labels = dollar_format(suffix=" cm",prefix="")) +
   labs(x = element_blank(),        
-       y = "Height",        
-       title = "Lorem ipsum dolor sit amet",        
+       y = element_blank(),        
+       title = "Height ipsum dolor sit amet",        
        caption = "Data source: this is all fake data.",        
-       subtitle = "Eiusmod tempor incididunt ut labore et dolore magna.",
-       fill = "Country") 
+       subtitle = "Eiusmod tempor incididunt ut labore et dolore magna.") 
 
 basicChart + scale_fill_ul() 
 basicChart + scale_fill_ul("cold") 
@@ -207,8 +212,8 @@ By adjusting the values parameter, you can manipulate the midpoint of the color 
 basicChartCont <- ggplot(df, aes(x = age, y = height, color = weight)) +   
   geom_point(size = 5) +   
   theme_ul(legend.justification = c(0, 1)) +
-  labs(x = "Age",        
-       y = "Height",        
+  labs(x = "Age (years)",        
+       y = "Height (cm)",        
        title = "Lorem ipsum dolor sit amet",        
        caption = "Data source: this is all fake data.",        
        subtitle = "Eiusmod tempor incididunt ut labore et dolore magna.",
@@ -222,13 +227,17 @@ basicChartCont + scale_color_ul(palette = "navyblue", discrete = FALSE, values =
 
 Diverging color scales are utilized when it's important to illustrate how quantities deviate in two directions from a specific breakpoint. Commonly, this breakpoint is established to visually distinguish values above or below zero, or to separate values on either side of a specified threshold. This could be a target value, an average, or a median value.
 
-In the realm of social sciences, these scales are often employed to visualize responses captured on a Likert scale. The ggthemeUL package provides several diverging scales. The red-green (`redGreen`) and blue-turquoise (`blueTurquoise`) hue combinations are commonly used. The blue-turquoise combination tends to be more neutral, avoiding the implication of negative or positive sentiment often associated with red-green scales. For other avaiable divering scales look at the package's manual.
+In the realm of social sciences, these scales are often employed to visualize responses captured on a Likert scale. The `ggthemeUL` package provides several diverging scales. The red-green (`redGreen`) and blue-turquoise (`blueTurquoise`) hue combinations are commonly used. The blue-turquoise combination tends to be more neutral, avoiding the implication of negative or positive sentiment often associated with red-green scales. For other avaiable divering scales look at the package's manual.
+
+Below, I demonstrate the application of the `redGreen` scale, along with the use of a white fill for the panel background. In this context, the exact percentage values are not particularly crucial, so to maintain a clean and focused visualization, the major grid lines are rendered invisible by setting their color to white.
 
 ```{r fig.show='hold'}
+df$country <- factor(df$country, levels = rev(c("Slovenia", "Croatia", "France", "Austria")))
 ggplot(df, aes(y = country, fill = satisfaction)) +
+  scale_x_continuous(labels = dollar_format(suffix=" %",prefix="", scale = 100)) +
   geom_bar(position = position_fill(reverse = TRUE)) +
   scale_fill_ul("redGreen") +
-  theme_ul() +
+  theme_ul(panel.background.fill = "white", panel.grid.major.color = "white") +
     labs(x = element_blank(),        
        y = element_blank(),        
        title = "Lorem ipsum dolor sit amet",        
@@ -247,6 +256,7 @@ basicChart <- ggplot(df, aes(y = country, fill = satisfactionWithNeutral)) +
   guides(fill = guide_legend(nrow = 1)) +
   theme_ul() +
   labs(fill = element_blank()) +
+  scale_x_continuous(labels = dollar_format(suffix=" %",prefix="", scale = 100)) +
   theme_ul(plot.background.fill = ul_color("lajt")) +
       labs(x = element_blank(),        
        y = element_blank(),        
@@ -266,6 +276,7 @@ Be aware that when using the 'lajt' color to color both the plot background and 
 ggplot(df, aes(y = country, fill = satisfactionWithNeutral)) +
   geom_bar(position = position_fill(reverse = TRUE)) +
   guides(fill = guide_legend(nrow = 1)) +
+  scale_x_continuous(labels = dollar_format(suffix=" %",prefix="", scale = 100)) +
   scale_fill_ul("redGreen", neutralColor = "lajt") +   
   theme_ul(legend.key = element_rect(color = ul_color("antracit"), 
                                      fill = "transparent"), 
@@ -281,6 +292,7 @@ ggplot(df, aes(y = country, fill = satisfactionWithNeutral)) +
 ggplot(df, aes(y = country, fill = satisfactionWithNeutral)) +
   geom_bar(position = position_fill(reverse = TRUE), color = ul_color("antracit")) +
   guides(fill = guide_legend(nrow = 1)) +
+  scale_x_continuous(labels = dollar_format(suffix=" %",prefix="", scale = 100)) +
   scale_fill_ul("redGreen", neutralColor = "lajt") +   
   theme_ul(plot.background.fill = ul_color("lajt")) +
   labs(fill = element_blank()) +
