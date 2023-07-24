@@ -53,7 +53,6 @@
 #' R Data Analysis Examples: Canonical Correlation Analysis, UCLA: Statistical Consulting Group. From http://www.ats.ucla.edu/stat/r/dae/canonical.htm (accessed Decembar 27, 2013).
 #' @export
 
-
 ldaPlus <- function(x,grouping,pred=TRUE, CV=TRUE,usePriorBetweenGroups=TRUE,...){
   call<-match.call()
   #if(!require(MASS)) stop("MASS Package is required but not installed!")

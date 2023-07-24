@@ -5,7 +5,7 @@
 #' @param reduce Wheter to reduce categories with zero frequency, default is \code{TRUE}.
 #' @param ... Arguments passed to function \code{factor}.
 #' @details
-#' Data have to be imported by using the \code{MASS::read.spss} function.
+#' Data have to be imported by using the \code{foreign::read.spss} function.
 #' The use of the function make sence when the parameter \code{use.value.lables} in the function \code{read.spss} is set to \code{FALSE}.
 #' @return Categorical variable (vector).
 #' @author Aleš Žiberna

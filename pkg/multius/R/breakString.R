@@ -26,10 +26,11 @@ breakString <- function(x, nChar = 20){
     return(besedilo)
   }
 
-  if (length(x) == 1) {
-    resitev <- baseFunction(x=x, nChar=nChar)
+  if (is.factor(x)) {
+    labels <- trimws(unlist(lapply(levels(x), baseFunction, nChar = nChar)))
+    x <- factor(x, labels = labels)
   } else {
-    resitev <- lapply(x, baseFunction, nChar = nChar)
+    x <- trimws(unlist(lapply(x, baseFunction, nChar = nChar)))
   }
-  return(unlist(resitev))
+  return(x)
 }
