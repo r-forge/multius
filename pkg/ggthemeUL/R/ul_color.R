@@ -36,8 +36,14 @@ ul_color <- function(...) {
     `pink`   = "#C43788"
     )
 
+  colorNames <- names(ul_colors)
+  ul_colors <- as.vector(ul_colors)
+  attr(ul_colors, "colorNames") <- colorNames
+
   cols <- c(...)
-  if (is.null(cols))
-    return (ul_colors)
-  ul_colors[cols]
+  if (is.null(cols)) {
+    return(ul_colors)
+  } else {
+      return(ul_colors[attributes(ul_colors)$colorNames %in% cols])
+    }
 }

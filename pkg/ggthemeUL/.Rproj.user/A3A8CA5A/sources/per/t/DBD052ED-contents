@@ -27,7 +27,7 @@
 #' @importFrom grDevices colorRamp colorRampPalette
 #' @export
 ul_pal <- function(palette = "primary", neutralColor = "white", reverse = FALSE, ...) {
-  neutralColor <- ifelse(neutralColor %in% names(ul_color()), yes = ul_color(neutralColor), no = neutralColor)
+  neutralColor <- ifelse(neutralColor %in% attr(ul_color(), "colorNames"), yes = ul_color(neutralColor), no = neutralColor)
 
   ul_palettes <- list(
     `primary` = c("#0033a0", "#0082C0", "#00B1AC", "#00694E",

@@ -25,7 +25,7 @@ scale_fill_ul <- function(palette = "primary", discrete = TRUE, reverse = FALSE,
     return(discrete_scale("fill", paste0("ul_", palette), palette = pal, ...))
   }
   if (!discrete){
-    if (palette %in% names(ul_color())) palette <- paste0(palette, "W")
+    if (palette %in% attr(ul_color(), "colorNames")) palette <- paste0(palette, "W")
     pal <- ul_pal(palette = palette, reverse = reverse, neutralColor = neutralColor)
     if (is.na(midpoint)) {return(scale_fill_gradientn(colours = pal(256), guide = guide, ...))}
     if (!is.na(midpoint)) {barve <- pal(3); return(scale_fill_gradient2(low = barve[1], mid = barve[2], high = barve[3], midpoint = midpoint, guide = guide,...))}
