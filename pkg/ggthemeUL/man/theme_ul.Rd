@@ -19,8 +19,7 @@ theme_ul(
   axis.title = element_text(face = "bold"),
   plot.title = element_text(face = "bold"),
   plot.subtitle = element_text(hjust = 0),
-  legend.background = element_rect(fill = ul_color("transparent"), colour =
-    "transparent"),
+  legend.background = element_rect(fill = "transparent", colour = "transparent"),
   ...
 )
 }
