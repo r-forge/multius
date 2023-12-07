@@ -12,11 +12,9 @@
 #' This function returns a color scale to be used with ggplot2. It uses color palettes defined according to the visual identity of the University of Ljubljana.
 #' @seealso \code{\link[ggplot2]{scale_color_gradientn}}, \code{\link[ggplot2]{scale_color_gradient2}}, \code{\link[ggplot2]{discrete_scale}}
 #' @examples
-#' \dontrun{
 #' ggplot(mtcars, aes(x = mpg, y = wt, color = factor(gear))) +
 #' geom_point(size = 4) +
 #' scale_color_ul()
-#' }
 #' @importFrom ggplot2 discrete_scale scale_color_gradientn scale_color_gradient2 guide_colourbar
 #' @export
 scale_color_ul <- function(palette = "primary", discrete = TRUE, reverse = FALSE, midpoint = NA, neutralColor = "white", guide = guide_colourbar(frame.colour = "#58595b", title.vjust = 0.8), ...) {

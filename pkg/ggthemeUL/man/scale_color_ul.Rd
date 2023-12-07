@@ -39,11 +39,9 @@ Applies color scale to the given data based on the University of Ljubljana's vis
 This function returns a color scale to be used with ggplot2. It uses color palettes defined according to the visual identity of the University of Ljubljana.
 }
 \examples{
-\dontrun{
 ggplot(mtcars, aes(x = mpg, y = wt, color = factor(gear))) +
 geom_point(size = 4) +
 scale_color_ul()
-}
 }
 \seealso{
 \code{\link[ggplot2]{scale_color_gradientn}}, \code{\link[ggplot2]{scale_color_gradient2}}, \code{\link[ggplot2]{discrete_scale}}

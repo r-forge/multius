@@ -12,11 +12,9 @@
 #' This function returns a color fill scale to be used with ggplot2. It uses color palettes defined according to the visual identity of the University of Ljubljana.
 #' @seealso \code{\link[ggplot2]{scale_fill_gradientn}}, \code{\link[ggplot2]{scale_fill_gradient2}}, \code{\link[ggplot2]{discrete_scale}}
 #' @examples
-#' \dontrun{
 #' ggplot(mtcars, aes(x = mpg, fill = factor(cyl))) +
 #' geom_density(alpha = 0.7) +
 #' scale_fill_ul(discrete = TRUE)
-#' }
 #' @importFrom ggplot2 discrete_scale scale_fill_gradientn scale_fill_gradient2 guide_colourbar
 #' @export
 scale_fill_ul <- function(palette = "primary", discrete = TRUE, reverse = FALSE, midpoint = NA, neutralColor = "white", guide = guide_colourbar(frame.colour = "#58595b", title.vjust = 0.8), ...) {

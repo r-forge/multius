@@ -20,10 +20,8 @@
 #' @return A function that takes an integer argument n and returns a character vector of n colors.
 #'
 #' @examples
-#' \dontrun{
 #' pal <- ul_pal("redBlue", reverse = TRUE)
 #' pal(7)  # Generates a reversed divergent palette of 7 colors
-#' }
 #' @importFrom grDevices colorRamp colorRampPalette
 #' @export
 ul_pal <- function(palette = "primary", neutralColor = "white", reverse = FALSE, ...) {

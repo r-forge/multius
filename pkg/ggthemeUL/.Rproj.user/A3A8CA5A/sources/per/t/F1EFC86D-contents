@@ -22,7 +22,6 @@
 #' @return A ggplot2 theme object that can be added to a ggplot.
 #'
 #' @examples
-#' \dontrun{
 #' ggplot(data = mtcars, aes(x = disp, y = mpg, color = qsec, size = wt)) +
 #' geom_point() +
 #' labs(y = "Miles per gallon",
@@ -34,7 +33,6 @@
 #' size = "Weight (1000 lbs)") +
 #' scale_color_ul(palette = "red", discrete = FALSE) +
 #' theme_ul(plot.background.fill = ul_color("lajt"))
-#' }
 #' @importFrom ggplot2 element_rect theme_gray theme element_blank element_line element_text
 #' @export
 #' @seealso \code{\link[ggplot2]{theme}}

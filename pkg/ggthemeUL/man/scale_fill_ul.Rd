@@ -39,11 +39,9 @@ Applies color fill to the given data based on the University of Ljubljana's visu
 This function returns a color fill scale to be used with ggplot2. It uses color palettes defined according to the visual identity of the University of Ljubljana.
 }
 \examples{
-\dontrun{
 ggplot(mtcars, aes(x = mpg, fill = factor(cyl))) +
 geom_density(alpha = 0.7) +
 scale_fill_ul(discrete = TRUE)
-}
 }
 \seealso{
 \code{\link[ggplot2]{scale_fill_gradientn}}, \code{\link[ggplot2]{scale_fill_gradient2}}, \code{\link[ggplot2]{discrete_scale}}

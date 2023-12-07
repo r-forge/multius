@@ -63,7 +63,6 @@ A ggplot2 theme object that can be added to a ggplot.
 This function creates a ggplot2 theme that follows the visual identity of the University of Ljubljana.
 }
 \examples{
-\dontrun{
 ggplot(data = mtcars, aes(x = disp, y = mpg, color = qsec, size = wt)) +
 geom_point() +
 labs(y = "Miles per gallon",
@@ -75,7 +74,6 @@ color = "1/4 mile time (seconds)",
 size = "Weight (1000 lbs)") +
 scale_color_ul(palette = "red", discrete = FALSE) +
 theme_ul(plot.background.fill = ul_color("lajt"))
-}
 }
 \seealso{
 \code{\link[ggplot2]{theme}}

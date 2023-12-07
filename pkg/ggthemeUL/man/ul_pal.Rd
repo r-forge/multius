@@ -32,8 +32,6 @@ of the University of Ljubljana. It includes the primary and secondary palettes,
 individual color gradations, and multiple divergent color palettes.
 }
 \examples{
-\dontrun{
 pal <- ul_pal("redBlue", reverse = TRUE)
 pal(7)  # Generates a reversed divergent palette of 7 colors
-}
 }
