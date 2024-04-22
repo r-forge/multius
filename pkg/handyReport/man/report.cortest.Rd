@@ -4,22 +4,31 @@
 \alias{report.cortest}
 \title{Report the results of correlation test}
 \usage{
-report.cortest(varNamesX, varNamesY, data, method = "pearson")
+report.cortest(
+  varNamesX,
+  varNamesY,
+  data,
+  method = "pearson",
+  confLevel = 0.95,
+  language = "english"
+)
 }
 \arguments{
 \item{varNamesX}{A vector of strings representing the names of the X variables in the data frame.}
 
 \item{varNamesY}{A vector of strings representing the names of the Y variables in the data frame.}
 
-\item{data}{A data frame containing the variables to be analyzed.}
+\item{data}{A data frame or an object of class \code{survey.design} from \code{survey} package.}
 
 \item{method}{A string indicating the method of correlation test to be conducted: \code{"pearson"} (default) or \code{"spearman"}.}
+
+\item{confLevel}{A numeric value between 0 and 1 indicating the confidence level for the confidence interval of the Pearson correlation. Default is \code{0.95}. This is ignored for Spearman correlation and when data is weighted.}
+
+\item{language}{The language used for displaying the statistics in the frequency table. This parameter accepts two values: \code{english} or \code{slovene}. Depending on the chosen language, all statistical terms and output will be adjusted accordingly. Default is \code{english}.}
 }
 \value{
 A matrix with rows representing each pair of variables, and columns representing:
         1) variable pair,
-        2) test statistic,
-        3) degrees of freedom (for Pearson's r),
         4) p-value,
         5) correlation coefficient (Pearson or Spearman, as specified),
         6) 95% confidence interval lower bound (for Pearson's r),
@@ -28,6 +37,9 @@ A matrix with rows representing each pair of variables, and columns representing
 \description{
 This function conducts correlation tests between pairs of interval variables.
 It performs either Pearson or Spearman correlation tests, depending on the chosen method.
+}
+\details{
+The function calculates correlation coefficients, p-values, and, for Pearson method, confidence intervals if specified and applicable. For weighted survey data, confidence intervals are not calculated. Spearman correlation is available only for non-weighted data.
 }
 \examples{
 report.cortest(varNamesX = "drat", varNamesY = c("wt", "disp", "hp"), data = mtcars)

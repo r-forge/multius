@@ -5,9 +5,9 @@
 #'
 #' @param catVarName A string representing the name of the ordinal factor variable in the data frame.
 #' @param numVarNames A vector of strings representing the names of the interval variables in the data frame.
-#' @param data A data frame containing the variables to be analyzed.
+#' @param data A data frame or an object of class \code{survey.design} from \code{survey} package.
 #' @param omegaSq Logical, if \code{TRUE}, the function also calculates and reports omega squared effect sizes.
-#'               By default, \code{omegaSq = FALSE}.
+#'               By default, \code{omegaSq = FALSE}. Not implemented for weighted data.
 #'
 #' @return A matrix with rows representing each specified interval variable, and columns representing:
 #'         1) means for each level of the ordinal factor (one column per level),
@@ -23,22 +23,45 @@
 #' report.anova(catVarName = "gear", numVarNames = c("mpg", "wt"),
 #' data = mtcars, omegaSq = TRUE)
 #' @author Marjan Cugmas
-#' @importFrom stats t.test aov chisq.test oneway.test sd t.test
+#' @importFrom stats t.test aov chisq.test oneway.test sd t.test as.formula formula
+#' @importFrom survey svyby svymean
 #' @export
 report.anova <- function(catVarName, numVarNames, data, omegaSq = FALSE){
-  if (is.factor(data[, which(names(data)==catVarName)]) == FALSE){
-    data[, which(names(data)==catVarName)] <- as.factor(data[, which(names(data)==catVarName)])
+  # omegaSq not implemented for weighted data
+  utezi <- any(class(data) %in% c("survey.design2", "survey.design"))
+  if (!utezi) {
+    if (is.factor(data[, which(names(data)==catVarName)]) == FALSE){
+      data[, which(names(data)==catVarName)] <- as.factor(data[, which(names(data)==catVarName)])
+    }
+    if (length(catVarName) > 1) stop("More than one categorical variable is provided.")
+    ravni <- levels(data[, which(names(data)==catVarName)])
+  } else {
+    ravni <- levels(data$variables[, which(names(data$variables)==catVarName)])
   }
-  if (length(catVarName) > 1) stop("More than one categorical variable is provided.")
-  ravni <- levels(data[, which(names(data)==catVarName)])
+
+  omegaSq <- ifelse(utezi == TRUE, yes = FALSE, no = omegaSq)
+
   nravni <- length(ravni)
+
   res <- matrix(NA, nrow = length(numVarNames), ncol = 4 + nravni + as.numeric(omegaSq==TRUE))
   for (i in 1:length(numVarNames)) {
-    tmp <- data[, c(which(names(data)==catVarName),  which(names(data)==numVarNames[i]))]
-    means <- round(as.vector(by(data = tmp[, numVarNames[i]], INDICES = tmp[, catVarName], mean, na.rm = TRUE)), 2)
-    res[i, 1:nravni] <- means
+    if (!utezi) {
+      tmp <- data[, c(which(names(data)==catVarName),  which(names(data)==numVarNames[i]))]
+      means <- round(as.vector(by(data = tmp[, numVarNames[i]], INDICES = tmp[, catVarName], mean, na.rm = TRUE)), 2)
+      model <- oneway.test(tmp[, numVarNames[i]] ~ as.factor(tmp[, catVarName]), var.equal = FALSE)
+    } else {
+      means <- round(survey::svyby(formula = stats::as.formula(paste("~", numVarNames[i])),
+                           by = stats::as.formula(paste("~", catVarName)), FUN = survey::svymean, design = data)[,2], 2)
+      m <- survey::svyglm(stats::as.formula(paste0(numVarNames[i], "~", catVarName)), design=data)
+      mm <- survey::regTermTest(m,stats::as.formula(paste("~", catVarName)))
+      model <- list()
+      model$statistic <- mm$Ftest
+      model$parameter[1] <- mm$df
+      model$parameter[2] <- mm$ddf
+      model$p.value <- mm$p
+    }
 
-    model <- oneway.test(tmp[, numVarNames[i]] ~ as.factor(tmp[, catVarName]), var.equal = FALSE)
+    res[i, 1:nravni] <- means
 
     res[i, 1+nravni] <- round(model$statistic, 2)
     res[i, 2+nravni] <- model$parameter[1]

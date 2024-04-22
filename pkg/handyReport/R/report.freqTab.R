@@ -1,45 +1,108 @@
 #' A frequency table with missing values
 #'
 #' @description The function creates a frequency table (with percentages and cumulative percentages) with valid values and with missing values.
-#' @param x A vector with the values of categorical variable.
-#' @param dec Number of decimal places for percentages.
-#' @param useNA Wheter to include NA values in the table. Default is always (it includes NAs even when the count of NAs is zero), other ppossible values are no (do not include NAs) and ifany (NAs are included if they are present in the data). See ?table for more.
+#' @param catVarName The name of a categorical variable.
+#' @param data A data frame or an object of class \code{survey.design} from \code{survey} package.
+#' @param dec Number of decimal places for percentages. Default is \code{2}.
+#' @param dec.freq Number of decimal places for frequencies. Defaults is \code{0}. Only used when an object of class \code{survey.design} is specified with the parameter \code{data}.
+#' @param useNA Wheter to include NA values in the table. Default is \code{always} (it includes NAs even when the count of NAs is zero), other ppossible values are \code{no} (do not include NAs) and \code{ifany} (NAs are included if they are present in the data). See \code{?table} for more.
 #' @param cumulative Wheter to report cumulative frequencies and percentages or not. Default is \code{FALSE}.
+#' @param total.row Logical; if `TRUE`, adds a total row at the bottom of the frequency table. Default is \code{TRUE}.
+#' @param language The language used for displaying the statistics in the frequency table. This parameter accepts two values: \code{english} or \code{slovene}. Depending on the chosen language, all statistical terms and output will be adjusted accordingly. Default is \code{english}.
 #' @examples
-#' x <- mtcars$gear
-#' x[sample(1:length(x), size = 5, replace = FALSE)] <- NA
-#' report.freqTab(x = x, dec = 2, useNA = "always")
-#' @note This is a modified function freqTab from the package multiUS. The aouthor of the original function is Aleš Žiberna.
+#' report.freqTab(catVarName = "gear", dec = 2, useNA = "always", data = mtcars)
+#' @note This is a modified function \code{freqTab} from the package \code{multiUS}. The author of the original function is Aleš Žiberna.
 #' @author Marjan Cugmas
 #' @export
 
-report.freqTab <- function(x, dec = 2, cumulative = FALSE, useNA = "always"){
-  if (is.factor(x) == FALSE) x <- as.factor(x)
-  tblValid <- table(x)
+report.freqTab <- function(catVarName,
+                           data,
+                           dec = 2,
+                           dec.freq = 0,
+                           cumulative = FALSE,
+                           useNA = "always",
+                           language = "english",
+                           total.row = TRUE){
+  utezi <- any(class(data) %in% c("survey.design2", "survey.design"))
+  if (!utezi) {
+    if (is.factor(data[, catVarName]) == FALSE) data[, catVarName] <- as.factor(data[, catVarName])
+    tblValid <- table(data[, catVarName])
+  } else {
+    tblValid <- round(survey::svytable(stats::as.formula(paste("~", catVarName)), data), dec.freq)
+  }
+
   cumFreqValid <- cumsum(tblValid)
   percValid <- tblValid/sum(tblValid) * 100
   cumPercValid <- cumsum(percValid)
+
   if (!is.null(dec)) {
     percValid <- round(percValid, dec)
     cumPercValid <- round(cumPercValid, dec)
   }
   frekValid <- as.data.frame(cbind("Category" = names(tblValid), "Valid %" = percValid, "Valid Cum. %" = cumPercValid), stringsAsFactors = FALSE)
-  frekValid <- rbind(frekValid, c(NA,0,0))
+
   if (useNA != "no"){
-    tbl <- table(x, useNA = useNA)
-    cumFreq <- cumsum(tbl)
-    perc <- tbl/sum(tbl) * 100
-    cumPerc <- cumsum(perc)
-    if (!is.null(dec)) {
-      perc <- round(perc, dec)
-      cumPerc <- round(cumPerc, dec)
-    }
-    frekTab <- as.data.frame(cbind("Category" = names(tbl),  "Freq." = tbl, "Cum. Freq." = cumFreq, "%" = perc, "Cum. %" = cumPerc), stringsAsFactors = FALSE)
-    freqTab <- merge(frekTab, frekValid, by = "Category", all = TRUE, sort = FALSE)
-    freqTab[is.na(freqTab$Category), "Category"] <- "Missing value"
-    freqTab[is.na(freqTab)] <- ""
+    frekValid <- rbind(frekValid, c(NA,0,0))
+    if (!utezi) {
+      tbl <- table(data[, catVarName], useNA = useNA)
+    } else {tbl <- round(survey::svytable(stats::as.formula(paste("~", catVarName)), data, addNA = TRUE, na.action = "na.pass"), dec.freq)}
   }
-  if (useNA == "no") freqTab <- frekValid
+  if (useNA == "no") {
+    tbl <- tblValid
+  }
+
+  cumFreq <- cumsum(tbl)
+  perc <- tbl/sum(tbl) * 100
+  cumPerc <- cumsum(perc)
+  if (!is.null(dec)) {
+    perc <- round(perc, dec)
+    cumPerc <- round(cumPerc, dec)
+  }
+
+  frekTab <- as.data.frame(cbind("Category" = names(tbl),  "Freq." = tbl, "Cum. Freq." = cumFreq, "%" = perc, "Cum. %" = cumPerc), stringsAsFactors = FALSE)
+
+  freqTab <- merge(frekTab, frekValid, by = "Category", all = TRUE, sort = FALSE)
+  freqTab[is.na(freqTab$Category), "Category"] <- "Missing value"
+  freqTab[is.na(freqTab)] <- ""
+
+  pogoj1 <- useNA == "no"
+  pogoj2 <- useNA == "ifany"
+  pogojTmp <- freqTab[freqTab$Category%in%"Missing value", "Valid Cum. %"]==0
+  pogoj3 <- ifelse(length(pogojTmp)==0, no = pogojTmp, yes = TRUE)
+
+  if (pogoj1 | (pogoj2&pogoj3)) {
+    freqTab <- freqTab[,-which(colnames(freqTab) %in% c("Valid %", "Valid Cum. %"))]
+    freqTab <- freqTab[!(freqTab$Category %in% "Missing value"),]
+  }
+
   if (cumulative == FALSE) freqTab <- freqTab[, -which(colnames(freqTab) %in% c("Cum. Freq.", "Cum. %", "Valid Cum. %"))]
+
+  if (total.row) {
+    freqTab <- rbind(freqTab, c("Total", rep(NA, times = ncol(freqTab)-1)))
+    for (i in c("Freq.", "%", "Valid %")) {
+      if (i %in% colnames(frekTab)) {
+
+        vsota <- sum(as.numeric(freqTab[,i]), na.rm = TRUE)
+        if (i %in% c("%", "Valid %")) vsota <- formatC(round(vsota), format = "f", digits = dec)
+
+        freqTab[freqTab$Category %in% "Total", i] <- vsota
+      }
+    }
+  }
+
+  if (language %in% c("Slovene", "slovene", "slo", "s")) {
+    if (total.row) freqTab[freqTab$Category %in% "Total", "Category"] <- "Skupaj"
+    freqTab[freqTab$Category %in% "Missing value", "Category"] <- "Manjkajo\u010da vrednost"
+    colnames(freqTab)[colnames(freqTab) %in% "Category"] <- "Kategorija"
+    colnames(freqTab)[colnames(freqTab) %in% "Freq."] <- "Frekvenca"
+    colnames(freqTab)[colnames(freqTab) %in% "Cum. Freq."] <- "Kumulativna frekvenca"
+    colnames(freqTab)[colnames(freqTab) %in% "%"] <- "Dele\u017e"
+    colnames(freqTab)[colnames(freqTab) %in% "Cum. %"] <- "Kumulativni dele\u017e"
+    colnames(freqTab)[colnames(freqTab) %in% "Valid %"] <- "Veljavni dele\u017e"
+  }
+
+  freqTab[is.na(freqTab)] <- ""
+
   return(freqTab)
 }
+

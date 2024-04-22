@@ -5,9 +5,10 @@
 #'
 #' @param varNamesX A vector of strings representing the names of the X variables in the data frame.
 #' @param varNamesY A vector of strings representing the names of the Y variables in the data frame.
-#' @param data A data frame containing the variables to be analyzed.
+#' @param data A data frame or an object of class \code{survey.design} from \code{survey} package.
 #' @param simulate.p.value A logical value indicating whether to compute p-values by Monte Carlo simulation. Default is TRUE.
 #' @param cramer A logical value indicating whether to compute Cramer's V for the pairs. Default is FALSE.
+#' @param language The language used for displaying the statistics in the frequency table. This parameter accepts two values: \code{english} or \code{slovene}. Depending on the chosen language, all statistical terms and output will be adjusted accordingly. Default is \code{english}.
 #' @param ... Additional arguments to be passed to the chisq.test function.
 #'
 #' @return A matrix with rows representing each pair of variables, and columns representing:
@@ -22,7 +23,9 @@
 #' varNamesY = "gear", data = mtcars, simulate.p.value = TRUE)
 #' @author Marjan Cugmas
 #' @export
-report.chitest <- function(varNamesX, varNamesY, data, simulate.p.value = TRUE, cramer = FALSE, ...){
+report.chitest <- function(varNamesX, varNamesY, data, simulate.p.value = TRUE, cramer = FALSE, language = "english", ...){
+  utezi <- any(class(data) %in% c("survey.design2", "survey.design"))
+  simulate.p.value <- ifelse((simulate.p.value == TRUE) | (utezi == FALSE), yes = TRUE, no = FALSE)
   res <- matrix(NA, nrow = length(varNamesX)*length(varNamesY), ncol = 2 +
                   as.numeric(simulate.p.value == TRUE) + as.numeric(simulate.p.value == FALSE) + as.numeric(simulate.p.value == FALSE) +
                   as.numeric(cramer == TRUE))
@@ -33,33 +36,39 @@ report.chitest <- function(varNamesX, varNamesY, data, simulate.p.value = TRUE, 
   basicNames <- basicNames[!basicNames %in% ""]
   colnames(res) <- basicNames
 
+  if (language %in% c("Slovene", "slovene", "slo", "s")) {
+    veznik <- "in"
+  } else {
+    veznik <- "and"
+  }
+
   stevec <- 1
   for (i in 1:length(varNamesX)) {
     for (j in 1:length(varNamesY)) {
-      cor.res <- chisq.test(table(data[, varNamesX[i]], data[,varNamesY[j]]), simulate.p.value =  simulate.p.value, ...)
-      if(simulate.p.value == TRUE){
-
-        vrstica <- c(paste0(varNamesX[i], " and ", varNamesY[j]),
-                     round(cor.res$statistic, 2),
-                     ifelse(cor.res$p.value < 0.001, yes = "< 0.01", no = round(cor.res$p.value, 3)))
-        if (cramer == TRUE) {
-          vrstica <- c(vrstica, round((cor.res$statistic/sum(cor.res$observed))/min(nrow(cor.res$observed)-1, ncol(cor.res$observed)-1), 2))
-        }
-        res[stevec, ] <- vrstica
+      if (!utezi){
+        cor.res <- chisq.test(table(data[, varNamesX[i]], data[,varNamesY[j]]), simulate.p.value =  simulate.p.value, ...)
+      } else {
+        cor.res <- survey::svychisq(formula = stats::formula(paste0("~", varNamesX[i], "+", varNamesY[j])), statistic = "Chisq", design = data)
       }
-      if(simulate.p.value == FALSE){
-        vrstica <- c(paste0(varNamesX[i], " and ", varNamesY[j]),
+
+      if (cramer == TRUE) {
+        cramerV <- round((cor.res$statistic/sum(cor.res$observed))/min(nrow(cor.res$observed)-1, ncol(cor.res$observed)-1), 2)
+      }
+
+      if(simulate.p.value){
+        vrstica <- c(paste0(varNamesX[i], " ", veznik, " ", varNamesY[j]),
+                     round(cor.res$statistic, 2),
+                     ifelse(cor.res$p.value < 0.001, yes = "< 0.01", no = round(cor.res$p.value, 2)))
+      } else {
+        vrstica <- c(paste0(varNamesX[i], " ", veznik, " ", varNamesY[j]),
                      round(cor.res$statistic, 2),
                      cor.res$parameter,
-                     ifelse(cor.res$p.value < 0.001, yes = "< 0.01", no = round(cor.res$p.value, 3)))
-        if (cramer == TRUE) {
-          vrstica <- c(vrstica, round((cor.res$statistic/sum(cor.res$observed))/min(nrow(cor.res$observed)-1, ncol(cor.res$observed)-1), 2))
-        }
-        res[stevec, ] <- vrstica
+                     ifelse(cor.res$p.value < 0.001, yes = "< 0.01", no = round(cor.res$p.value, 2)))
       }
+
+      if (cramer == TRUE) {res[stevec, ] <- c(vrstica, cramerV)} else {res[stevec, ] <- vrstica}
       stevec <- stevec+1
     }
   }
   return(res)
 }
-

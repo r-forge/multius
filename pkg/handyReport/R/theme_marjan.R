@@ -43,5 +43,3 @@ theme_marjan <- function(legend.position = "top"){
   )
 }
 
-
-

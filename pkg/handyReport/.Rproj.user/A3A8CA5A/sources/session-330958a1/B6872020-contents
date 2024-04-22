@@ -1,0 +1,10 @@
+Package: handyReport
+Title: Handy package for reports
+Version: 0.0.5.100
+Authors@R: person(given = "Marjan", family = "Cugmas", role = c("aut", "cre"), email = "marjan.cugmas@fdv.uni-lj.si", comment = c(ORCID = "0000-0002-1715-2460"))
+Description: The package contains functions for summary tables and some statistical tests. Be aware of multitesting problem, when using this package.
+License: GPL
+Encoding: UTF-8
+LazyData: true
+Imports: ggplot2, jtools, survey
+RoxygenNote: 7.3.1

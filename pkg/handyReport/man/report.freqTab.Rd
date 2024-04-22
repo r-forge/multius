@@ -4,27 +4,42 @@
 \alias{report.freqTab}
 \title{A frequency table with missing values}
 \usage{
-report.freqTab(x, dec = 2, cumulative = FALSE, useNA = "always")
+report.freqTab(
+  catVarName,
+  data,
+  dec = 2,
+  dec.freq = 0,
+  cumulative = FALSE,
+  useNA = "always",
+  language = "english",
+  total.row = TRUE
+)
 }
 \arguments{
-\item{x}{A vector with the values of categorical variable.}
+\item{catVarName}{The name of a categorical variable.}
 
-\item{dec}{Number of decimal places for percentages.}
+\item{data}{A data frame or an object of class \code{survey.design} from \code{survey} package.}
+
+\item{dec}{Number of decimal places for percentages. Default is \code{2}.}
+
+\item{dec.freq}{Number of decimal places for frequencies. Defaults is \code{0}. Only used when an object of class \code{survey.design} is specified with the parameter \code{data}.}
 
 \item{cumulative}{Wheter to report cumulative frequencies and percentages or not. Default is \code{FALSE}.}
 
-\item{useNA}{Wheter to include NA values in the table. Default is always (it includes NAs even when the count of NAs is zero), other ppossible values are no (do not include NAs) and ifany (NAs are included if they are present in the data). See ?table for more.}
+\item{useNA}{Wheter to include NA values in the table. Default is \code{always} (it includes NAs even when the count of NAs is zero), other ppossible values are \code{no} (do not include NAs) and \code{ifany} (NAs are included if they are present in the data). See \code{?table} for more.}
+
+\item{language}{The language used for displaying the statistics in the frequency table. This parameter accepts two values: \code{english} or \code{slovene}. Depending on the chosen language, all statistical terms and output will be adjusted accordingly. Default is \code{english}.}
+
+\item{total.row}{Logical; if `TRUE`, adds a total row at the bottom of the frequency table. Default is \code{TRUE}.}
 }
 \description{
 The function creates a frequency table (with percentages and cumulative percentages) with valid values and with missing values.
 }
 \note{
-This is a modified function freqTab from the package multiUS. The aouthor of the original function is Aleš Žiberna.
+This is a modified function \code{freqTab} from the package \code{multiUS}. The author of the original function is Aleš Žiberna.
 }
 \examples{
-x <- mtcars$gear
-x[sample(1:length(x), size = 5, replace = FALSE)] <- NA
-report.freqTab(x = x, dec = 2, useNA = "always")
+report.freqTab(catVarName = "gear", dec = 2, useNA = "always", data = mtcars)
 }
 \author{
 Marjan Cugmas

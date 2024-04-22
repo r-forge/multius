@@ -4,12 +4,20 @@
 \alias{report.ordinal}
 \title{Report the distributions of ordinal variables}
 \usage{
-report.ordinal(ordVarNames, data, type = 1, dec = 1, attachLabels = FALSE)
+report.ordinal(
+  ordVarNames,
+  data,
+  type = 1,
+  dec = 1,
+  dec.freq = 0,
+  language = "english",
+  attachLabels = FALSE
+)
 }
 \arguments{
 \item{ordVarNames}{A vector of strings representing the names of the ordinal variables in the dataset.}
 
-\item{data}{A data frame containing the ordinal variables to be analysed.}
+\item{data}{A data frame or an object of class \code{survey.design} from \code{survey} package.}
 
 \item{type}{An integer indicating the type of the report:
 1 = proportions (default),
@@ -17,6 +25,10 @@ report.ordinal(ordVarNames, data, type = 1, dec = 1, attachLabels = FALSE)
 3 = counts and proportions.}
 
 \item{dec}{The number of decimal places to round the values.}
+
+\item{dec.freq}{Number of decimal places for frequencies. Defaults is \code{0}. Only used when an object of class \code{survey.design} is specified with the parameter \code{data}.}
+
+\item{language}{The language used for displaying the statistics in the frequency table. This parameter accepts two values: \code{english} or \code{slovene}. Depending on the chosen language, all statistical terms and output will be adjusted accordingly. Default is \code{english}.}
 
 \item{attachLabels}{Logical, if \code{TRUE}, attempts to attach variable labels from the attributes of the data frame.
 By default, \code{attachLabels = FALSE}.}

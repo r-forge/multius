@@ -11,10 +11,10 @@ report.anova(catVarName, numVarNames, data, omegaSq = FALSE)
 
 \item{numVarNames}{A vector of strings representing the names of the interval variables in the data frame.}
 
-\item{data}{A data frame containing the variables to be analyzed.}
+\item{data}{A data frame or an object of class \code{survey.design} from \code{survey} package.}
 
 \item{omegaSq}{Logical, if \code{TRUE}, the function also calculates and reports omega squared effect sizes.
-By default, \code{omegaSq = FALSE}.}
+By default, \code{omegaSq = FALSE}. Not implemented for weighted data.}
 }
 \value{
 A matrix with rows representing each specified interval variable, and columns representing:

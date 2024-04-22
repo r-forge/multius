@@ -4,19 +4,30 @@
 \alias{report.multipleChoice}
 \title{Report the distributions of several dichotomous variables}
 \usage{
-report.multipleChoice(data, varNames, event = 1, attachLabels = FALSE)
+report.multipleChoice(
+  data,
+  varNames,
+  event = 1,
+  attachLabels = FALSE,
+  dec.freq = 0,
+  language = "english"
+)
 }
 \arguments{
-\item{data}{A data frame containing the variables to be analysed.}
+\item{data}{A data frame or an object of class \code{survey.design} from \code{survey} package.}
 
 \item{varNames}{A vector of strings representing the names of the variables in the data frame.}
 
 \item{event}{A value (numeric or character) representing the event of interest to be reported.
 This event is transformed to numeric 1 in each specified variable.
-By default, event = 1.}
+Default is \code{1}.}
 
 \item{attachLabels}{Logical, if \code{TRUE}, attempts to attach variable labels from the attributes of the data frame.
-By default, \code{attachLabels = FALSE}.}
+Default is \code{FALSE}.}
+
+\item{dec.freq}{Number of decimal places for frequencies. Defaults is \code{0}. Only used when an object of class \code{survey.design} is specified with the parameter \code{data}.}
+
+\item{language}{The language used for displaying the statistics in the frequency table. This parameter accepts two values: \code{english} or \code{slovene}. Depending on the chosen language, all statistical terms and output will be adjusted accordingly. Default is \code{english}.}
 }
 \value{
 A data frame with columns representing:

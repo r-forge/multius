@@ -11,9 +11,9 @@ report.ttest(catVarName, numVarNames, data, hedgesG = FALSE, CI = FALSE)
 
 \item{numVarNames}{A vector of strings. The names of the numerical variables to be used in the t-tests.}
 
-\item{data}{A data frame. The data to be used in the t-tests.}
+\item{data}{A data frame or an object of class \code{survey.design} from \code{survey} package.}
 
-\item{hedgesG}{A logical. If \code{TRUE}, Hedges' G effect size is computed for each t-test. Defaults to \code{FALSE}.}
+\item{hedgesG}{A logical. If \code{TRUE}, Hedges' G effect size is computed for each t-test. Defaults to \code{FALSE}. Not implemented for weighted data.}
 
 \item{CI}{A logical. If \code{TRUE}, confidence intervals are computed for each t-test. Defaults to \code{FALSE}.}
 }

@@ -10,6 +10,7 @@ report.chitest(
   data,
   simulate.p.value = TRUE,
   cramer = FALSE,
+  language = "english",
   ...
 )
 }
@@ -18,11 +19,13 @@ report.chitest(
 
 \item{varNamesY}{A vector of strings representing the names of the Y variables in the data frame.}
 
-\item{data}{A data frame containing the variables to be analyzed.}
+\item{data}{A data frame or an object of class \code{survey.design} from \code{survey} package.}
 
 \item{simulate.p.value}{A logical value indicating whether to compute p-values by Monte Carlo simulation. Default is TRUE.}
 
 \item{cramer}{A logical value indicating whether to compute Cramer's V for the pairs. Default is FALSE.}
+
+\item{language}{The language used for displaying the statistics in the frequency table. This parameter accepts two values: \code{english} or \code{slovene}. Depending on the chosen language, all statistical terms and output will be adjusted accordingly. Default is \code{english}.}
 
 \item{...}{Additional arguments to be passed to the chisq.test function.}
 }
