@@ -52,7 +52,9 @@ report.chitest <- function(varNamesX, varNamesY, data, simulate.p.value = TRUE, 
       }
 
       if (cramer == TRUE) {
-        cramerV <- round((cor.res$statistic/sum(cor.res$observed))/min(nrow(cor.res$observed)-1, ncol(cor.res$observed)-1), 2)
+        n_obs <- sum(cor.res$observed)
+        chi2_statistic <- cor.res$statistic
+        cramerV <- round(sqrt((chi2_statistic)/(n_obs*min(nrow(cor.res$observed)-1, ncol(cor.res$observed)-1))), 2)
       }
 
       if(simulate.p.value){

@@ -28,6 +28,7 @@ report.cortest <- function(varNamesX, varNamesY, data, method = "pearson", confL
   # Confidence intervals only for pearson.
   # Confidence interval only for non-weighted data.
   # Spearman only for non-weighted data
+  # if ((method == "spearman") & )
 
   if (language %in% c("Slovene", "slovene", "slo", "s")) {veznik <- "in"} else {veznik <- "and"}
 
@@ -44,7 +45,7 @@ report.cortest <- function(varNamesX, varNamesY, data, method = "pearson", confL
     }
   }
   if (method == "spearman") {
-    res <- matrix(NA, nrow = length(varNamesX)*length(varNamesY), ncol = 4)
+    res <- matrix(NA, nrow = length(varNamesX)*length(varNamesY), ncol = 3)
     colnames(res) <- c("var", "cor (Spearman)", "p")
   }
 

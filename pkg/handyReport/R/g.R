@@ -7,14 +7,20 @@
 #' @examples
 #' g(ordinal = mtcars$vs, interval = mtcars$gear, correct = TRUE)
 #' @author Marjan Cugmas
+#' @importFrom stats complete.cases
 #' @export
 
-g <- function(ordinal, interval, correct = TRUE){
-  gs <- diff(by(data = interval, ordinal, mean))/(sum((by(data = interval, ordinal, length) - 1)*by(data = interval, ordinal, sd))/(length(interval) - 2))
-
-  if (correct == TRUE){
+g <- function (ordinal, interval, correct = TRUE) {
+  tmp <- stats::complete.cases(cbind(ordinal, interval))
+  ordinal <- ordinal[tmp]
+  interval <- interval[tmp]
+  gs <- diff(by(data = interval, ordinal, mean))/(sum((by(data = interval,
+                                                          ordinal, length) - 1) * by(data = interval, ordinal,
+                                                                                     sd))/(length(interval) - 2))
+  if (correct == TRUE) {
     a <- length(interval) - 2
-    gs <- ((gamma(a/2))/(sqrt(a/2)*gamma((a-1)/2)))*gs
+    gs <- ((gamma(a/2))/(sqrt(a/2) * gamma((a - 1)/2))) *
+      gs
   }
   return(gs)
 }
