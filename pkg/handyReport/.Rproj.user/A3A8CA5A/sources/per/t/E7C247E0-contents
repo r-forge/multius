@@ -8,6 +8,7 @@
 #' @param useNA Wheter to include NA values in the table. Default is \code{always} (it includes NAs even when the count of NAs is zero), other ppossible values are \code{no} (do not include NAs) and \code{ifany} (NAs are included if they are present in the data). See \code{?table} for more.
 #' @param cumulative Wheter to report cumulative frequencies and percentages or not. Default is \code{FALSE}.
 #' @param total.row Logical; if `TRUE`, adds a total row at the bottom of the frequency table. Default is \code{TRUE}.
+#' @param sort.cat A logical or character value that specifies whether and how the categories of the frequency table should be sorted. If \code{FALSE} (the default), the categories are not sorted and appear in the order they are found in the data. If \code{"freq"}, the categories are sorted by frequency in descending order (most frequent categories first).
 #' @param language The language used for displaying the statistics in the frequency table. This parameter accepts two values: \code{english} or \code{slovene}. Depending on the chosen language, all statistical terms and output will be adjusted accordingly. Default is \code{english}.
 #' @examples
 #' report.freqTab(catVarName = "gear", dec = 2, useNA = "always", data = mtcars)
@@ -22,6 +23,7 @@ report.freqTab <- function(catVarName,
                            cumulative = FALSE,
                            useNA = "always",
                            language = "english",
+                           sort.cat = FALSE,
                            total.row = TRUE){
   utezi <- any(class(data) %in% c("survey.design2", "survey.design"))
   if (!utezi) {
@@ -30,6 +32,8 @@ report.freqTab <- function(catVarName,
   } else {
     tblValid <- round(survey::svytable(stats::as.formula(paste("~", catVarName)), data), dec.freq)
   }
+
+  if (sort.cat == "freq") tblValid <- sort(tblValid, decreasing = TRUE)
 
   cumFreqValid <- cumsum(tblValid)
   percValid <- tblValid/sum(tblValid) * 100

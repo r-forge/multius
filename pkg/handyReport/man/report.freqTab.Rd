@@ -12,6 +12,7 @@ report.freqTab(
   cumulative = FALSE,
   useNA = "always",
   language = "english",
+  sort.cat = FALSE,
   total.row = TRUE
 )
 }
@@ -29,6 +30,8 @@ report.freqTab(
 \item{useNA}{Wheter to include NA values in the table. Default is \code{always} (it includes NAs even when the count of NAs is zero), other ppossible values are \code{no} (do not include NAs) and \code{ifany} (NAs are included if they are present in the data). See \code{?table} for more.}
 
 \item{language}{The language used for displaying the statistics in the frequency table. This parameter accepts two values: \code{english} or \code{slovene}. Depending on the chosen language, all statistical terms and output will be adjusted accordingly. Default is \code{english}.}
+
+\item{sort.cat}{A logical or character value that specifies whether and how the categories of the frequency table should be sorted. If \code{FALSE} (the default), the categories are not sorted and appear in the order they are found in the data. If \code{"freq"}, the categories are sorted by frequency in descending order (most frequent categories first).}
 
 \item{total.row}{Logical; if `TRUE`, adds a total row at the bottom of the frequency table. Default is \code{TRUE}.}
 }
