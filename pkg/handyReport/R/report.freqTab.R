@@ -33,7 +33,15 @@ report.freqTab <- function(catVarName,
     tblValid <- round(survey::svytable(stats::as.formula(paste("~", catVarName)), data), dec.freq)
   }
 
-  if (sort.cat == "freq") tblValid <- sort(tblValid, decreasing = TRUE)
+  if (sort.cat == "freq"){
+    data[, catVarName] <- factor(data[, catVarName], levels = names(sort(tblValid, decreasing = TRUE)))
+    if (!utezi) {
+      if (is.factor(data[, catVarName]) == FALSE) data[, catVarName] <- as.factor(data[, catVarName])
+      tblValid <- table(data[, catVarName])
+    } else {
+      tblValid <- round(survey::svytable(stats::as.formula(paste("~", catVarName)), data), dec.freq)
+    }
+  }
 
   cumFreqValid <- cumsum(tblValid)
   percValid <- tblValid/sum(tblValid) * 100
@@ -103,6 +111,7 @@ report.freqTab <- function(catVarName,
     colnames(freqTab)[colnames(freqTab) %in% "%"] <- "Dele\u017e"
     colnames(freqTab)[colnames(freqTab) %in% "Cum. %"] <- "Kumulativni dele\u017e"
     colnames(freqTab)[colnames(freqTab) %in% "Valid %"] <- "Veljavni dele\u017e"
+    colnames(freqTab)[colnames(freqTab) %in% "Valid Cum. %"] <- "Veljavni kum. dele\u017e"
   }
 
   freqTab[is.na(freqTab)] <- ""
