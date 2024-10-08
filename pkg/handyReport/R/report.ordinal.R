@@ -48,15 +48,15 @@ report.ordinal <- function(ordVarNames, data, type = 1, dec = 1, dec.freq = 0, l
       if (type == 1)  res[i, 1:(nravni+1)] <- c(round(prop.table(table(data[,ordVarNames[i]]))*100, dec), sum(!is.na(data[,ordVarNames[i]])))
       if (type == 2) res[i, 1:(nravni+1)] <- c(table(data[, ordVarNames[i]]), sum(!is.na(data[,ordVarNames[i]])))
       if (type == 3) res[i, 1:(nravni+1)] <- c(paste0(table(data[, ordVarNames[i]]), " (", round(prop.table(table(data[,ordVarNames[i]]))*100, dec), ")"), sum(!is.na(data[,ordVarNames[i]])))
-      res[i, (nravni+2):(nravni+3)] <- round(c(mean(as.numeric(as.character(data[, ordVarNames[i]])), na.rm = TRUE), sd(as.numeric(as.character(data[, ordVarNames[i]])), na.rm = TRUE)), digits = dec)
+      res[i, (nravni+2):(nravni+3)] <- round(c(mean(as.numeric(data[, ordVarNames[i]]), na.rm = TRUE), sd(as.numeric(data[, ordVarNames[i]]), na.rm = TRUE)), digits = dec)
     }
   } else {
     for (i in 1:length(ordVarNames)){
       tmpCounts <- round(survey::svytable(stats::as.formula(paste("~", ordVarNames[i])), data), dec.freq)
       tmpPerc <- round(prop.table(tmpCounts)*100, dec)
 
-      povprecje <- survey::svymean(stats::as.formula(paste("~as.numeric(as.character(", ordVarNames[i], "))")), data, na.rm = TRUE)[1]
-      stdOdklon <- jtools::svysd(stats::as.formula(paste("~as.numeric(as.character(", ordVarNames[i], "))")), data, na.rm = TRUE)[1]
+      povprecje <- survey::svymean(stats::as.formula(paste("~as.numeric(", ordVarNames[i], ")")), data, na.rm = TRUE)[1]
+      stdOdklon <- jtools::svysd(stats::as.formula(paste("~as.numeric(", ordVarNames[i], ")")), data, na.rm = TRUE)[1]
 
       if (type == 1)  res[i, 1:(nravni+1)] <- c(tmpPerc, sum(tmpCounts))
       if (type == 2) res[i, 1:(nravni+1)] <- c(tmpCounts, sum(tmpCounts))
