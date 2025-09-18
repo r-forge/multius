@@ -9,38 +9,61 @@ plotCCA(
   xTitle = "X",
   yTitle = "Y",
   inColors = TRUE,
+  show = NULL,
   scaleLabelsFactor = 1/2,
   what = "reg",
   nDigits = 2,
-  mar = c(1, 2, 1, 1)
+  mar = c(1, 2, 1, 1),
+  gapLeft = 0,
+  customNames = NULL
 )
 }
 \arguments{
-\item{ccRes}{The output of  \code{\link[multiUS:cancorPlus]{multiUS::cancorPlus}}.}
+\item{ccRes}{The output of \code{\link[multiUS:cancorPlus]{multiUS::cancorPlus}}.}
 
-\item{xTitle}{The title of the first set of variables.}
+\item{xTitle}{Title for the first (X) set of variables.}
 
-\item{yTitle}{The title of the second set of variables.}
+\item{yTitle}{Title for the second (Y) set of variables.}
 
-\item{inColors}{Whether plot should be plotted in colours (\code{TRUE}) (default) or in black and white (\code{FALSE}).}
+\item{inColors}{Logical; plot values in color (\code{TRUE}, default) or in black
+and white (\code{FALSE}). Positive values map to blue tones, negative to red.}
 
-\item{scaleLabelsFactor}{Parameter for setting the size of values (default is \code{1/2}). The size of plotted values is proportional to  its value to the power of \code{scaleLabelsFactor}.}
+\item{show}{Integer; how many canonical dimensions to display. Defaults to
+\code{length(ccRes$cor)}.}
 
-\item{what}{Whether to plot regression coefficients (\code{"reg"}) (default) or correlations (i.e., canonical structure loadings) (\code{"cor"}).}
+\item{scaleLabelsFactor}{Numeric scaling exponent for the printed coefficients
+(default \code{1/2}). The label size is proportional to \code{|value|^scaleLabelsFactor}.}
 
-\item{nDigits}{Number of decimal places.}
+\item{what}{What to plot: regression coefficients \code{"reg"} (default) or
+canonical structure correlations \code{"cor"}. If correlations are unavailable
+in \code{ccRes$scores}, the function falls back to regression coefficients
+with a warning.}
 
-\item{mar}{Margins, default is \code{mar = c(1, 2, 1, 1)}, see \code{\link[graphics:par]{graphics::par}}.}
+\item{nDigits}{Integer; number of decimal places shown for printed values.}
+
+\item{mar}{Numeric vector of plot margins; passed to \code{\link[graphics:par]{graphics::par}}.
+Default is \code{c(1, 2, 1, 1)}.}
+
+\item{gapLeft}{Integer; number of empty column gaps to insert before the first
+canonical dimension (useful for aligning multiple panels). Default \code{0}.}
+
+\item{customNames}{Optional named character vector for relabeling variables.
+Names should match \code{rownames(ccRes$xcoef)} and/or \code{rownames(ccRes$ycoef)};
+values are the labels to display. Unmatched variables keep their original names
+(or default to \code{"Var X#"/"Var Y#"} when row names are missing).}
 }
 \value{
-It plots the plot.
+Draws the plot.
 }
 \description{
-It plots the canonical solution that is obtained by the function \code{\link[multiUS:cancorPlus]{multiUS::cancorPlus}}.
+Plot the canonical solution produced by \code{\link[multiUS:cancorPlus]{multiUS::cancorPlus}}.
+You can display either regression coefficients (canonical weights) or canonical
+structure correlations for the first \code{show} canonical dimensions, with
+optional color-coding by sign and magnitude.
 }
 \examples{
 tmp<-cancorPlus(x = mtcars[, c(1,2,3)], y = mtcars[, c(4,5, 6)], useCCApackage = TRUE)
-plotCCA(tmp, scaleLabelsFactor = 1/2, what = "cor")
+plotCCA(tmp, scaleLabelsFactor = 1/2, what = "cor", customNames = c("cyl" = "Cylinders"))
 }
 \author{
 Marjan Cugmas
