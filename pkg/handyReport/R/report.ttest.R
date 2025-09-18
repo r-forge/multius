@@ -62,7 +62,7 @@ report.ttest <- function(catVarName, numVarNames, data, hedgesG = FALSE, CI = FA
     res[i, 1:nravni] <- means
     res[i, 1+nravni] <- round(model$statistic, 2)
     res[i, 2+nravni] <- round(model$parameter, 2)
-    res[i, 3+nravni] <- ifelse(model$p.value < 0.001, yes = "< 0.01", no = round(model$p.value, 3))
+    res[i, 3+nravni] <- ifelse(model$p.value < 0.01, yes = "< 0.01", no = round(model$p.value, 3))
     if (CI) {
       res[i, 4+nravni] <- round(model$conf.int[1], 2)
       res[i, 5+nravni] <- round(model$conf.int[2], 2)

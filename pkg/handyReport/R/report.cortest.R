@@ -76,11 +76,11 @@ report.cortest <- function(varNamesX, varNamesY, data, method = "pearson", confL
         if (!confLevel) {
           res[stevec, ] <- c(paste0(varNamesX[i], " ", veznik, " ", varNamesY[j]),
                              round(cor.res$estimate, 2),
-                             ifelse(cor.res$p.value < 0.001, yes = "< 0.01", no = round(cor.res$p.value, 3)))
+                             ifelse(cor.res$p.value < 0.01, yes = "< 0.01", no = round(cor.res$p.value, 3)))
         } else {
           res[stevec, ] <- c(paste0(varNamesX[i], " ", veznik, " ", varNamesY[j]),
                              round(cor.res$estimate, 2),
-                             ifelse(cor.res$p.value < 0.001, yes = "< 0.01", no = round(cor.res$p.value, 3)),
+                             ifelse(cor.res$p.value < 0.01, yes = "< 0.01", no = round(cor.res$p.value, 3)),
                              ifelse(is.null(cor.res$conf.int[1]), yes = "", no = round(cor.res$conf.int[1], 2)),
                              ifelse(is.null(cor.res$conf.int[2]), yes = "", no = round(cor.res$conf.int[2], 2)))
         }
@@ -89,7 +89,7 @@ report.cortest <- function(varNamesX, varNamesY, data, method = "pearson", confL
       if (method == "spearman"){
         res[stevec, ] <- c(paste0(varNamesX[i], " ", veznik, " ", varNamesY[j]),
                            round(cor.res$estimate, 2),
-                           ifelse(cor.res$p.value < 0.001, yes = "< 0.01", no = round(cor.res$p.value, 3)))
+                           ifelse(cor.res$p.value < 0.01, yes = "< 0.01", no = round(cor.res$p.value, 3)))
       }
       stevec <- stevec+1
     }

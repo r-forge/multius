@@ -60,12 +60,12 @@ report.chitest <- function(varNamesX, varNamesY, data, simulate.p.value = TRUE, 
       if(simulate.p.value){
         vrstica <- c(paste0(varNamesX[i], " ", veznik, " ", varNamesY[j]),
                      round(cor.res$statistic, 2),
-                     ifelse(cor.res$p.value < 0.001, yes = "< 0.01", no = round(cor.res$p.value, 2)))
+                     ifelse(cor.res$p.value < 0.01, yes = "< 0.01", no = round(cor.res$p.value, 2)))
       } else {
         vrstica <- c(paste0(varNamesX[i], " ", veznik, " ", varNamesY[j]),
                      round(cor.res$statistic, 2),
                      cor.res$parameter,
-                     ifelse(cor.res$p.value < 0.001, yes = "< 0.01", no = round(cor.res$p.value, 2)))
+                     ifelse(cor.res$p.value < 0.01, yes = "< 0.01", no = round(cor.res$p.value, 2)))
       }
 
       if (cramer == TRUE) {res[stevec, ] <- c(vrstica, cramerV)} else {res[stevec, ] <- vrstica}

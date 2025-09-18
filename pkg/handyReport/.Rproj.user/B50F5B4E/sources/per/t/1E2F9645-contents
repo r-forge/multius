@@ -1,0 +1,79 @@
+#' Report the distributions of several dichotomous variables
+#'
+#' This function reports the frequencies of a specified event in multiple variables of a dataset.
+#' It converts the event of interest to numeric, calculates the frequency of the event,
+#' the number of valid and invalid entries for each variable, and optionally attaches variable labels.
+#'
+#' @param data A data frame or an object of class \code{survey.design} from \code{survey} package.
+#' @param varNames A vector of strings representing the names of the variables in the data frame.
+#' @param dec.freq Number of decimal places for frequencies. Defaults is \code{0}. Only used when an object of class \code{survey.design} is specified with the parameter \code{data}.
+#' @param language The language used for displaying the statistics in the frequency table. This parameter accepts two values: \code{english} or \code{slovene}. Depending on the chosen language, all statistical terms and output will be adjusted accordingly. Default is \code{english}.
+#' @param event A value (numeric or character) representing the event of interest to be reported.
+#'              This event is transformed to numeric 1 in each specified variable.
+#'              Default is \code{1}.
+#' @param attachLabels Logical, if \code{TRUE}, attempts to attach variable labels from the attributes of the data frame.
+#'                     Default is \code{FALSE}.
+#'
+#' @return A data frame with columns representing:
+#'         1) the frequency of the event,
+#'         2) the percentage of the event,
+#'         3) the number of valid (non-NA) entries,
+#'         4) the number of invalid (NA) entries for each specified variable.
+#'
+#' @examples
+#' data <- data.frame(A = c(1, 1, 2, NA), B = c(1, 2, 2, 1), C = c(NA, 1, 1, 1))
+#' varNames <- c("A", "B", "C")
+#' report.multipleChoice(data, varNames)
+#' @author Marjan Cugmas
+#' @importFrom stats t.test aov chisq.test oneway.test sd t.test as.formula formula
+#' @importFrom survey svyby svymean
+#' @export
+
+report.multipleChoice <- function(data, varNames, event = 1, attachLabels = FALSE, dec.freq = 0, language = "english") {
+  utezi <- any(class(data) %in% c("survey.design2", "survey.design"))
+  if (!utezi){
+    for (i in varNames) data[,i] <- as.numeric(data[,i]== event)
+    frekvence <- colSums(data[,varNames], na.rm = TRUE)
+    veljavne <- apply(data[,varNames], 2, FUN = function(x) sum(!is.na(x)))
+    neveljavne <- apply(data[,varNames], 2, FUN = function(x) sum(is.na(x)))
+    ret <- data.frame(varNames,
+                      frekvence,
+                      round(frekvence/veljavne*100),
+                      veljavne, check.names = FALSE,
+                      neveljavne)
+    colnames(ret) <- c("Category", paste0("Frequency (", event, ")"),
+                       paste0("Share (", event, ")"),
+                       "n", "NA")
+    if (attachLabels) try({ret$Category <- attributes(data)$variable.labels[varNames]}, silent = TRUE)
+    if (language %in% c("Slovene", "slovene", "slo", "s")) {
+      colnames(ret) <- c("Kategorija", paste0("Frekvenca (", event, ")"),
+                         paste0("Dele\u017e (", event, ")"),
+                         "n", "Brez odgovora")
+    }
+  }
+  if (utezi){
+    frekvence <- NULL
+    veljavne <- NULL
+    for (i in varNames) {
+      tmp <- survey::svytable(stats::as.formula(paste("~", i)), data)
+      frekvence <- c(frekvence, round(tmp[event], dec.freq))
+      veljavne <- c(veljavne, round(sum(tmp), dec.freq))
+    }
+    ret <- data.frame(varNames,
+                      frekvence,
+                      round(frekvence/veljavne*100),
+                      veljavne, check.names = FALSE)
+    colnames(ret) <- c("Category", paste0("Frequency (", event, ")"),
+                       paste0("Share (", event, ")"),
+                       "n")
+
+    if (attachLabels) try({ret$Category <- attributes(data$variables)$variable.labels[varNames]}, silent = TRUE)
+    if (language %in% c("Slovene", "slovene", "slo", "s")) {
+      colnames(ret) <- c("Kategorija", paste0("Frekvenca (", event, ")"),
+                         paste0("Dele\u017e (", event, ")"),
+                         "n")
+    }
+  }
+
+  return(ret)
+}
