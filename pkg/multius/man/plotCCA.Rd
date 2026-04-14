@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotCCA.R
 \name{plotCCA}
 \alias{plotCCA}
-\title{Plot a solution of canonical correlations}
+\title{Plot a canonical correlation analysis solution}
 \usage{
 plotCCA(
   ccRes,
@@ -21,49 +21,70 @@ plotCCA(
 \arguments{
 \item{ccRes}{The output of \code{\link[multiUS:cancorPlus]{multiUS::cancorPlus}}.}
 
-\item{xTitle}{Title for the first (X) set of variables.}
+\item{xTitle}{Character string used as the label for the first (X) set of variables.}
 
-\item{yTitle}{Title for the second (Y) set of variables.}
+\item{yTitle}{Character string used as the label for the second (Y) set of variables.}
 
-\item{inColors}{Logical; plot values in color (\code{TRUE}, default) or in black
-and white (\code{FALSE}). Positive values map to blue tones, negative to red.}
+\item{inColors}{Logical; should values be shown in color (\code{TRUE}, default)
+or in black (\code{FALSE})? When \code{TRUE}, positive values are shown in
+blue tones and negative values in red tones, with intensity reflecting magnitude.}
 
-\item{show}{Integer; how many canonical dimensions to display. Defaults to
-\code{length(ccRes$cor)}.}
+\item{show}{Integer; number of canonical dimensions to display. If \code{NULL}
+(default), all canonical correlations in \code{ccRes$cor} are shown.}
 
-\item{scaleLabelsFactor}{Numeric scaling exponent for the printed coefficients
-(default \code{1/2}). The label size is proportional to \code{|value|^scaleLabelsFactor}.}
+\item{scaleLabelsFactor}{Numeric exponent controlling the size of the printed
+coefficients. Label size is proportional to
+\code{abs(value)^scaleLabelsFactor + 0.2}. Default is \code{1/2}.}
 
-\item{what}{What to plot: regression coefficients \code{"reg"} (default) or
-canonical structure correlations \code{"cor"}. If correlations are unavailable
-in \code{ccRes$scores}, the function falls back to regression coefficients
-with a warning.}
+\item{what}{Character string specifying what should be plotted:
+\code{"reg"} for regression coefficients (default) or \code{"cor"} for
+canonical structure correlations. If \code{what = "cor"} but the required
+correlation components are unavailable in \code{ccRes$scores}, the function
+falls back to regression coefficients and issues a warning.}
 
-\item{nDigits}{Integer; number of decimal places shown for printed values.}
+\item{nDigits}{Integer; number of decimal places used when printing the values.}
 
-\item{mar}{Numeric vector of plot margins; passed to \code{\link[graphics:par]{graphics::par}}.
-Default is \code{c(1, 2, 1, 1)}.}
+\item{mar}{Numeric vector of plot margins passed to
+\code{\link[graphics:par]{graphics::par}}. Default is \code{c(1, 2, 1, 1)}.}
 
-\item{gapLeft}{Integer; number of empty column gaps to insert before the first
-canonical dimension (useful for aligning multiple panels). Default \code{0}.}
+\item{gapLeft}{Integer; number of empty columns inserted before the first
+canonical dimension. Useful for aligning multiple plots. Default is \code{0}.}
 
-\item{customNames}{Optional named character vector for relabeling variables.
-Names should match \code{rownames(ccRes$xcoef)} and/or \code{rownames(ccRes$ycoef)};
-values are the labels to display. Unmatched variables keep their original names
-(or default to \code{"Var X#"/"Var Y#"} when row names are missing).}
+\item{customNames}{Optional named character vector or list used to relabel
+variables. Names should correspond to variable names in
+\code{rownames(ccRes$xcoef)} and/or \code{rownames(ccRes$ycoef)}. If provided,
+matched variables are replaced by the supplied labels.}
 }
 \value{
-Draws the plot.
+This function is called for its side effect of drawing a plot and
+  returns \code{NULL} invisibly.
 }
 \description{
-Plot the canonical solution produced by \code{\link[multiUS:cancorPlus]{multiUS::cancorPlus}}.
-You can display either regression coefficients (canonical weights) or canonical
-structure correlations for the first \code{show} canonical dimensions, with
-optional color-coding by sign and magnitude.
+Visualize the canonical correlation solution produced by
+\code{\link[multiUS:cancorPlus]{multiUS::cancorPlus}}. The function displays
+the first \code{show} canonical dimensions together with the corresponding
+coefficients for the X and Y variable sets. You can plot either regression
+coefficients (canonical weights) or canonical structure correlations, and
+optionally color the printed values according to their sign and magnitude.
+
+Variable labels can be taken from row names of \code{ccRes$xcoef} and
+\code{ccRes$ycoef}, replaced with \code{customNames}, or generated
+automatically when row names are missing.
 }
 \examples{
-tmp<-cancorPlus(x = mtcars[, c(1,2,3)], y = mtcars[, c(4,5, 6)], useCCApackage = TRUE)
-plotCCA(tmp, scaleLabelsFactor = 1/2, what = "cor", customNames = c("cyl" = "Cylinders"))
+tmp <- cancorPlus(
+  x = mtcars[, c(1, 2, 3)],
+  y = mtcars[, c(4, 5, 6)],
+  useCCApackage = TRUE
+)
+
+plotCCA(
+  tmp,
+  scaleLabelsFactor = 1/2,
+  what = "cor",
+  customNames = c("cyl" = "Cylinders")
+)
+
 }
 \author{
 Marjan Cugmas

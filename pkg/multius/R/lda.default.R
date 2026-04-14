@@ -1,3 +1,4 @@
+#' @export
 lda.default <- function (x, grouping, prior = proportions, tol = 1e-04, method = c("moment", "mle", "mve", "t"), CV = FALSE, nu = 5, usePriorBetweenGroups=TRUE, ...) {
     if (is.null(dim(x)))
         stop("'x' is not a matrix")
