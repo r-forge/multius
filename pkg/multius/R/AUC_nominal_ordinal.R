@@ -10,9 +10,9 @@
 #' A weighted version is also reported using weights \eqn{n_i n_j}. This
 #' weighted version is a practical extension and not the original ORC definition.
 #'
-#' @param outcome A vector containing the observed ordinal outcome. May be a
-#'   numeric/integer vector or an ordered/unordered factor. Its unique values
-#'   define the outcome categories.
+#' @param outcome A vector containing the observed ordinal dependent variable. 
+#'   May be a numeric/integer vector or an ordered/unordered factor. Its unique 
+#'   values define the outcome categories.
 #' @param probs A numeric matrix or data frame of predicted probabilities with
 #'   one row per observation and one column per outcome category.
 #' @param categories Optional vector giving the category values in the same order
@@ -216,8 +216,8 @@ orc_table <- function(outcome,
 #' weighted version is a practical extension and not the original Hand-Till
 #' definition.
 #'
-#' @param outcome A vector containing the observed nominal outcome. May be a
-#'   factor, character, numeric, or integer vector.
+#' @param outcome A vector containing the empirical/observed values of nominal 
+#' dependent variable. May be a factor, character, numeric, or integer vector.
 #' @param probs A numeric matrix or data frame of predicted probabilities with
 #'   one row per observation and one column per outcome category.
 #' @param categories Optional vector giving the category values in the same order

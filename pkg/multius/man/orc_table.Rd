@@ -7,9 +7,9 @@
 orc_table(outcome, probs, categories = NULL, na_rm = TRUE)
 }
 \arguments{
-\item{outcome}{A vector containing the observed ordinal outcome. May be a
-numeric/integer vector or an ordered/unordered factor. Its unique values
-define the outcome categories.}
+\item{outcome}{A vector containing the observed ordinal dependent variable. 
+May be a numeric/integer vector or an ordered/unordered factor. Its unique 
+values define the outcome categories.}
 
 \item{probs}{A numeric matrix or data frame of predicted probabilities with
 one row per observation and one column per outcome category.}

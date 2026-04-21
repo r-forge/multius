@@ -7,8 +7,8 @@
 ht_auc_table(outcome, probs, categories = NULL, na_rm = TRUE)
 }
 \arguments{
-\item{outcome}{A vector containing the observed nominal outcome. May be a
-factor, character, numeric, or integer vector.}
+\item{outcome}{A vector containing the empirical/observed values of nominal 
+dependent variable. May be a factor, character, numeric, or integer vector.}
 
 \item{probs}{A numeric matrix or data frame of predicted probabilities with
 one row per observation and one column per outcome category.}
