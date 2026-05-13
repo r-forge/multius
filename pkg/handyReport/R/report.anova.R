@@ -66,7 +66,7 @@ report.anova <- function(catVarName, numVarNames, data, omegaSq = FALSE){
     res[i, 1+nravni] <- round(model$statistic, 2)
     res[i, 2+nravni] <- model$parameter[1]
     res[i, 3+nravni] <- round(model$parameter[2])
-    res[i, 4+nravni] <- ifelse(model$p.value < 0.01, yes = "< 0.01", no = round(model$p.value, 3))
+    res[i, 4+nravni] <- model$p.value #ifelse(model$p.value < 0.01, yes = "< 0.01", no = round(model$p.value, 3))
 
     if (omegaSq == TRUE) {
       modelAov <- summary(aov(tmp[, numVarNames[i]] ~ as.factor(tmp[, catVarName])))
@@ -78,5 +78,14 @@ report.anova <- function(catVarName, numVarNames, data, omegaSq = FALSE){
   if (omegaSq==TRUE) labele <- c(labele, "Omega Sq")
   colnames(res) <- labele
   rownames(res) <- numVarNames
+
+  res <- as.data.frame(res)
+
+  res$p <- format.pval(
+    as.numeric(res$p),
+    digits = 3,
+    eps = 0.01
+  )
+
   return(res)
 }
